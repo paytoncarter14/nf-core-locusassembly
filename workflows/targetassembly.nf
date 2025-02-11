@@ -11,6 +11,8 @@ include { BLAST_MAKEBLASTDB     } from '../modules/nf-core/blast/makeblastdb/mai
 include { BLAST_BLASTN          } from '../modules/nf-core/blast/blastn/main'
 include { GNU_SORT              } from '../modules/nf-core/gnu/sort/main'
 include { GNU_SORT as GNU_SORT2 } from '../modules/nf-core/gnu/sort/main'
+include { FASTP                 } from '../modules/nf-core/fastp/main'
+include { SPADES                } from '../modules/nf-core/spades/main'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -28,6 +30,10 @@ workflow TARGETASSEMBLY {
     ch_probes = file(params.probes)
     ch_versions = Channel.empty()
 
+    /* -------------------------
+    Prepare reference and probes
+    ------------------------- */
+
     // make reference genome blast db
     BLAST_MAKEBLASTDB ([[id: ch_reference.baseName], ch_reference])
     ch_versions = ch_versions.mix(BLAST_MAKEBLASTDB.out.versions)
@@ -44,9 +50,22 @@ workflow TARGETASSEMBLY {
     GNU_SORT2 (GNU_SORT.out.sorted)
     ch_versions = ch_versions.mix(GNU_SORT2.out.versions)
 
-    //
+    /* -------------
+    Data preparation
+    ------------- */
+
+    // filter adapters, gather sequencing qc with fastp
+    FASTP (ch_samplesheet, [], false, false, false)
+    ch_versions = ch_versions.mix(FASTP.out.versions)
+
+    /* -----
+    Assembly
+    ----- */
+
+    SPADES ( FASTP.out.reads.map{[it[0], it[1], [], []]}, [], [] )
+    ch_versions = ch_versions.mix(SPADES.out.versions.first())
+
     // Collate and save software versions
-    //
     softwareVersionsToYAML(ch_versions)
         .collectFile(
             storeDir: "${params.outdir}/pipeline_info",
