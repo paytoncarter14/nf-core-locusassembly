@@ -33,6 +33,8 @@ include { GNU_SORT as GNU_SORT4                        } from '../modules/nf-cor
 include { ORTHOLOGFILTER                               } from '../modules/local/orthologfilter/main'
 include { BEDTOOLS_GETFASTA as ORTHOLOGS_PROBEGETFASTA } from '../modules/nf-core/bedtools/getfasta/main'
 include { BEDTOOLS_GETFASTA as ORTHOLOGS_FULLGETFASTA  } from '../modules/nf-core/bedtools/getfasta/main'
+include { CLEANHEADERS as CLEANHEADERS_PROBE           } from '../modules/local/cleanheaders/main'
+include { CLEANHEADERS as CLEANHEADERS_FULL            } from '../modules/local/cleanheaders/main'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -140,6 +142,12 @@ workflow TARGETASSEMBLY {
     ORTHOLOGS_FULLGETFASTA ( full_together.map{it[0..1]}, full_together.map{it[2]} )
     ch_versions = ch_versions.mix(ORTHOLOGS_PROBEGETFASTA.out.versions)
     ch_versions = ch_versions.mix(ORTHOLOGS_FULLGETFASTA.out.versions)
+
+    // get rid of everything but locus name in fasta headers
+    CLEANHEADERS_PROBE ( ORTHOLOGS_PROBEGETFASTA.out.fasta )
+    CLEANHEADERS_FULL ( ORTHOLOGS_FULLGETFASTA.out.fasta )
+    ch_versions = ch_versions.mix(CLEANHEADERS_PROBE.out.versions)
+    ch_versions = ch_versions.mix(CLEANHEADERS_FULL.out.versions)
 
     // Collate and save software versions
     softwareVersionsToYAML(ch_versions)
