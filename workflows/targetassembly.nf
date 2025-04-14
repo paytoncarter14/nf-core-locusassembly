@@ -18,6 +18,7 @@ include { BLAST_MAKEBLASTDB                            } from '../modules/nf-cor
 include { BLAST_BLASTN                                 } from '../modules/nf-core/blast/blastn/main'
 include { GNU_SORT                                     } from '../modules/nf-core/gnu/sort/main'
 include { GNU_SORT as GNU_SORT2                        } from '../modules/nf-core/gnu/sort/main'
+include { FASTQTOOLS_SORT                              } from '../modules/local/fastqtools_sort/main'
 include { FASTP                                        } from '../modules/nf-core/fastp/main'
 include { SPADES                                       } from '../modules/nf-core/spades/main'
 include { VSEARCH_CLUSTER                              } from '../modules/nf-core/vsearch/cluster/main'
@@ -80,12 +81,16 @@ workflow TARGETASSEMBLY {
     FASTP (ch_samplesheet, [], false, false, false)
     ch_versions = ch_versions.mix(FASTP.out.versions)
 
+    // sort fastqs to avoid errors with SPAdes
+    FASTQTOOLS_SORT ( FASTP.out.reads )
+    // FASTQTOOLS_SORT ( ch_samplesheet )
+
     /* -----
     Assembly
     ----- */
 
     // assemble scaffolds with SPAdes
-    SPADES (FASTP.out.reads.map{[it[0], it[1], [], []]}, [], [])
+    SPADES (FASTQTOOLS_SORT.out.fastq.map{[it[0], it[1], [], []]}, [], [])
     ch_versions = ch_versions.mix(SPADES.out.versions)
 
     // collapse similar scaffolds
