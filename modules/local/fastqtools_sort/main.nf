@@ -1,5 +1,3 @@
-
-
 process FASTQTOOLS_SORT {
     tag "$meta.id"
     label 'process_medium'
@@ -25,6 +23,7 @@ process FASTQTOOLS_SORT {
     """
 
     stub:
+    def prefix = task.ext.prefix ?: meta.id
     """
     touch ${prefix}.fastq.gz
     """

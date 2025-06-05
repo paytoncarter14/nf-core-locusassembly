@@ -1,15 +1,12 @@
 /* TODO:
+    file endings and prefixes
     BITSCOREFILTER, BLASTTOBED doesn't have container
     probably check and lint all local modules
     biocontainers/python:3.12 is probably a good general container, already used for ORTHOLOGFILTER
+    maybe biocontainers/coreutils:9.3 as well
     add fastp '-g' to modules.conf (didn't yet because I didn't want pipeline to restart totally over)
 */
 
-/*
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    IMPORT MODULES / SUBWORKFLOWS / FUNCTIONS
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-*/
 include { paramsSummaryMap       } from 'plugin/nf-schema'
 include { softwareVersionsToYAML } from '../subworkflows/nf-core/utils_nfcore_pipeline'
 include { methodsDescriptionText } from '../subworkflows/local/utils_nfcore_targetassembly_pipeline'
@@ -26,7 +23,6 @@ include { VSEARCH_SORT                                 } from '../modules/nf-cor
 include { BLAST_MAKEBLASTDB as BLAST_MAKEBLASTDB2      } from '../modules/nf-core/blast/makeblastdb/main'
 include { BLAST_TBLASTX                                } from '../modules/local/blast/tblastx/main'
 include { BITSCOREFILTER                               } from '../modules/local/bitscorefilter/main'
-include { BLASTTOBED                                   } from '../modules/local/blasttobed/main'
 include { BEDTOOLS_GETFASTA                            } from '../modules/nf-core/bedtools/getfasta/main'
 include { BLAST_TBLASTX as BLAST_TBLASTX2              } from '../modules/local/blast/tblastx/main'
 include { GNU_SORT as GNU_SORT3                        } from '../modules/nf-core/gnu/sort/main'
@@ -36,12 +32,6 @@ include { BEDTOOLS_GETFASTA as ORTHOLOGS_PROBEGETFASTA } from '../modules/nf-cor
 include { BEDTOOLS_GETFASTA as ORTHOLOGS_FULLGETFASTA  } from '../modules/nf-core/bedtools/getfasta/main'
 include { CLEANHEADERS as CLEANHEADERS_PROBE           } from '../modules/local/cleanheaders/main'
 include { CLEANHEADERS as CLEANHEADERS_FULL            } from '../modules/local/cleanheaders/main'
-
-/*
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    RUN MAIN WORKFLOW
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-*/
 
 workflow TARGETASSEMBLY {
 
@@ -65,6 +55,7 @@ workflow TARGETASSEMBLY {
     BLAST_BLASTN ([[id: ch_probes.baseName], ch_probes], BLAST_MAKEBLASTDB.out.db)
     ch_versions = ch_versions.mix(BLAST_BLASTN.out.versions)
 
+    // TODO: can these two sorts be combined?
     // sort probe/reference hits by bitscore
     GNU_SORT (BLAST_BLASTN.out.txt)
     ch_versions = ch_versions.mix(GNU_SORT.out.versions)
@@ -77,13 +68,14 @@ workflow TARGETASSEMBLY {
     Sample preparation
     ------------- */
 
+    // TODO: option to skip this?
     // filter adapters, gather sequencing qc with fastp
     FASTP (ch_samplesheet, [], false, false, false)
     ch_versions = ch_versions.mix(FASTP.out.versions)
 
+    // TODO: is this necessary?
     // sort fastqs to avoid errors with SPAdes
     FASTQTOOLS_SORT ( FASTP.out.reads )
-    // FASTQTOOLS_SORT ( ch_samplesheet )
 
     /* -----
     Assembly
@@ -113,16 +105,19 @@ workflow TARGETASSEMBLY {
     BLAST_TBLASTX (BLAST_MAKEBLASTDB2.out.db.map{[it[0], ch_probes]}, BLAST_MAKEBLASTDB2.out.db)
     ch_versions = ch_versions.mix(BLAST_TBLASTX.out.versions)
 
+    // TODO: can this be combined with BLASTTOBED?
     // keep probe/scaffold hits with bit scores at least 80% of top bit score per probe
-    BITSCOREFILTER (BLAST_TBLASTX.out.txt)
-    ch_versions = ch_versions.mix(BITSCOREFILTER.out.versions)
+    // BITSCOREFILTER (BLAST_TBLASTX.out.txt)
+    // ch_versions = ch_versions.mix(BITSCOREFILTER.out.versions)
 
     // transform probe/scaffold blast output to bed for bedtools
-    BLASTTOBED ( BITSCOREFILTER.out.txt )
-    ch_versions = ch_versions.mix(BLASTTOBED.out.versions)
+    // BLASTTOBED ( BITSCOREFILTER.out.txt )
+    // ch_versions = ch_versions.mix(BLASTTOBED.out.versions)
+
+    BITSCOREFILTER (BLAST_TBLASTX.out.txt)
 
     // pull regions of scaffold sequences (putative orthologs) that had tblastx probe hits
-    together = BLASTTOBED.out.bed.join(VSEARCH_SORT.out.fasta)
+    together = BITSCOREFILTER.out.bed.join(VSEARCH_SORT.out.fasta)
     BEDTOOLS_GETFASTA ( together.map{it[0..1]}, together.map{it[2]} )
     ch_versions = ch_versions.mix(BEDTOOLS_GETFASTA.out.versions)
 
@@ -130,6 +125,7 @@ workflow TARGETASSEMBLY {
     BLAST_TBLASTX2 ( BEDTOOLS_GETFASTA.out.fasta, BLAST_MAKEBLASTDB.out.db )
     ch_versions = ch_versions.mix(BLAST_TBLASTX2.out.versions)
 
+    // TODO: can these two sorts be combined?
     // keep only top ortholog/reference hit by bitscore for each ortholog
     GNU_SORT3 ( BLAST_TBLASTX2.out.txt )
     GNU_SORT4 ( GNU_SORT3.out.sorted )
@@ -148,7 +144,7 @@ workflow TARGETASSEMBLY {
     ch_versions = ch_versions.mix(ORTHOLOGS_PROBEGETFASTA.out.versions)
     ch_versions = ch_versions.mix(ORTHOLOGS_FULLGETFASTA.out.versions)
 
-    // get rid of everything but locus name in fasta headers
+    // remove spades information and keep only locus name in fasta headers
     CLEANHEADERS_PROBE ( ORTHOLOGS_PROBEGETFASTA.out.fasta )
     CLEANHEADERS_FULL ( ORTHOLOGS_FULLGETFASTA.out.fasta )
     ch_versions = ch_versions.mix(CLEANHEADERS_PROBE.out.versions)
@@ -167,9 +163,3 @@ workflow TARGETASSEMBLY {
     versions       = ch_versions                 // channel: [ path(versions.yml) ]
 
 }
-
-/*
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    THE END
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-*/
