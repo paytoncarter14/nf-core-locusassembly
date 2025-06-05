@@ -1,9 +1,9 @@
 /* TODO:
     file endings and prefixes
-    BITSCOREFILTER, BLASTTOBED doesn't have container
     probably check and lint all local modules
     biocontainers/python:3.12 is probably a good general container, already used for ORTHOLOGFILTER
     maybe biocontainers/coreutils:9.3 as well
+    publish tblastx as nf-core module
     add fastp '-g' to modules.conf (didn't yet because I didn't want pipeline to restart totally over)
 */
 
@@ -13,8 +13,8 @@ include { methodsDescriptionText } from '../subworkflows/local/utils_nfcore_targ
 
 include { BLAST_MAKEBLASTDB                            } from '../modules/nf-core/blast/makeblastdb/main'
 include { BLAST_BLASTN                                 } from '../modules/nf-core/blast/blastn/main'
-include { GNU_SORT                                     } from '../modules/nf-core/gnu/sort/main'
-include { GNU_SORT as GNU_SORT2                        } from '../modules/nf-core/gnu/sort/main'
+include { GNU_SORT                                     } from '../modules/local/gnu_sort/main'
+include { GNU_SORT as GNU_SORT2                        } from '../modules/local/gnu_sort/main'
 include { FASTQTOOLS_SORT                              } from '../modules/local/fastqtools_sort/main'
 include { FASTP                                        } from '../modules/nf-core/fastp/main'
 include { SPADES                                       } from '../modules/nf-core/spades/main'
@@ -25,8 +25,6 @@ include { BLAST_TBLASTX                                } from '../modules/local/
 include { BITSCOREFILTER                               } from '../modules/local/bitscorefilter/main'
 include { BEDTOOLS_GETFASTA                            } from '../modules/nf-core/bedtools/getfasta/main'
 include { BLAST_TBLASTX as BLAST_TBLASTX2              } from '../modules/local/blast/tblastx/main'
-include { GNU_SORT as GNU_SORT3                        } from '../modules/nf-core/gnu/sort/main'
-include { GNU_SORT as GNU_SORT4                        } from '../modules/nf-core/gnu/sort/main'
 include { ORTHOLOGFILTER                               } from '../modules/local/orthologfilter/main'
 include { BEDTOOLS_GETFASTA as ORTHOLOGS_PROBEGETFASTA } from '../modules/nf-core/bedtools/getfasta/main'
 include { BEDTOOLS_GETFASTA as ORTHOLOGS_FULLGETFASTA  } from '../modules/nf-core/bedtools/getfasta/main'
@@ -56,13 +54,9 @@ workflow TARGETASSEMBLY {
     ch_versions = ch_versions.mix(BLAST_BLASTN.out.versions)
 
     // TODO: can these two sorts be combined?
-    // sort probe/reference hits by bitscore
+    // sort probe/reference hits by bitscore and keep only best probe/reference hit by bitscore
     GNU_SORT (BLAST_BLASTN.out.txt)
     ch_versions = ch_versions.mix(GNU_SORT.out.versions)
-
-    // keep only best probe/reference hit by bitscore
-    GNU_SORT2 (GNU_SORT.out.sorted)
-    ch_versions = ch_versions.mix(GNU_SORT2.out.versions)
 
     /* -------------
     Sample preparation
@@ -105,16 +99,10 @@ workflow TARGETASSEMBLY {
     BLAST_TBLASTX (BLAST_MAKEBLASTDB2.out.db.map{[it[0], ch_probes]}, BLAST_MAKEBLASTDB2.out.db)
     ch_versions = ch_versions.mix(BLAST_TBLASTX.out.versions)
 
-    // TODO: can this be combined with BLASTTOBED?
     // keep probe/scaffold hits with bit scores at least 80% of top bit score per probe
-    // BITSCOREFILTER (BLAST_TBLASTX.out.txt)
-    // ch_versions = ch_versions.mix(BITSCOREFILTER.out.versions)
-
-    // transform probe/scaffold blast output to bed for bedtools
-    // BLASTTOBED ( BITSCOREFILTER.out.txt )
-    // ch_versions = ch_versions.mix(BLASTTOBED.out.versions)
-
+    // and transform probe/scaffold blast output to bed for bedtools
     BITSCOREFILTER (BLAST_TBLASTX.out.txt)
+    ch_versions = ch_versions.mix(BITSCOREFILTER.out.versions)
 
     // pull regions of scaffold sequences (putative orthologs) that had tblastx probe hits
     together = BITSCOREFILTER.out.bed.join(VSEARCH_SORT.out.fasta)
@@ -125,15 +113,12 @@ workflow TARGETASSEMBLY {
     BLAST_TBLASTX2 ( BEDTOOLS_GETFASTA.out.fasta, BLAST_MAKEBLASTDB.out.db )
     ch_versions = ch_versions.mix(BLAST_TBLASTX2.out.versions)
 
-    // TODO: can these two sorts be combined?
     // keep only top ortholog/reference hit by bitscore for each ortholog
-    GNU_SORT3 ( BLAST_TBLASTX2.out.txt )
-    GNU_SORT4 ( GNU_SORT3.out.sorted )
-    ch_versions = ch_versions.mix(GNU_SORT3.out.versions)
-    ch_versions = ch_versions.mix(GNU_SORT4.out.versions)
+    GNU_SORT2 ( BLAST_TBLASTX2.out.txt )
+    ch_versions = ch_versions.mix(GNU_SORT2.out.versions)
 
     // ortholog filter: make sure putative orthologs intersect the same coordinates as the probe/reference blast
-    ORTHOLOGFILTER ( GNU_SORT4.out.sorted, GNU_SORT2.out.sorted )
+    ORTHOLOGFILTER ( GNU_SORT2.out.sorted, GNU_SORT.out.sorted )
     ch_versions = ch_versions.mix(ORTHOLOGFILTER.out.versions)
 
     // pull full and probe orthologs
