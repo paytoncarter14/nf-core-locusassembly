@@ -1,10 +1,9 @@
 /* TODO:
     file endings and prefixes
-    probably check and lint all local modules
+    check and lint all local modules
     biocontainers/python:3.12 is probably a good general container, already used for ORTHOLOGFILTER
     maybe biocontainers/coreutils:9.3 as well
     publish tblastx as nf-core module
-    add fastp '-g' to modules.conf (didn't yet because I didn't want pipeline to restart totally over)
 */
 
 include { paramsSummaryMap       } from 'plugin/nf-schema'
@@ -30,6 +29,7 @@ include { BEDTOOLS_GETFASTA as ORTHOLOGS_PROBEGETFASTA } from '../modules/nf-cor
 include { BEDTOOLS_GETFASTA as ORTHOLOGS_FULLGETFASTA  } from '../modules/nf-core/bedtools/getfasta/main'
 include { CLEANHEADERS as CLEANHEADERS_PROBE           } from '../modules/local/cleanheaders/main'
 include { CLEANHEADERS as CLEANHEADERS_FULL            } from '../modules/local/cleanheaders/main'
+include { QUAST                                        } from '../modules/nf-core/quast/main'
 
 workflow TARGETASSEMBLY {
 
@@ -134,6 +134,9 @@ workflow TARGETASSEMBLY {
     CLEANHEADERS_FULL ( ORTHOLOGS_FULLGETFASTA.out.fasta )
     ch_versions = ch_versions.mix(CLEANHEADERS_PROBE.out.versions)
     ch_versions = ch_versions.mix(CLEANHEADERS_FULL.out.versions)
+
+    // run QUAST on probe orthologs
+    QUAST ( CLEANHEADERS_PROBE.out.fasta, [[id: ch_reference.baseName], ch_reference], [[id: ''], []] )
 
     // Collate and save software versions
     softwareVersionsToYAML(ch_versions)
