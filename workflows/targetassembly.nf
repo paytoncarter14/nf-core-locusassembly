@@ -31,6 +31,11 @@ include { GETSPADESCOVERAGE                            } from '../modules/local/
 include { CLEANHEADERS as CLEANHEADERS_PROBE           } from '../modules/local/cleanheaders/main'
 include { CLEANHEADERS as CLEANHEADERS_FULL            } from '../modules/local/cleanheaders/main'
 include { QUAST                                        } from '../modules/nf-core/quast/main'
+include { MINIMAP2_ALIGN                               } from '../modules/nf-core/minimap2/align/main'
+include { SAMTOOLS_COVERAGE                            } from '../modules/nf-core/samtools/coverage/main'
+include { SAMTOOLS_FAIDX                               } from '../modules/nf-core/samtools/faidx/main'
+include { GETLOCUSLENGTH as GETLOCUSLENGTH_PROBE       } from '../modules/local/getlocuslength/main'
+include { GETLOCUSLENGTH as GETLOCUSLENGTH_FULL        } from '../modules/local/getlocuslength/main'
 
 workflow TARGETASSEMBLY {
 
@@ -130,6 +135,10 @@ workflow TARGETASSEMBLY {
     ch_versions = ch_versions.mix(ORTHOLOGS_PROBEGETFASTA.out.versions)
     ch_versions = ch_versions.mix(ORTHOLOGS_FULLGETFASTA.out.versions)
 
+    /* -----------
+    Cleanup and QC
+    ------------*/
+
     // pull spades coverage information from the orthologs
     GETSPADESCOVERAGE ( ORTHOLOGS_PROBEGETFASTA.out.fasta )
 
@@ -138,6 +147,21 @@ workflow TARGETASSEMBLY {
     CLEANHEADERS_FULL ( ORTHOLOGS_FULLGETFASTA.out.fasta )
     ch_versions = ch_versions.mix(CLEANHEADERS_PROBE.out.versions)
     ch_versions = ch_versions.mix(CLEANHEADERS_FULL.out.versions)
+
+    // align fastqs with orthologs to get coverage stats
+    minimap2_input = FASTQTOOLS_SORT.out.fastq.join(CLEANHEADERS_PROBE.out.fasta)
+    MINIMAP2_ALIGN ( minimap2_input.map{[it[0], it[1]]}, minimap2_input.map{[it[0], it[2]]}, true, 'bai', true, false )
+
+    // make ortholog index
+    // SAMTOOLS_FAIDX ( CLEANHEADERS_PROBE.out.fasta, [[], []], false )
+
+    // get alignment coverage stats
+    samtools_input = MINIMAP2_ALIGN.out.bam.join(CLEANHEADERS_PROBE.out.fasta)
+    SAMTOOLS_COVERAGE ( samtools_input.map{[it[0], it[1], []]}, samtools_input.map{[it[0], it[2]]}, [[], []])
+
+    // get locus length statistics
+    GETLOCUSLENGTH_PROBE ( CLEANHEADERS_PROBE.out.fasta )
+    GETLOCUSLENGTH_FULL ( CLEANHEADERS_FULL.out.fasta )
 
     // run QUAST on probe orthologs
     // QUAST ( CLEANHEADERS_PROBE.out.fasta, [[id: ch_reference.baseName], ch_reference], [[id: ''], []] )
