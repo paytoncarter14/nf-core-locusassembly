@@ -27,6 +27,7 @@ include { BLAST_TBLASTX as BLAST_TBLASTX2              } from '../modules/local/
 include { ORTHOLOGFILTER                               } from '../modules/local/orthologfilter/main'
 include { BEDTOOLS_GETFASTA as ORTHOLOGS_PROBEGETFASTA } from '../modules/nf-core/bedtools/getfasta/main'
 include { BEDTOOLS_GETFASTA as ORTHOLOGS_FULLGETFASTA  } from '../modules/nf-core/bedtools/getfasta/main'
+include { GETSPADESCOVERAGE                            } from '../modules/local/getspadescoverage/main'
 include { CLEANHEADERS as CLEANHEADERS_PROBE           } from '../modules/local/cleanheaders/main'
 include { CLEANHEADERS as CLEANHEADERS_FULL            } from '../modules/local/cleanheaders/main'
 include { QUAST                                        } from '../modules/nf-core/quast/main'
@@ -129,6 +130,9 @@ workflow TARGETASSEMBLY {
     ch_versions = ch_versions.mix(ORTHOLOGS_PROBEGETFASTA.out.versions)
     ch_versions = ch_versions.mix(ORTHOLOGS_FULLGETFASTA.out.versions)
 
+    // pull spades coverage information from the orthologs
+    GETSPADESCOVERAGE ( ORTHOLOGS_PROBEGETFASTA.out.fasta )
+
     // remove spades information and keep only locus name in fasta headers
     CLEANHEADERS_PROBE ( ORTHOLOGS_PROBEGETFASTA.out.fasta )
     CLEANHEADERS_FULL ( ORTHOLOGS_FULLGETFASTA.out.fasta )
@@ -136,7 +140,7 @@ workflow TARGETASSEMBLY {
     ch_versions = ch_versions.mix(CLEANHEADERS_FULL.out.versions)
 
     // run QUAST on probe orthologs
-    QUAST ( CLEANHEADERS_PROBE.out.fasta, [[id: ch_reference.baseName], ch_reference], [[id: ''], []] )
+    // QUAST ( CLEANHEADERS_PROBE.out.fasta, [[id: ch_reference.baseName], ch_reference], [[id: ''], []] )
 
     // Collate and save software versions
     softwareVersionsToYAML(ch_versions)
