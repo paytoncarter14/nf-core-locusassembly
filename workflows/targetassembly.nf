@@ -36,6 +36,7 @@ include { SAMTOOLS_COVERAGE                            } from '../modules/nf-cor
 include { SAMTOOLS_FAIDX                               } from '../modules/nf-core/samtools/faidx/main'
 include { GETLOCUSLENGTH as GETLOCUSLENGTH_PROBE       } from '../modules/local/getlocuslength/main'
 include { GETLOCUSLENGTH as GETLOCUSLENGTH_FULL        } from '../modules/local/getlocuslength/main'
+include { COLLECTSTATS                                 } from '../modules/local/collectstats/main'
 
 workflow TARGETASSEMBLY {
 
@@ -160,11 +161,19 @@ workflow TARGETASSEMBLY {
     SAMTOOLS_COVERAGE ( samtools_input.map{[it[0], it[1], []]}, samtools_input.map{[it[0], it[2]]}, [[], []])
 
     // get locus length statistics
-    GETLOCUSLENGTH_PROBE ( CLEANHEADERS_PROBE.out.fasta )
-    GETLOCUSLENGTH_FULL ( CLEANHEADERS_FULL.out.fasta )
+    // GETLOCUSLENGTH_PROBE ( CLEANHEADERS_PROBE.out.fasta )
+    // GETLOCUSLENGTH_FULL ( CLEANHEADERS_FULL.out.fasta )
 
     // run QUAST on probe orthologs
     // QUAST ( CLEANHEADERS_PROBE.out.fasta, [[id: ch_reference.baseName], ch_reference], [[id: ''], []] )
+
+    // collect statistics
+    COLLECTSTATS (
+        CLEANHEADERS_PROBE.out.fasta.map{it[1]}.collect().map{[[id: 'all_samples'], it]},
+        CLEANHEADERS_FULL.out.fasta.map{it[1]}.collect().map{[[id: 'all_samples'], it]},
+        SAMTOOLS_COVERAGE.out.coverage.map{it[1]}.collect().map{[[id: 'all_samples'], it]},
+        ch_probes
+    )
 
     // Collate and save software versions
     softwareVersionsToYAML(ch_versions)
