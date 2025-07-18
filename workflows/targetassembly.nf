@@ -172,6 +172,7 @@ workflow TARGETASSEMBLY {
         CLEANHEADERS_PROBE.out.fasta.map{it[1]}.collect().map{[[id: 'all_samples'], it]},
         CLEANHEADERS_FULL.out.fasta.map{it[1]}.collect().map{[[id: 'all_samples'], it]},
         SAMTOOLS_COVERAGE.out.coverage.map{it[1]}.collect().map{[[id: 'all_samples'], it]},
+        GETSPADESCOVERAGE.out.txt.map{it[1]}.collect().map{[[id: 'all_samples'], it]},
         ch_probes
     )
 
