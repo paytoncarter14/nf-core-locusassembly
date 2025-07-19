@@ -50,7 +50,11 @@ with open('locus_lengths_probe.csv', 'w') as f:
     for sample, loci in locus_lengths.items():
         counts = []
         for locus in loci_reference:
-            counts.append(loci.get(locus, 'NA').get('probe', 'NA'))
+            to_append = loci.get(locus)
+            if to_append:
+                counts.append(to_append['probe'])
+            else:
+                counts.append('NA')
         f.write(f'{sample},{",".join([str(x) for x in counts])}\\n')
 
 with open('locus_lengths_full.csv', 'w') as f:
@@ -58,7 +62,11 @@ with open('locus_lengths_full.csv', 'w') as f:
     for sample, loci in locus_lengths.items():
         counts = []
         for locus in loci_reference:
-            counts.append(loci.get(locus, 'NA').get('full', 'NA'))
+            to_append = loci.get(locus)
+            if to_append:
+                counts.append(to_append['full'])
+            else:
+                counts.append('NA')
         f.write(f'{sample},{",".join([str(x) for x in counts])}\\n')
 
 # --------------------- #
