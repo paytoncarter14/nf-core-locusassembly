@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
-import glob, os
+import glob, os, json
 
 # ------------- #
 # Locus lengths #
 # ------------- #
 
 locus_lengths = {}
+locus = ''
 
 with open('${probe_reference}') as f:
   loci_reference = []
@@ -44,7 +45,6 @@ for full_file in glob.glob('full_fasta/*'):
           locus_lengths[sample_name][locus] = {'probe': None, 'full': None}
         locus_lengths[sample_name][locus]['full'] = len(line)
 
-print(locus_lengths)
 
 with open('locus_lengths.csv', 'w') as f:
   f.write(f'sample,{",".join(loci_reference)}\\n')
@@ -61,16 +61,20 @@ with open('locus_lengths.csv', 'w') as f:
 # --------------------- #
 
 mapping_coverages = {}
+mapped_reads = {}
 for file in glob.glob('coverage_txt/*.txt'):
   with open(file) as f:
     next(f)
     sample_name = os.path.basename(file).split('.')[0]
     mapping_coverages[sample_name] = {}
+    mapped_reads[sample_name] = 0
     for line in f.readlines():
       line = line.strip().split('\\t')
       locus = line[0]
+      num_reads = line[3]
       count = line[6]
       mapping_coverages[sample_name][locus] = count
+      mapped_reads[sample_name] += int(num_reads)
 
 
 with open('mean_mapping_coverage.csv', 'w') as f:
@@ -80,6 +84,52 @@ with open('mean_mapping_coverage.csv', 'w') as f:
     for locus in loci_reference:
       counts.append(loci[locus])
     f.write(sample + ',' + ','.join(counts) + '\\n')
+
+# ---------------------------- #
+# Percent at 80% mean coverage #
+# ---------------------------- #
+
+depths = {}
+for file in glob.glob('depth_txt/*.tsv'):
+    with open(file) as f:
+        sample_name = os.path.basename(file).split('.')[0]
+        depths[sample_name] = {}
+        mean_covs = mapping_coverages[sample_name]
+        for line in f.readlines():
+            line = line.strip().split('\\t')
+            locus = line[0]
+            if not depths[sample_name].get(locus):
+                depths[sample_name][locus] = {'length': 0, 'above_80': 0}
+            cov = int(line[2])
+            mean_cov = float(mean_covs[locus])
+            depths[sample_name][locus]['length'] += 1
+            if cov > mean_cov * 0.8:
+                depths[sample_name][locus]['above_80'] += 1
+
+with open('pct_at_80_pct_mean_cov.csv', 'w') as f:
+    f.write('sample,' + ','.join(loci_reference) + '\\n')
+    for sample, loci in depths.items():
+      counts = []
+      for locus in loci_reference:
+        counts.append(loci[locus]['above_80'] / loci[locus]['length'])
+      f.write(sample + ',' + ','.join([str(x) for x in counts]) + '\\n')
+
+# ----------------- #
+# Percent on target #
+# ----------------- #
+
+total_reads = {}
+for file in glob.glob('fastp_json/*.json'):
+    sample_name = os.path.basename(file).split('.')[0]
+    with open(file) as f:
+        j = json.loads(f.read())
+    total_reads[sample_name] = j['summary']['before_filtering']['total_reads']
+
+with open('pct_on_target.csv', 'w') as f:
+    f.write('sample,pct_on_target\\n')
+    for sample, total_read in total_reads.items():
+      pct_on_target = mapped_reads[sample] / total_read
+      f.write(sample + ',' + str(pct_on_target) + '\\n')
 
 # -------------------- #
 # SPAdes kmer coverage #

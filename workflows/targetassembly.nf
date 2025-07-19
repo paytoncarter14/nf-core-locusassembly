@@ -1,3 +1,4 @@
+import com.sun.imageio.spi.RAFImageInputStreamSpi
 /* TODO:
     file endings and prefixes
     check and lint all local modules
@@ -37,6 +38,7 @@ include { SAMTOOLS_FAIDX                               } from '../modules/nf-cor
 include { GETLOCUSLENGTH as GETLOCUSLENGTH_PROBE       } from '../modules/local/getlocuslength/main'
 include { GETLOCUSLENGTH as GETLOCUSLENGTH_FULL        } from '../modules/local/getlocuslength/main'
 include { COLLECTSTATS                                 } from '../modules/local/collectstats/main'
+include { SAMTOOLS_DEPTH                               } from '../modules/nf-core/samtools/depth/main'
 
 workflow TARGETASSEMBLY {
 
@@ -136,43 +138,41 @@ workflow TARGETASSEMBLY {
     ch_versions = ch_versions.mix(ORTHOLOGS_PROBEGETFASTA.out.versions)
     ch_versions = ch_versions.mix(ORTHOLOGS_FULLGETFASTA.out.versions)
 
-    /* -----------
-    Cleanup and QC
-    ------------*/
-
-    // pull spades coverage information from the orthologs
-    GETSPADESCOVERAGE ( ORTHOLOGS_PROBEGETFASTA.out.fasta )
-
     // remove spades information and keep only locus name in fasta headers
     CLEANHEADERS_PROBE ( ORTHOLOGS_PROBEGETFASTA.out.fasta )
     CLEANHEADERS_FULL ( ORTHOLOGS_FULLGETFASTA.out.fasta )
     ch_versions = ch_versions.mix(CLEANHEADERS_PROBE.out.versions)
     ch_versions = ch_versions.mix(CLEANHEADERS_FULL.out.versions)
 
+    /* ----
+    QC
+    ---- */
+
+    // pull spades coverage information from the orthologs
+    GETSPADESCOVERAGE ( ORTHOLOGS_PROBEGETFASTA.out.fasta )
+
     // align fastqs with orthologs to get coverage stats
     minimap2_input = FASTQTOOLS_SORT.out.fastq.join(CLEANHEADERS_PROBE.out.fasta)
     MINIMAP2_ALIGN ( minimap2_input.map{[it[0], it[1]]}, minimap2_input.map{[it[0], it[2]]}, true, 'bai', true, false )
 
-    // make ortholog index
-    // SAMTOOLS_FAIDX ( CLEANHEADERS_PROBE.out.fasta, [[], []], false )
-
-    // get alignment coverage stats
+    // get alignment coverage and depth stats
     samtools_input = MINIMAP2_ALIGN.out.bam.join(CLEANHEADERS_PROBE.out.fasta)
     SAMTOOLS_COVERAGE ( samtools_input.map{[it[0], it[1], []]}, samtools_input.map{[it[0], it[2]]}, [[], []])
-
-    // get locus length statistics
-    // GETLOCUSLENGTH_PROBE ( CLEANHEADERS_PROBE.out.fasta )
-    // GETLOCUSLENGTH_FULL ( CLEANHEADERS_FULL.out.fasta )
-
-    // run QUAST on probe orthologs
-    // QUAST ( CLEANHEADERS_PROBE.out.fasta, [[id: ch_reference.baseName], ch_reference], [[id: ''], []] )
+    SAMTOOLS_DEPTH ( MINIMAP2_ALIGN.out.bam, [[], []] )
 
     // collect statistics
+    // locus lengths
+    // mapping coverage
+    // spades kmer coverage
+    // TODO: add % reads on target
+    // TODO: add pct at 80% mean cov
     COLLECTSTATS (
         CLEANHEADERS_PROBE.out.fasta.map{it[1]}.collect().map{[[id: 'all_samples'], it]},
         CLEANHEADERS_FULL.out.fasta.map{it[1]}.collect().map{[[id: 'all_samples'], it]},
         SAMTOOLS_COVERAGE.out.coverage.map{it[1]}.collect().map{[[id: 'all_samples'], it]},
         GETSPADESCOVERAGE.out.txt.map{it[1]}.collect().map{[[id: 'all_samples'], it]},
+        SAMTOOLS_DEPTH.out.tsv.map{it[1]}.collect().map{[[id: 'all_samples'], it]},
+        FASTP.out.json.map{it[1]}.collect().map{[[id: 'all_samples'], it]},
         ch_probes
     )
 
@@ -189,3 +189,16 @@ workflow TARGETASSEMBLY {
     versions       = ch_versions                 // channel: [ path(versions.yml) ]
 
 }
+
+/* unused processes
+
+// get locus length statistics
+GETLOCUSLENGTH_PROBE ( CLEANHEADERS_PROBE.out.fasta )
+GETLOCUSLENGTH_FULL ( CLEANHEADERS_FULL.out.fasta )
+
+// run QUAST on probe orthologs
+QUAST ( CLEANHEADERS_PROBE.out.fasta, [[id: ch_reference.baseName], ch_reference], [[id: ''], []] )
+// make ortholog index
+SAMTOOLS_FAIDX ( CLEANHEADERS_PROBE.out.fasta, [[], []], false )
+
+*/

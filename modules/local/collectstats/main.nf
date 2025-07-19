@@ -10,12 +10,16 @@ process COLLECTSTATS {
     tuple val(meta2) , path(full_fasta, stageAs: 'full_fasta/*')
     tuple val(meta3), path(coverage_txt, stageAs: 'coverage_txt/*')
     tuple val(meta4), path(kmer_txt, stageAs: 'kmer_txt/*')
+    tuple val(meta5), path(depth_txt, stageAs: 'depth_txt/*')
+    tuple val(meta6), path(fastp_json, stageAs: 'fastp_json/*')
     path(probe_reference)
 
     output:
     tuple val(meta), path('locus_lengths.csv'), emit: locus_lengths
     tuple val(meta), path('mean_mapping_coverage.csv'), emit: mapping_coverage
     tuple val(meta), path('spades_kmer_coverage.csv'), emit: kmer_coverage
+    tuple val(meta), path('pct_at_80_pct_mean_cov.csv'), emit: pct_at_80_pct_mean_cov
+    tuple val(meta), path('pct_on_target.csv'), emit: pct_on_target
 
     when:
     task.ext.when == null || task.ext.when
