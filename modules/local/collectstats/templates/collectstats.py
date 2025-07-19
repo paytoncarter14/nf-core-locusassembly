@@ -82,7 +82,7 @@ with open('mean_mapping_coverage.csv', 'w') as f:
   for sample, loci in mapping_coverages.items():
     counts = []
     for locus in loci_reference:
-      counts.append(loci[locus])
+      counts.append(loci.get(locus, 'NA'))
     f.write(sample + ',' + ','.join(counts) + '\\n')
 
 # ---------------------------- #
@@ -111,7 +111,10 @@ with open('pct_at_80_pct_mean_cov.csv', 'w') as f:
     for sample, loci in depths.items():
       counts = []
       for locus in loci_reference:
-        counts.append(loci[locus]['above_80'] / loci[locus]['length'])
+        if loci.get(locus):
+          counts.append(loci[locus]['above_80'] / loci[locus]['length'])
+        else:
+          counts.append('NA')
       f.write(sample + ',' + ','.join([str(x) for x in counts]) + '\\n')
 
 # ----------------- #
@@ -153,5 +156,5 @@ with open('spades_kmer_coverage.csv', 'w') as f:
   for sample, loci in kmer_coverages.items():
     counts = []
     for locus in loci_reference:
-      counts.append(loci[locus])
+      counts.append(loci.get(locus, 'NA'))
     f.write(sample + ',' + ','.join(counts) + '\\n')
