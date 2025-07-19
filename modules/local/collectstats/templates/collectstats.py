@@ -45,7 +45,6 @@ for full_file in glob.glob('full_fasta/*'):
           locus_lengths[sample_name][locus] = {'probe': None, 'full': None}
         locus_lengths[sample_name][locus]['full'] = len(line)
 
-
 with open('locus_lengths.csv', 'w') as f:
   f.write(f'sample,{",".join(loci_reference)}\\n')
   for sample, loci in locus_lengths.items():
@@ -54,6 +53,8 @@ with open('locus_lengths.csv', 'w') as f:
       c = loci.get(locus)
       if c:
         counts.append(f'{c['probe']}/{c['full']}')
+      else:
+        counts.append('NA/NA')
     f.write(f'{sample},{",".join([str(x) for x in counts])}\\n')
 
 # --------------------- #
