@@ -171,6 +171,14 @@ with open('spades_kmer_coverage.csv', 'w') as f:
 # ------------- #
 
 with open('summary.csv', 'w') as out:
+    out.write('''
+# plot_type: "generalstats"
+# headers:
+#   - Num Loci:
+#       min: 0
+#   - Avg SPAdes kmer Coverage:
+#       min: 0
+'''.strip())
     out.write('Sample,Num Loci,Avg Probe Length,Avg Full Length,Avg SPAdes kmer Coverage,Avg Mapping Coverage,Avg Pct Bases at 80 Pct Mean Coverage,Pct Reads Mapped\\n')
     for probe_file in glob.glob('probe_fasta/*'):
 
