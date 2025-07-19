@@ -45,7 +45,8 @@ for full_file in glob.glob('full_fasta/*'):
                     locus_lengths[sample_name][locus] = {'probe': None, 'full': None}
                 locus_lengths[sample_name][locus]['full'] = len(line)
 
-with open('locus_lengths_probe.csv', 'w') as f:
+with open('locus_lengths_probe_mqc.csv', 'w') as f:
+    f.write('# plot_type: "table"\\n')
     f.write(f'sample,{",".join(loci_reference)}\\n')
     for sample, loci in locus_lengths.items():
         counts = []
@@ -57,7 +58,8 @@ with open('locus_lengths_probe.csv', 'w') as f:
                 counts.append('NA')
         f.write(f'{sample},{",".join([str(x) for x in counts])}\\n')
 
-with open('locus_lengths_full.csv', 'w') as f:
+with open('locus_lengths_full_mqc.csv', 'w') as f:
+    f.write('# plot_type: "table"\\n')
     f.write(f'sample,{",".join(loci_reference)}\\n')
     for sample, loci in locus_lengths.items():
         counts = []
@@ -90,7 +92,8 @@ for file in glob.glob('coverage_txt/*.txt'):
             mapped_reads[sample_name] += int(num_reads)
 
 
-with open('mean_mapping_coverage.csv', 'w') as f:
+with open('mean_mapping_coverage_mqc.csv', 'w') as f:
+    f.write('# plot_type: "table"\\n')
     f.write('sample,' + ','.join(loci_reference) + '\\n')
     for sample, loci in mapping_coverages.items():
         counts = []
@@ -119,7 +122,8 @@ for file in glob.glob('depth_txt/*.tsv'):
                         if cov > mean_cov * 0.8:
                                 depths[sample_name][locus]['above_80'] += 1
 
-with open('pct_at_80_pct_mean_cov.csv', 'w') as f:
+with open('pct_at_80_pct_mean_cov_mqc.csv', 'w') as f:
+        f.write('# plot_type: "table"\\n')
         f.write('sample,' + ','.join(loci_reference) + '\\n')
         for sample, loci in depths.items():
             counts = []
@@ -158,7 +162,8 @@ for file in glob.glob('kmer_txt/*.txt'):
             kmer_coverages[sample_name][locus] = count
 
 
-with open('spades_kmer_coverage.csv', 'w') as f:
+with open('spades_kmer_coverage_mqc.csv', 'w') as f:
+    f.write('# plot_type: "table"\\n')
     f.write('sample,' + ','.join(loci_reference) + '\\n')
     for sample, loci in kmer_coverages.items():
         counts = []
@@ -170,15 +175,14 @@ with open('spades_kmer_coverage.csv', 'w') as f:
 # General stats #
 # ------------- #
 
-with open('summary.csv', 'w') as out:
-    out.write('''
-# plot_type: "generalstats"
+with open('summary_mqc.csv', 'w') as out:
+    out.write('''# plot_type: "generalstats"
 # headers:
 #   - Num Loci:
 #       min: 0
 #   - Avg SPAdes kmer Coverage:
 #       min: 0
-'''.strip())
+''')
     out.write('Sample,Num Loci,Avg Probe Length,Avg Full Length,Avg SPAdes kmer Coverage,Avg Mapping Coverage,Avg Pct Bases at 80 Pct Mean Coverage,Pct Reads Mapped\\n')
     for probe_file in glob.glob('probe_fasta/*'):
 

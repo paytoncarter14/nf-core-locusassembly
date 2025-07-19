@@ -15,10 +15,10 @@ process COLLECTSTATS {
     path(probe_reference)
 
     output:
-    tuple val(meta), path('summary.csv'), emit: summary
-    tuple val(meta), path('mean_mapping_coverage.csv'), emit: mapping_coverage
-    tuple val(meta), path('spades_kmer_coverage.csv'), emit: kmer_coverage
-    tuple val(meta), path('pct_at_80_pct_mean_cov.csv'), emit: pct_at_80_pct_mean_cov
+    tuple val(meta), path('summary_mqc.csv'), emit: summary
+    tuple val(meta), path('mean_mapping_coverage_mqc.csv'), emit: mapping_coverage
+    tuple val(meta), path('spades_kmer_coverage_mqc.csv'), emit: kmer_coverage
+    tuple val(meta), path('pct_at_80_pct_mean_cov_mqc.csv'), emit: pct_at_80_pct_mean_cov
 
     when:
     task.ext.when == null || task.ext.when
