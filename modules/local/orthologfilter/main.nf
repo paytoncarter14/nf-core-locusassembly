@@ -8,11 +8,11 @@ process ORTHOLOGFILTER {
     input:
     tuple val(meta), path(assembly_blast)
     tuple val(meta2), path(probe_blast)
-    
+
 
     output:
-    tuple val(meta), path("*ortho_probe.bed"), emit: probe
-    tuple val(meta), path("*ortho_full.bed"), emit: full
+    tuple val(meta), path("*.ortho_probe.bed"), emit: probe
+    tuple val(meta), path("*.ortho_full.bed"), emit: full
     path "versions.yml"           , emit: versions
 
     when:
@@ -27,7 +27,7 @@ process ORTHOLOGFILTER {
         --probe_blast ${probe_blast} \\
         --assembly_blast ${assembly_blast} \\
         --output_prefix ${prefix}
-    
+
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
         orthologfilter: \$(python3 --version | sed 's/Python //g')

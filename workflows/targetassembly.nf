@@ -25,10 +25,10 @@ include { BITSCOREFILTER                               } from '../modules/local/
 include { BEDTOOLS_GETFASTA                            } from '../modules/nf-core/bedtools/getfasta/main'
 include { BLAST_TBLASTX as BLAST_TBLASTX2              } from '../modules/local/blast/tblastx/main'
 include { ORTHOLOGFILTER                               } from '../modules/local/orthologfilter/main'
-include { BEDTOOLS_GETFASTA as ORTHOLOGS_PROBEGETFASTA } from '../modules/nf-core/bedtools/getfasta/main'
-include { BEDTOOLS_GETFASTA as ORTHOLOGS_FULLGETFASTA  } from '../modules/nf-core/bedtools/getfasta/main'
-include { CLEANHEADERS as CLEANHEADERS_PROBE           } from '../modules/local/cleanheaders/main'
-include { CLEANHEADERS as CLEANHEADERS_FULL            } from '../modules/local/cleanheaders/main'
+include { BEDTOOLS_GETFASTA as GETORTHOLOGS_PROBE      } from '../modules/nf-core/bedtools/getfasta/main'
+include { BEDTOOLS_GETFASTA as GETORTHOLOGS_FULL       } from '../modules/nf-core/bedtools/getfasta/main'
+include { CLEANHEADERS                                 } from '../modules/local/cleanheaders/main'
+include { GATHERSTATS                                  } from '../modules/local/gatherstats/main'
 
 workflow TARGETASSEMBLY {
 
@@ -56,7 +56,7 @@ workflow TARGETASSEMBLY {
     GNU_SORT (BLAST_BLASTN.out.txt)
     ch_versions = ch_versions.mix(GNU_SORT.out.versions)
 
-    // filter adapters, gather sequencing qc with fastp
+    // filter reads, gather sequencing qc with fastp
     FASTP (ch_samplesheet, [], false, false, false)
     ch_versions = ch_versions.mix(FASTP.out.versions)
 
@@ -107,22 +107,17 @@ workflow TARGETASSEMBLY {
     ch_versions = ch_versions.mix(ORTHOLOGFILTER.out.versions)
 
     // pull full and probe orthologs
-    probe_together = ORTHOLOGFILTER.out.probe.join(VSEARCH_CLUSTER.out.centroids)
-    full_together = ORTHOLOGFILTER.out.full.join(VSEARCH_CLUSTER.out.centroids)
-    ORTHOLOGS_PROBEGETFASTA ( probe_together.map{it[0..1]}, probe_together.map{it[2]} )
-    ORTHOLOGS_FULLGETFASTA ( full_together.map{it[0..1]}, full_together.map{it[2]} )
-    ch_versions = ch_versions.mix(ORTHOLOGS_PROBEGETFASTA.out.versions)
-    ch_versions = ch_versions.mix(ORTHOLOGS_FULLGETFASTA.out.versions)
+    full_input = ORTHOLOGFILTER.out.full.join(VSEARCH_CLUSTER.out.centroids)
+    probe_input = ORTHOLOGFILTER.out.probe.join(VSEARCH_CLUSTER.out.centroids)
+    GETORTHOLOGS_FULL ( full_input.map{it[0..1]}, full_input.map{it[2]} )
+    GETORTHOLOGS_PROBE ( probe_input.map{it[0..1]}, probe_input.map{it[2]} )
 
     // remove spades information and keep only locus name in fasta headers
-    CLEANHEADERS_PROBE ( ORTHOLOGS_PROBEGETFASTA.out.fasta )
-    CLEANHEADERS_FULL ( ORTHOLOGS_FULLGETFASTA.out.fasta )
-    ch_versions = ch_versions.mix(CLEANHEADERS_PROBE.out.versions)
-    ch_versions = ch_versions.mix(CLEANHEADERS_FULL.out.versions)
+    // collect some stats as well
+    CLEANHEADERS ( GETORTHOLOGS_FULL.out.fasta.mix(GETORTHOLOGS_PROBE.out.fasta) )
 
-    /* ------------
-    Quality control
-    ------------ */
+    GATHERSTATS ( CLEANHEADERS.out.general.collect().map{[[id: 'all_samples'], it]} )
+    // compile general stats
 
     // Collate and save software versions
     softwareVersionsToYAML(ch_versions)
