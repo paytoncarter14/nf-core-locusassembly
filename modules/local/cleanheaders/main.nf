@@ -58,7 +58,7 @@ open('${prefix}.stats.summary.csv', 'w') as general_output:
         else:
             sequence = line
             fasta_output.write('>' + locus + '\\n')
-            fasta_output.write(sequence)
+            fasta_output.write(sequence + '\\n')
 
             probe_length = len(sequence)
             probe_length_output.write(locus + ',' + str(probe_length) + '\\n')
