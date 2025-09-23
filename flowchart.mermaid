@@ -1,0 +1,19 @@
+flowchart TD
+    A(sample .fastq) -->|"assembly (SPAdes)"| B(scaffold .fasta)
+    B -->|"collapse and sort (vsearch)"| C(collapsed, sorted scaffold .fasta)
+    C -->|"make blast db (ncbi blast)"| D(scaffold .db)
+    D -->|"tblastx db (ncbi blast)"| E(probe/scaffold .blast6)
+    F(probe sequences .fasta) -->|"tblastx query (ncbi blast)"| E
+    E -->|"discard hits with bitscore under 80% of each probe's top bitscore (sort/awk)"| G(bitscore-filtered probe/scaffold .blast6)
+    G -->|"transform blast6 to bed (awk)"| H(probe/scaffold .bed)
+    H -->|"pull regions from scaffolds with probe hits (bedtools)"| I(putative orthologs .fasta)
+    I -->|"tblastx query"| J
+    M(reference genome .fasta) -->|"make blast db"| L
+    L(reference genome .db) -->|"tblastx db"| J
+    C --> I
+    J(putative ortholog/reference genome .blast6) -->|"keep only top hit per probe/scaffold by bitscore (sort)"| K(top putative ortholog/reference genome .blast6)
+    F -->|blastn query| N(probe/reference genome .blast6)
+    L -->|blastn db| N
+    I --> O
+    N -->|"filter orthologs that match probe hit coordinates to reference (python)"| O
+    K --> O(orthologs .fasta)
