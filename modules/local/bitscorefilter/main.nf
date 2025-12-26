@@ -1,13 +1,11 @@
-// TODO: gnu cut version (`cut --version` doesn't work)
-
 process BITSCOREFILTER {
     tag "$meta.id"
     label 'process_single'
 
     conda "${moduleDir}/environment.yml"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/python:3.12':
-        'biocontainers/python:3.12' }"
+        'https://depot.galaxyproject.org/singularity/coreutils:9.3':
+        'biocontainers/coreutils:9.3' }"
 
     input:
     tuple val(meta), path(txt)
@@ -33,6 +31,7 @@ process BITSCOREFILTER {
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
         sort: \$(sort --version | sed -n 's/sort (GNU coreutils) \\(.*\\)\$/\\1/p')
+        cut: \$(cut --version | sed -n 's/cut (GNU coreutils) \\(.*\\)\$/\\1/p')
         awk: \$(awk --version | sed -e '1!d' -e 's/,.*\$//' -e 's/GNU Awk //')
     END_VERSIONS
     """

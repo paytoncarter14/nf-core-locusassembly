@@ -3,12 +3,13 @@ process ORTHOLOGFILTER {
     label 'process_single'
 
     conda "${moduleDir}/environment.yml"
-    container 'biocontainers/python:3.12'
+    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
+        'https://depot.galaxyproject.org/singularity/python:3.12':
+        'biocontainers/python:3.12' }"
 
     input:
     tuple val(meta), path(assembly_blast)
     tuple val(meta2), path(probe_blast)
-
 
     output:
     tuple val(meta), path("*.ortho_probe.bed"), emit: probe
