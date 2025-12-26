@@ -20,19 +20,9 @@ process ORTHOLOGFILTER {
 
     script:
     def args = task.ext.args ?: ''
-    def prefix = task.ext.prefix ?: "${meta.id}"
+    prefix = task.ext.prefix ?: "${meta.id}"
 
-    """
-    orthologfilter.py \\
-        --probe_blast ${probe_blast} \\
-        --assembly_blast ${assembly_blast} \\
-        --output_prefix ${prefix}
-
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        orthologfilter: \$(python3 --version | sed 's/Python //g')
-    END_VERSIONS
-    """
+    template "orthologfilter.py"
 
     stub:
     def args = task.ext.args ?: ''
