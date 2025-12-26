@@ -48,4 +48,5 @@ open('$prefix' + '.stats.summary.csv', 'w') as general_output:
 
 with open('versions.yml', 'w') as f:
     f.write("\"$task.process\":\\n")
-    f.write(f"    orthologfilter: {platform.python_version()}\\n")
+    f.write(f"    python: {platform.python_version()}\\n")
+    f.write(f"    sed: $sed_version")

@@ -34,7 +34,7 @@ process ORTHOLOGFILTER {
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        orthologfilter: \$(python3 --version | sed 's/Python //g')
+        python: \$(python3 --version | sed 's/Python //g')
     END_VERSIONS
     """
 }

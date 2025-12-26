@@ -24,7 +24,8 @@ process CLEANHEADERS {
     script:
     def args = task.ext.args ?: ''
     prefix = task.ext.prefix ?: "${meta.id}"
-    def sed_version = '4.0' // BusyBox sed --version outputs "This is not GNU sed version 4.0"
+    sed_version = '4.0' // BusyBox sed --version outputs "This is not GNU sed version 4.0"
+    def python_version = '3.12.2'
     if ("${fasta}" == "${prefix}.fasta") error "Input and output names are the same, set prefix in module configuration to disambiguate!"
     if ( fasta.name.tokenize('.')[-2] == 'probe_ortho' ) template "cleanheaders.py"
     else
@@ -33,6 +34,7 @@ process CLEANHEADERS {
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
+        python: ${python_version}
         sed: ${sed_version}
     END_VERSIONS
     """
@@ -45,6 +47,7 @@ process CLEANHEADERS {
     touch ${prefix}.orthologs.probe.fasta
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
+        python: ${python_version}
         sed: ${sed_version}
     END_VERSIONS
     """
@@ -53,6 +56,7 @@ process CLEANHEADERS {
     touch ${prefix}.orthologs.full.fasta
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
+        python: ${python_version}
         sed: ${sed_version}
     END_VERSIONS
     """

@@ -21,6 +21,7 @@ process BITSCOREFILTER {
 
     script:
     def prefix = task.ext.prefix ?: "${meta.id}"
+    def coreutils_version = '9.3'
     if ("${txt}" == "${prefix}.txt") error "Input and output names are the same, set prefix in module configuration to disambiguate!"
 
     """
@@ -30,9 +31,7 @@ process BITSCOREFILTER {
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        sort: \$(sort --version | sed -n 's/sort (GNU coreutils) \\(.*\\)\$/\\1/p')
-        cut: \$(cut --version | sed -n 's/cut (GNU coreutils) \\(.*\\)\$/\\1/p')
-        awk: \$(awk --version | sed -e '1!d' -e 's/,.*\$//' -e 's/GNU Awk //')
+        coreutils: ${coreutils_version}
     END_VERSIONS
     """
 
@@ -44,9 +43,8 @@ process BITSCOREFILTER {
     touch ${prefix}.key
 
     cat <<-END_VERSIONS > versions.yml
-    "!{task.process}":
-        sort: \$(sort --version | sed -n 's/sort (GNU coreutils) \\(.*\\)\$/\\1/p')
-        awk: \$(awk --version | sed -e '1!d' -e 's/,.*\$//' -e 's/GNU Awk //')
+    "${task.process}":
+        coreutils: ${coreutils_version}
     END_VERSIONS
     """
 }

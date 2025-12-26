@@ -45,7 +45,7 @@ process BLAST_TBLASTX {
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        blast_tblastx: \$(tblastx -version | sed -n 's/tblastx: \\(.*\\)\$/\\1/p')
+        blast: \$(tblastx -version | sed -n 's/tblastx: \\(.*\\)\$/\\1/p')
     END_VERSIONS
     """
 
@@ -60,7 +60,7 @@ process BLAST_TBLASTX {
     touch ${prefix}.txt
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        blast_tblastx: \$(tblastx -version | sed -n 's/tblastx: \\(.*\\)\$/\\1/p')
+        blast: \$(tblastx -version | sed -n 's/tblastx: \\(.*\\)\$/\\1/p')
     END_VERSIONS
     """
 }
