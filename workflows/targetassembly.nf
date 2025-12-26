@@ -1,13 +1,3 @@
-/* TODO:
-    file endings and prefixes
-    check and lint all local modules
-    biocontainers/python:3.12 is probably a good general container, already used for ORTHOLOGFILTER
-    maybe biocontainers/coreutils:9.3 as well
-    publish tblastx as nf-core module
-    params to skip optional steps of pipeline
-    check if fastqtools sort is necessary
-*/
-
 include { paramsSummaryMap       } from 'plugin/nf-schema'
 include { softwareVersionsToYAML } from '../subworkflows/nf-core/utils_nfcore_pipeline'
 include { methodsDescriptionText } from '../subworkflows/local/utils_nfcore_targetassembly_pipeline'
@@ -33,7 +23,8 @@ include { GATHERSTATS                                  } from '../modules/local/
 workflow TARGETASSEMBLY {
 
     take:
-    ch_samplesheet // channel: samplesheet read in from --input
+    ch_samplesheet
+    
     main:
 
     ch_reference = file(params.reference)
@@ -49,10 +40,12 @@ workflow TARGETASSEMBLY {
     ch_versions = ch_versions.mix(BLAST_MAKEBLASTDB.out.versions)
 
     // blastn probes to reference genome
+    // TODO: test/implement tblastx for more divergent probe sequences
     BLAST_BLASTN ([[id: ch_probes.baseName], ch_probes], BLAST_MAKEBLASTDB.out.db)
     ch_versions = ch_versions.mix(BLAST_BLASTN.out.versions)
 
     // sort probe/reference hits by bitscore and keep only best probe/reference hit by bitscore
+    // TODO: add filter for paralogy, low quality hits
     GNU_SORT (BLAST_BLASTN.out.txt)
     ch_versions = ch_versions.mix(GNU_SORT.out.versions)
 
@@ -69,6 +62,11 @@ workflow TARGETASSEMBLY {
     ch_versions = ch_versions.mix(SPADES.out.versions)
 
     // collapse similar scaffolds
+    // TODO: why did I make this a local module?
+    // Local outputs un-gzipped
+    // I think I did this for my local bitscorefilter module so I wouldn't have to gzip it
+    // But that's bad practice, I'll rewrite to use nf-core module and rewrite
+    // the bitscorefilter module to allow gzipped input
     VSEARCH_CLUSTER (SPADES.out.scaffolds)
     ch_versions = ch_versions.mix(VSEARCH_CLUSTER.out.versions)
 
@@ -102,7 +100,7 @@ workflow TARGETASSEMBLY {
     GNU_SORT2 ( BLAST_TBLASTX2.out.txt )
     ch_versions = ch_versions.mix(GNU_SORT2.out.versions)
 
-    // ortholog filter: make sure putative orthologs intersect the same coordinates as the probe/reference blast
+    // make sure putative orthologs intersect the same coordinates as the probe/reference blast
     ORTHOLOGFILTER ( GNU_SORT2.out.sorted, GNU_SORT.out.sorted )
     ch_versions = ch_versions.mix(ORTHOLOGFILTER.out.versions)
 
@@ -114,10 +112,9 @@ workflow TARGETASSEMBLY {
 
     // remove spades information and keep only locus name in fasta headers
     // collect some stats as well
+    // test
     CLEANHEADERS ( GETORTHOLOGS_FULL.out.fasta.mix(GETORTHOLOGS_PROBE.out.fasta) )
-
     GATHERSTATS ( CLEANHEADERS.out.general.collect().map{[[id: 'all_samples'], it]} )
-    // compile general stats
 
     // Collate and save software versions
     softwareVersionsToYAML(ch_versions)

@@ -23,7 +23,7 @@ process GNU_SORT {
     def prefix      = task.ext.prefix   ?: "${meta.id}"
     suffix          = task.ext.suffix   ?: "${input.extension}"
     output_file     = "${prefix}.${suffix}"
-    def VERSION     = "9.3"             // WARN: Version information not provided by tool on CLI. Please update this string when bumping container versions.
+    def VERSION     = "9.3" // WARN: Version information not provided by tool on CLI. Please update this string when bumping container versions.
     if ("$input" == "$output_file") error "Input and output names are the same, use \"task.ext.prefix\" to disambiguate!"
     """
     sort ${args} ${input} | sort ${args2} > ${output_file}
