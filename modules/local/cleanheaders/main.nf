@@ -3,7 +3,9 @@ process CLEANHEADERS {
     label 'process_single'
 
     conda "${moduleDir}/environment.yml"
-    container 'biocontainers/python:3.12'
+    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
+        'https://depot.galaxyproject.org/singularity/python:3.12':
+        'biocontainers/python:3.12' }"
 
     input:
     tuple val(meta) , path(fasta)
@@ -14,7 +16,7 @@ process CLEANHEADERS {
     path('*.stats.length_full.csv'), emit: full_length, optional: true
     path('*.stats.length_probe.csv'), emit: probe_length, optional: true
     path('*.stats.summary.csv'), emit: general, optional: true
-    // path "versions.yml"             , emit: versions
+    path "versions.yml", emit: versions
 
     when:
     task.ext.when == null || task.ext.when
@@ -22,6 +24,7 @@ process CLEANHEADERS {
     script:
     def args = task.ext.args ?: ''
     prefix = task.ext.prefix ?: "${meta.id}"
+    def sed_version = '4.0' // BusyBox sed --version outputs "This is not GNU sed version 4.0"
     if ("${fasta}" == "${prefix}.fasta") error "Input and output names are the same, set prefix in module configuration to disambiguate!"
     if ( fasta.name.tokenize('.')[-2] == 'probe_ortho' ) template "cleanheaders.py"
     else
@@ -30,7 +33,7 @@ process CLEANHEADERS {
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        sed: \$(sed --version | head -1 | sed 's|sed (GNU sed) ||g')
+        sed: ${sed_version}
     END_VERSIONS
     """
 
@@ -42,7 +45,7 @@ process CLEANHEADERS {
     touch ${prefix}.orthologs.probe.fasta
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        sed: \$(sed --version | head -1 | sed 's|sed (GNU sed) ||g')
+        sed: ${sed_version}
     END_VERSIONS
     """
     else
@@ -50,7 +53,7 @@ process CLEANHEADERS {
     touch ${prefix}.orthologs.full.fasta
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        sed: \$(sed --version | head -1 | sed 's|sed (GNU sed) ||g')
+        sed: ${sed_version}
     END_VERSIONS
     """
 }

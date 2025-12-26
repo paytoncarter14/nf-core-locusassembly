@@ -114,6 +114,7 @@ workflow TARGETASSEMBLY {
     // remove spades information and keep only locus name in fasta headers
     // calculate some stats as well
     CLEANHEADERS ( GETORTHOLOGS_FULL.out.fasta.mix(GETORTHOLOGS_PROBE.out.fasta) )
+    ch_versions = ch_versions.mix(CLEANHEADERS.out.versions)
 
     // collect stats for all samples into summary.csv
     GATHERSTATS ( CLEANHEADERS.out.general.collect().map{[[id: 'all_samples'], it]} )

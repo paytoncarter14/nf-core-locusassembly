@@ -1,7 +1,6 @@
-name: cleanheaders
+name: gatherstats
 channels:
   - conda-forge
   - defaults
 dependencies:
-  - conda-forge::python=3.12
   - conda-forge::coreutils=9.3

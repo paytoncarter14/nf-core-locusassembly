@@ -1,4 +1,4 @@
-name: bitscorefilter
+name: orthologfilter
 channels:
   - conda-forge
   - defaults
