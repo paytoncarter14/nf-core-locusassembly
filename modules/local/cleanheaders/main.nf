@@ -28,6 +28,8 @@ process CLEANHEADERS {
 """
 #!/usr/bin/env python3
 
+import platform
+
 # input fasta:
 # >L1062__tanypteryx_R:105603_P008_WB01_25925147_Calopterygidae_Mnais_andersoni::NODE_36_length_541_cov_29.899177:181-411
 # CTGTCGGATACCGCTGTTATGGATATGATGATTTCCAACTTGCAACAACAAAGGCAAGTGACAGAGCAGCTCAGAAGGGAGGCTGCTATAAAACGTATAAGTGTGTCCCAAGCAGTGCA
@@ -71,17 +73,35 @@ open('${prefix}.stats.summary.csv', 'w') as general_output:
             kmer_coverages.append(kmer_coverage)
 
     general_output.write('${meta.id},' + ','.join([str(round(average(x), 2)) for x in [kmer_coverages, full_lengths, probe_lengths]]) + '\\n')
+
+with open('versions.yml', 'w') as f:
+    f.write("\"$task.process\":\\n")
+    f.write(f"    orthologfilter: {platform.python_version()}\\n")
 """
     else
         """
         sed 's|:.*\$||g' ${fasta} > ${prefix}.orthologs.full.fasta
+
+        cat <<-END_VERSIONS > versions.yml
+        "${task.process}":
+            sed: \$(sed --version | head -1 | sed 's|sed (GNU sed) ||g')
+        END_VERSIONS
         """
 
     stub:
     def args = task.ext.args ?: ''
     def prefix = task.ext.prefix ?: "${meta.id}"
+    if ( fasta.name.tokenize('.')[-2] == 'probe_ortho' )
     """
-    touch ${prefix}.fasta
+    touch ${prefix}.orthologs.probe.fasta
+    cat <<-END_VERSIONS > versions.yml
+    "${task.process}":
+        sed: \$(sed --version | head -1 | sed 's|sed (GNU sed) ||g')
+    END_VERSIONS
+    """
+    else
+    """
+    touch ${prefix}.orthologs.full.fasta
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
         sed: \$(sed --version | head -1 | sed 's|sed (GNU sed) ||g')
