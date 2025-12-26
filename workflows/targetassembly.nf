@@ -8,11 +8,12 @@ include { GNU_SORT                                     } from '../modules/local/
 include { GNU_SORT as GNU_SORT2                        } from '../modules/local/gnu_sort/main'
 include { FASTP                                        } from '../modules/nf-core/fastp/main'
 include { SPADES                                       } from '../modules/nf-core/spades/main'
-include { VSEARCH_CLUSTER                              } from '../modules/local/vsearch/cluster/main'
+include { VSEARCH_CLUSTER                              } from '../modules/nf-core/vsearch/cluster/main'
 include { BLAST_MAKEBLASTDB as BLAST_MAKEBLASTDB2      } from '../modules/nf-core/blast/makeblastdb/main'
 include { BLAST_TBLASTX                                } from '../modules/local/blast/tblastx/main'
 include { BITSCOREFILTER                               } from '../modules/local/bitscorefilter/main'
 include { BEDTOOLS_GETFASTA                            } from '../modules/nf-core/bedtools/getfasta/main'
+include { GUNZIP                                       } from '../modules/nf-core/gunzip/main'
 include { BLAST_TBLASTX as BLAST_TBLASTX2              } from '../modules/local/blast/tblastx/main'
 include { ORTHOLOGFILTER                               } from '../modules/local/orthologfilter/main'
 include { BEDTOOLS_GETFASTA as GETORTHOLOGS_PROBE      } from '../modules/nf-core/bedtools/getfasta/main'
@@ -61,7 +62,7 @@ workflow TARGETASSEMBLY {
     SPADES (FASTP.out.reads.map{[it[0], it[1], [], []]}, [], [])
     ch_versions = ch_versions.mix(SPADES.out.versions)
 
-    // collapse similar scaffolds
+    // collapse similar scaffolds and unzip output
     // TODO: why did I make this a local module?
     // Local outputs un-gzipped
     // I think I did this for my local bitscorefilter module so I wouldn't have to gzip it
@@ -69,6 +70,9 @@ workflow TARGETASSEMBLY {
     // the bitscorefilter module to allow gzipped input
     VSEARCH_CLUSTER (SPADES.out.scaffolds)
     ch_versions = ch_versions.mix(VSEARCH_CLUSTER.out.versions)
+
+    GUNZIP (VSEARCH_CLUSTER.out.centroids)
+    ch_versions = ch_versions.mix(GUNZIP.out.versions)
 
     /* -------------
     Orthology filter
@@ -88,7 +92,7 @@ workflow TARGETASSEMBLY {
     ch_versions = ch_versions.mix(BITSCOREFILTER.out.versions)
 
     // pull regions of scaffold sequences (putative orthologs) that had tblastx probe hits
-    together = BITSCOREFILTER.out.bed.join(VSEARCH_CLUSTER.out.centroids)
+    together = BITSCOREFILTER.out.bed.join(GUNZIP.out.gunzip)
     BEDTOOLS_GETFASTA ( together.map{it[0..1]}, together.map{it[2]} )
     ch_versions = ch_versions.mix(BEDTOOLS_GETFASTA.out.versions)
 
@@ -105,8 +109,8 @@ workflow TARGETASSEMBLY {
     ch_versions = ch_versions.mix(ORTHOLOGFILTER.out.versions)
 
     // pull full and probe orthologs
-    full_input = ORTHOLOGFILTER.out.full.join(VSEARCH_CLUSTER.out.centroids)
-    probe_input = ORTHOLOGFILTER.out.probe.join(VSEARCH_CLUSTER.out.centroids)
+    full_input = ORTHOLOGFILTER.out.full.join(GUNZIP.out.gunzip)
+    probe_input = ORTHOLOGFILTER.out.probe.join(GUNZIP.out.gunzip)
     GETORTHOLOGS_FULL ( full_input.map{it[0..1]}, full_input.map{it[2]} )
     GETORTHOLOGS_PROBE ( probe_input.map{it[0..1]}, probe_input.map{it[2]} )
 
