@@ -21,6 +21,7 @@ open('$prefix' + '.stats.length_full.csv', 'w') as full_length_output, \
 open('$prefix' + '.stats.length_probe.csv', 'w') as probe_length_output, \
 open('$prefix' + '.stats.summary.csv', 'w') as general_output:
     full_lengths, probe_lengths, kmer_coverages = ([] for _ in range(3))
+    locus_count = 0
     for line in fasta_input.readlines():
         line = line.strip()
         if line[0] == '>':
@@ -29,6 +30,7 @@ open('$prefix' + '.stats.summary.csv', 'w') as general_output:
             spades_info = line[3].split('_')
             full_length = int(spades_info[3])
             kmer_coverage = float(spades_info[5])
+            locus_count += 1
         else:
             sequence = line
             fasta_output.write('>' + locus + '\\n')
@@ -44,7 +46,7 @@ open('$prefix' + '.stats.summary.csv', 'w') as general_output:
             kmer_coverage_output.write(locus + ',' + str(round(kmer_coverage, 2)) + '\\n')
             kmer_coverages.append(kmer_coverage)
 
-    general_output.write('$meta.id,' + ','.join([str(round(average(x), 2)) for x in [kmer_coverages, full_lengths, probe_lengths]]) + '\\n')
+    general_output.write('$meta.id,' + str(locus_count) + ',' + ','.join([str(round(average(x), 2)) for x in [kmer_coverages, full_lengths, probe_lengths]]) + '\\n')
 
 with open('versions.yml', 'w') as f:
     f.write("\"$task.process\":\\n")

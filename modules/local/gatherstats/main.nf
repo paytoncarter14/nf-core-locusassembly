@@ -19,7 +19,7 @@ process GATHERSTATS {
     script:
     def coreutils_version = '9.3'
     """
-    echo 'sample,kmer_coverage,full_length,probe_length' > summary.csv
+    echo 'sample,loci,kmer_coverage,full_length,probe_length' > summary.csv
     cat *.stats.summary.csv >> summary.csv
 
     cat <<-END_VERSIONS > versions.yml
