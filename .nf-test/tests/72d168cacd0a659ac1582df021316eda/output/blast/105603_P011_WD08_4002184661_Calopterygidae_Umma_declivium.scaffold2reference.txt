@@ -1,6 +1,0 @@
-L160__tanypteryx_R::NODE_1_length_275_cov_20.424242:1-207	L160__tanypteryx_R	90.385	52	5	0	24	179	3	158	9.52e-35	125
-L160__tanypteryx_R::NODE_1_length_275_cov_20.424242:1-207	L160__tanypteryx_R	68.627	51	16	0	175	23	154	2	9.53e-23	85.4
-L160__tanypteryx_R::NODE_1_length_275_cov_20.424242:1-207	L160__tanypteryx_R	60.000	45	18	0	44	178	23	157	2.90e-20	77.1
-L160__tanypteryx_R::NODE_1_length_275_cov_20.424242:1-207	L160__tanypteryx_R	67.391	46	15	0	179	42	158	21	1.31e-18	71.6
-L160__tanypteryx_R::NODE_1_length_275_cov_20.424242:1-207	L160__tanypteryx_R	59.091	44	18	0	174	43	153	22	2.90e-12	50.6
-L160__tanypteryx_R::NODE_1_length_275_cov_20.424242:1-207	L160__tanypteryx_R	75.000	24	6	0	43	114	22	93	5.92e-09	39.6

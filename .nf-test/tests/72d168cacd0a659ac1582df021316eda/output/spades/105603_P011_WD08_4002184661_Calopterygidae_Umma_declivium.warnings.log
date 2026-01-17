@@ -1,5 +1,0 @@
-
-=== Error correction and assembling warnings:
- * 0:00:00.402     1M / 20M   WARN    General                 (kmer_coverage_model.cpp   : 367)   Failed to determine erroneous kmer threshold. Threshold set to: 0
- * 0:00:00.321     1M / 58M   WARN    General                 (pair_info_count.cpp       : 195)   Estimated mean insert size 165.424 is very small compared to read length 151
-======= Warnings saved to /tmp/nxf.HBaVj0ur0S/warnings.log
