@@ -1,5 +1,5 @@
 nextflow_pipeline {
-
+    
     name "Test pipeline"
     script "../main.nf"
     tag "pipeline"
@@ -9,26 +9,59 @@ nextflow_pipeline {
         when {
             params {
                 outdir = "$outputDir"
+                input  = "${projectDir}/assets/test-data/samplesheet.csv"
+                probes = "https://github.com/paytoncarter14/containers/raw/refs/heads/main/L160__tanypteryx_R_probe.fasta"
+                reference = "https://github.com/paytoncarter14/containers/raw/refs/heads/main/L160__tanypteryx_R_reference.fasta"
             }
         }
 
         then {
+
             // stable_name: All files + folders in ${params.outdir}/ with a stable name
             def stable_name = getAllFilesFromDir(params.outdir, relative: true, includeDir: true, ignore: ['pipeline_info/*.{html,json,txt}'])
+
             // stable_path: All files in ${params.outdir}/ with stable content
-            def stable_path = getAllFilesFromDir(params.outdir, ignoreFile: 'tests/.nftignore')
+            def stable_path = getAllFilesFromDir(params.outdir, include: ['cleanheaders/*.orthologs.*.fasta'], ignoreFile: 'tests/.nftignore')
+
+            // check for stable-ish motif in ortholog output
+            def orthologProbe = path("$outputDir/cleanheaders/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.orthologs.probe.fasta").fasta
+            def orthologFull = path("$outputDir/cleanheaders/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.orthologs.full.fasta").fasta
+            def seqId = "L160__tanypteryx_R"
+            def motif = "GGAATTTTGGTGTAGTTGGCATGATATGCATTCACTGGCAGGGGCCACTAAGATTACAGCAAGGCTATTTAATCTTTGTTGCTGCCCTCATGGCT"
+
             assertAll(
-                { assert workflow.success},
+
+                { assert workflow.success },
+
                 { assert snapshot(
+
                     // Number of successful tasks
                     workflow.trace.succeeded().size(),
+
                     // pipeline versions.yml file for multiqc from which Nextflow version is removed because we tests pipelines on multiple Nextflow versions
-                    removeNextflowVersion("$outputDir/pipeline_info/nf_core_{{ short_name }}_software_mqc_versions.yml"),
+                    // removeNextflowVersion("$outputDir/pipeline_info/nf_core_{{ short_name }}_software_mqc_versions.yml"),
+                    removeNextflowVersion("$outputDir/pipeline_info/nf_core_targetassembly_software_versions.yml"),
+
                     // All stable path name, with a relative path
-                    stable_name,
+                    stable_name
+
                     // All files with stable contents
-                    stable_path
-                ).match() }
+                    // stable_path
+
+                ).match() },
+
+                // make sure only one locus is assembled
+                { assert orthologProbe.size() == 1 },
+                { assert orthologFull.size() == 1},
+
+                // make sure the locus is the expected locus
+                { assert orthologProbe.containsKey(seqId) },
+                { assert orthologFull.containsKey(seqId) },
+
+                // make sure the locus has the expected motif
+                { assert orthologProbe[seqId].contains(motif) },
+                { assert orthologFull[seqId].contains(motif) }
+                
             )
         }
     }

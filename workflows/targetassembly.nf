@@ -4,6 +4,7 @@ include { methodsDescriptionText } from '../subworkflows/local/utils_nfcore_targ
 
 include { BLAST_MAKEBLASTDB                            } from '../modules/nf-core/blast/makeblastdb/main'
 include { BLAST_BLASTN                                 } from '../modules/nf-core/blast/blastn/main'
+include { BLAST_TBLASTX as BLAST_TBLASTXPROBE2REF      } from '../modules/local/blast/tblastx/main'
 include { GNU_SORT                                     } from '../modules/local/gnu_sort/main'
 include { GNU_SORT as GNU_SORT2                        } from '../modules/local/gnu_sort/main'
 include { FASTP                                        } from '../modules/nf-core/fastp/main'
@@ -42,12 +43,19 @@ workflow TARGETASSEMBLY {
 
     // blastn probes to reference genome
     // TODO: test/implement tblastx for more divergent probe sequences
-    BLAST_BLASTN ([[id: ch_probes.baseName], ch_probes], BLAST_MAKEBLASTDB.out.db)
-    ch_versions = ch_versions.mix(BLAST_BLASTN.out.versions)
+    if (params.probe2ref_blast_method == 'blastn') {
+        BLAST_BLASTN ([[id: ch_probes.baseName], ch_probes], BLAST_MAKEBLASTDB.out.db)
+        ch_versions = ch_versions.mix(BLAST_BLASTN.out.versions)
+        probe2ref = BLAST_BLASTN
+    } else if (params.probe2ref_blast_method == 'tblastx') {
+        BLAST_TBLASTXPROBE2REF ([[id: ch_probes.baseName], ch_probes], BLAST_MAKEBLASTDB.out.db)
+        ch_versions = ch_versions.mix(BLAST_TBLASTXPROBE2REF.out.versions)
+        probe2ref = BLAST_TBLASTXPROBE2REF
+    }
 
     // sort probe/reference hits by bitscore and keep only best probe/reference hit by bitscore
     // TODO: add filter for paralogy, low quality hits
-    GNU_SORT (BLAST_BLASTN.out.txt)
+    GNU_SORT (probe2ref.out.txt)
     ch_versions = ch_versions.mix(GNU_SORT.out.versions)
 
     // filter reads, gather sequencing qc with fastp

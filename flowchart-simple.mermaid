@@ -1,0 +1,19 @@
+flowchart LR
+    A["Sample .fastq"]
+    AA["Reference .fasta"]
+    AAA["Probes .fasta"]
+    B["Filter reads<br>(fastp)"]
+    C["Assemble scaffolds<br>(SPAdes)"]
+    D["Collapse scaffolds<br>(vsearch cluster)"]
+    E["Query probes to<br>scaffolds (tblastx)"]
+    F["Pull orthologs from<br>scaffolds (bedtools)"]
+    G["Query orthologs to<br>reference (tblastx)"]
+    H["Query probes to <br>reference (blastn)"]
+    I["Ensure orthologs and<br>probes hit same<br>reference location"]
+    J["Ortholog .fasta"]
+
+A-->B-->C-->D-->E-->F-->G-->I-->J
+AA-->H
+AAA-->H
+AAA-->E
+H-->I

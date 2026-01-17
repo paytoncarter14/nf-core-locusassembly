@@ -1,0 +1,364 @@
+Jan-17 11:03:27.937 [main] DEBUG nextflow.cli.Launcher - $> nextflow -quiet -log /home/pcart14/git/nf-core-targetassembly/.nf-test/tests/72d168cacd0a659ac1582df021316eda/meta/nextflow.log run /home/pcart14/git/nf-core-targetassembly/tests/../main.nf -c /home/pcart14/git/nf-core-targetassembly/nextflow.config -c /home/pcart14/git/nf-core-targetassembly/tests/nextflow.config -params-file /home/pcart14/git/nf-core-targetassembly/.nf-test/tests/72d168cacd0a659ac1582df021316eda/meta/params.json -ansi-log false -profile test,apptainer -with-trace /home/pcart14/git/nf-core-targetassembly/.nf-test/tests/72d168cacd0a659ac1582df021316eda/meta/trace.csv -w /home/pcart14/git/nf-core-targetassembly/.nf-test/tests/72d168cacd0a659ac1582df021316eda/work
+Jan-17 11:03:28.023 [main] INFO  nextflow.cli.CmdRun - N E X T F L O W  ~  version 24.10.4
+Jan-17 11:03:28.047 [main] DEBUG nextflow.plugin.PluginsFacade - Setting up plugin manager > mode=prod; embedded=false; plugins-dir=/home/pcart14/.nextflow/plugins; core-plugins: nf-amazon@2.9.2,nf-azure@1.10.2,nf-cloudcache@0.4.2,nf-codecommit@0.2.2,nf-console@1.1.4,nf-google@1.15.3,nf-tower@1.9.3,nf-wave@1.7.4
+Jan-17 11:03:28.276 [main] INFO  o.pf4j.DefaultPluginStatusProvider - Enabled plugins: []
+Jan-17 11:03:28.278 [main] INFO  o.pf4j.DefaultPluginStatusProvider - Disabled plugins: []
+Jan-17 11:03:28.281 [main] INFO  org.pf4j.DefaultPluginManager - PF4J version 3.12.0 in 'deployment' mode
+Jan-17 11:03:28.295 [main] INFO  org.pf4j.AbstractPluginManager - No plugins
+Jan-17 11:03:28.338 [main] DEBUG nextflow.config.ConfigBuilder - Found config home: /home/pcart14/.nextflow/config
+Jan-17 11:03:28.340 [main] DEBUG nextflow.config.ConfigBuilder - Found config base: /home/pcart14/git/nf-core-targetassembly/nextflow.config
+Jan-17 11:03:28.345 [main] DEBUG nextflow.config.ConfigBuilder - User config file: /home/pcart14/git/nf-core-targetassembly/nextflow.config
+Jan-17 11:03:28.345 [main] DEBUG nextflow.config.ConfigBuilder - User config file: /home/pcart14/git/nf-core-targetassembly/tests/nextflow.config
+Jan-17 11:03:28.347 [main] DEBUG nextflow.config.ConfigBuilder - Parsing config file: /home/pcart14/.nextflow/config
+Jan-17 11:03:28.348 [main] DEBUG nextflow.config.ConfigBuilder - Parsing config file: /home/pcart14/git/nf-core-targetassembly/nextflow.config
+Jan-17 11:03:28.348 [main] DEBUG nextflow.config.ConfigBuilder - Parsing config file: /home/pcart14/git/nf-core-targetassembly/nextflow.config
+Jan-17 11:03:28.348 [main] DEBUG nextflow.config.ConfigBuilder - Parsing config file: /home/pcart14/git/nf-core-targetassembly/tests/nextflow.config
+Jan-17 11:03:28.379 [main] DEBUG n.secret.LocalSecretsProvider - Secrets store: /home/pcart14/.nextflow/secrets/store.json
+Jan-17 11:03:28.382 [main] DEBUG nextflow.secret.SecretsLoader - Discovered secrets providers: [nextflow.secret.LocalSecretsProvider@3a43d133] - activable => nextflow.secret.LocalSecretsProvider@3a43d133
+Jan-17 11:03:28.408 [main] DEBUG nextflow.config.ConfigBuilder - Applying config profile: `test,apptainer`
+Jan-17 11:03:28.826 [main] DEBUG nextflow.config.ConfigBuilder - Applying config profile: `test,apptainer`
+Jan-17 11:03:30.320 [main] DEBUG nextflow.config.ConfigBuilder - Applying config profile: `test,apptainer`
+Jan-17 11:03:30.654 [main] DEBUG nextflow.config.ConfigBuilder - Applying config profile: `test,apptainer`
+Jan-17 11:03:30.667 [main] DEBUG nextflow.config.ConfigBuilder - Available config profiles: [bih, cfc_dev, uzl_omics, ifb_core, embl_hd, denbi_qbic, alice, mjolnir_globe, uppmax, giga, incliva, ilifu, ki_luria, uge, icr_alma, rosalind_uge, lugh, mccleary, unibe_ibu, vai, czbiohub_aws, jax, roslin, iris, tes, scw, unc_longleaf, tigem, tubingen_apg, apollo, ipop_up, vsc_calcua, pdc_kth, ceci_nic5, ccga_cau, humantechnopole, stjude, daisybio, eddie, medair, biowulf, apptainer, bi, bigpurple, adcra, cedars, pawsey_setonix, vsc_kul_uhasselt, pawsey_nimbus, rki, ucl_myriad, utd_ganymede, charliecloud, fred_hutch, seattlechildrens, icr_davros, ceres, arm, munin, rosalind, hasta, cfc, uzh, shu_bmrc, ebi_codon_slurm, ebc, ccga_dx, crick, ku_sund_danhead, marvin, lrz_cm4, shifter, biohpc_gen, mana, mamba, york_viking, unc_lccc, wehi, awsbatch, wustl_htcf, arcc, ceci_dragon2, imperial, maestro, software_license, cannon, genotoul, nci_gadi, abims, eva_grace, janelia, nu_genomics, googlebatch, oist, sahmri, kaust, alliance_canada, mpcdf, leicester, vsc_ugent, create, sage, cambridge, jex, podman, ebi_codon, cheaha, xanadu, nyu_hpc, test, marjorie, computerome, ucd_sonic, seg_globe, mssm, sanger, dkfz, bluebear, pasteur, einstein, ethz_euler, m3c, test_full, imb, ucl_cscluster, tuos_stanage, azurebatch, seadragon, crukmi, csiro_petrichor, qmul_apocrita, wave, docker, engaging, gis, hypatia, psmn, eva, unity, cropdiversityhpc, nygc, fgcz, conda, crg, singularity, mpcdf_viper, pe2, dirac, self_hosted_runner, tufts, uw_hyak_pedslabs, binac2, debug, hki_genie, genouest, cbe, unsw_katana, utd_juno, gitpod, phoenix, seawulf, uod_hpc, fub_curta, lovelace, uct_hpc, aws_tower, binac, fsu_draco]
+Jan-17 11:03:30.674 [main] WARN  nextflow.config.ConfigBuilder - It appears you have never run this project before -- Option `-resume` is ignored
+Jan-17 11:03:30.710 [main] DEBUG nextflow.cli.CmdRun - Applied DSL=2 by global default
+Jan-17 11:03:30.730 [main] INFO  nextflow.cli.CmdRun - Launching `/home/pcart14/git/nf-core-targetassembly/tests/../main.nf` [modest_kare] DSL2 - revision: f2ab51aae3
+Jan-17 11:03:30.731 [main] DEBUG nextflow.plugin.PluginsFacade - Plugins declared=[nf-schema@2.3.0]
+Jan-17 11:03:30.731 [main] DEBUG nextflow.plugin.PluginsFacade - Plugins default=[]
+Jan-17 11:03:30.732 [main] DEBUG nextflow.plugin.PluginsFacade - Plugins resolved requirement=[nf-schema@2.3.0]
+Jan-17 11:03:30.732 [main] DEBUG nextflow.plugin.PluginUpdater - Installing plugin nf-schema version: 2.3.0
+Jan-17 11:03:30.747 [main] INFO  org.pf4j.AbstractPluginManager - Plugin 'nf-schema@2.3.0' resolved
+Jan-17 11:03:30.747 [main] INFO  org.pf4j.AbstractPluginManager - Start plugin 'nf-schema@2.3.0'
+Jan-17 11:03:30.761 [main] DEBUG nextflow.plugin.BasePlugin - Plugin started nf-schema@2.3.0
+Jan-17 11:03:30.815 [main] DEBUG nextflow.Session - Session UUID: 5622e841-6cfa-455e-b05f-64456e293936
+Jan-17 11:03:30.815 [main] DEBUG nextflow.Session - Run name: modest_kare
+Jan-17 11:03:30.816 [main] DEBUG nextflow.Session - Executor pool size: 80
+Jan-17 11:03:30.824 [main] DEBUG nextflow.file.FilePorter - File porter settings maxRetries=3; maxTransfers=50; pollTimeout=null
+Jan-17 11:03:30.830 [main] DEBUG nextflow.util.ThreadPoolBuilder - Creating thread pool 'FileTransfer' minSize=10; maxSize=240; workQueue=LinkedBlockingQueue[10000]; allowCoreThreadTimeout=false
+Jan-17 11:03:30.866 [main] DEBUG nextflow.cli.CmdRun - 
+  Version: 24.10.4 build 5934
+  Created: 20-01-2025 16:47 UTC (09:47 MDT)
+  System: Linux 5.14.0-570.51.1.el9_6.x86_64
+  Runtime: Groovy 4.0.23 on OpenJDK 64-Bit Server VM 17.0.16+8-LTS
+  Encoding: UTF-8 (UTF-8)
+  Process: 979781@login03 [128.187.49.42]
+  CPUs: 80 - Mem: 752.1 GB (299.6 GB) - Swap: 8 GB (8 GB)
+Jan-17 11:03:30.917 [main] DEBUG nextflow.Session - Work-dir: /home/pcart14/git/nf-core-targetassembly/.nf-test/tests/72d168cacd0a659ac1582df021316eda/work [nfs]
+Jan-17 11:03:30.918 [main] DEBUG nextflow.Session - Script base path does not exist or is not a directory: /home/pcart14/git/nf-core-targetassembly/bin
+Jan-17 11:03:30.939 [main] DEBUG nextflow.executor.ExecutorFactory - Extension executors providers=[]
+Jan-17 11:03:30.950 [main] DEBUG nextflow.Session - Observer factory: DefaultObserverFactory
+Jan-17 11:03:30.971 [main] DEBUG nextflow.Session - Observer factory: ValidationObserverFactory
+Jan-17 11:03:31.034 [main] DEBUG nextflow.cache.CacheFactory - Using Nextflow cache factory: nextflow.cache.DefaultCacheFactory
+Jan-17 11:03:31.044 [main] DEBUG nextflow.util.CustomThreadPool - Creating default thread pool > poolSize: 81; maxThreads: 1000
+Jan-17 11:03:31.184 [main] DEBUG nextflow.Session - Session start
+Jan-17 11:03:31.186 [main] DEBUG nextflow.trace.TraceFileObserver - Workflow started -- trace file: /home/pcart14/git/nf-core-targetassembly/.nf-test/tests/72d168cacd0a659ac1582df021316eda/meta/trace.csv
+Jan-17 11:03:31.340 [main] DEBUG nextflow.script.ScriptRunner - > Launching execution
+Jan-17 11:03:31.553 [main] DEBUG nextflow.script.IncludeDef - Loading included plugin extensions with names: [paramsSummaryMap:paramsSummaryMap]; plugin Id: nf-schema
+Jan-17 11:03:32.002 [main] DEBUG nextflow.script.IncludeDef - Loading included plugin extensions with names: [paramsSummaryLog:paramsSummaryLog]; plugin Id: nf-schema
+Jan-17 11:03:32.004 [main] DEBUG nextflow.script.IncludeDef - Loading included plugin extensions with names: [validateParameters:validateParameters]; plugin Id: nf-schema
+Jan-17 11:03:32.006 [main] DEBUG nextflow.script.IncludeDef - Loading included plugin extensions with names: [paramsSummaryMap:paramsSummaryMap]; plugin Id: nf-schema
+Jan-17 11:03:32.007 [main] DEBUG nextflow.script.IncludeDef - Loading included plugin extensions with names: [samplesheetToList:samplesheetToList]; plugin Id: nf-schema
+Jan-17 11:03:33.440 [main] DEBUG nextflow.script.IncludeDef - Loading included plugin extensions with names: [paramsSummaryLog:paramsSummaryLog]; plugin Id: nf-schema
+Jan-17 11:03:33.441 [main] DEBUG nextflow.script.IncludeDef - Loading included plugin extensions with names: [validateParameters:validateParameters]; plugin Id: nf-schema
+Jan-17 11:03:33.443 [main] DEBUG nextflow.script.IncludeDef - Loading included plugin extensions with names: [paramsSummaryMap:paramsSummaryMap]; plugin Id: nf-schema
+Jan-17 11:03:33.444 [main] DEBUG nextflow.script.IncludeDef - Loading included plugin extensions with names: [samplesheetToList:samplesheetToList]; plugin Id: nf-schema
+Jan-17 11:03:33.721 [main] INFO  nextflow.Nextflow - 
+-[2m----------------------------------------------------[0m-
+                                        [0;32m,--.[0;30m/[0;32m,-.[0m
+[0;34m        ___     __   __   __   ___     [0;32m/,-._.--~'[0m
+[0;34m  |\ | |__  __ /  ` /  \ |__) |__         [0;33m}  {[0m
+[0;34m  | \| |       \__, \__/ |  \ |___     [0;32m\`-._,-`-,[0m
+                                        [0;32m`._,._,'[0m
+[0;35m  nf-core/targetassembly 1.0.0dev[0m
+-[2m----------------------------------------------------[0m-
+[1mInput/output options[0m
+  [0;34minput                     : [0;32m/home/pcart14/git/nf-core-targetassembly/assets/test-data/samplesheet.csv[0m
+  [0;34moutdir                    : [0;32m/home/pcart14/git/nf-core-targetassembly/.nf-test/tests/72d168cacd0a659ac1582df021316eda/output[0m
+  [0;34mreference                 : [0;32mhttps://github.com/paytoncarter14/containers/raw/refs/heads/main/L160__tanypteryx_R_reference.fasta[0m
+  [0;34mprobes                    : [0;32mhttps://github.com/paytoncarter14/containers/raw/refs/heads/main/L160__tanypteryx_R_probe.fasta[0m
+
+[1mInstitutional config options[0m
+  [0;34mconfig_profile_name       : [0;32mTest profile[0m
+  [0;34mconfig_profile_description: [0;32mMinimal test dataset to check pipeline function[0m
+
+[1mGeneric options[0m
+  [0;34mtrace_report_suffix       : [0;32m2026-01-17_11-03-30[0m
+
+[1mCore Nextflow options[0m
+  [0;34mrunName                   : [0;32mmodest_kare[0m
+  [0;34mcontainerEngine           : [0;32mapptainer[0m
+  [0;34mlaunchDir                 : [0;32m/home/pcart14/git/nf-core-targetassembly/.nf-test/tests/72d168cacd0a659ac1582df021316eda[0m
+  [0;34mworkDir                   : [0;32m/home/pcart14/git/nf-core-targetassembly/.nf-test/tests/72d168cacd0a659ac1582df021316eda/work[0m
+  [0;34mprojectDir                : [0;32m/home/pcart14/git/nf-core-targetassembly[0m
+  [0;34muserName                  : [0;32mpcart14[0m
+  [0;34mprofile                   : [0;32mtest,apptainer[0m
+  [0;34mconfigFiles               : [0;32m/home/pcart14/.nextflow/config, /home/pcart14/git/nf-core-targetassembly/nextflow.config, /home/pcart14/git/nf-core-targetassembly/nextflow.config, /home/pcart14/git/nf-core-targetassembly/tests/nextflow.config[0m
+
+!! Only displaying parameters that differ from the pipeline defaults !!
+-[2m----------------------------------------------------[0m-
+* The nf-core framework
+    https://doi.org/10.1038/s41587-020-0439-x
+
+* Software dependencies
+    https://github.com/nf-core/targetassembly/blob/master/CITATIONS.md
+
+Jan-17 11:03:33.723 [main] DEBUG n.validation.ValidationExtension - Starting parameters validation
+Jan-17 11:03:33.940 [main] DEBUG nextflow.validation.SchemaEvaluator - Started validating /home/pcart14/git/nf-core-targetassembly/assets/test-data/samplesheet.csv
+Jan-17 11:03:34.841 [main] DEBUG n.file.http.XFileSystemProvider - Remote redirect location: https://raw.githubusercontent.com/paytoncarter14/containers/refs/heads/main/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium_L160__tanypteryx_R_full_R2.fastq.gz
+Jan-17 11:03:34.983 [main] DEBUG n.file.http.XFileSystemProvider - Remote redirect location: https://raw.githubusercontent.com/paytoncarter14/containers/refs/heads/main/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium_L160__tanypteryx_R_full_R2.fastq.gz
+Jan-17 11:03:35.235 [main] DEBUG n.file.http.XFileSystemProvider - Remote redirect location: https://raw.githubusercontent.com/paytoncarter14/containers/refs/heads/main/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium_L160__tanypteryx_R_full_R2.fastq.gz
+Jan-17 11:03:35.480 [main] DEBUG n.file.http.XFileSystemProvider - Remote redirect location: https://raw.githubusercontent.com/paytoncarter14/containers/refs/heads/main/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium_L160__tanypteryx_R_full_R2.fastq.gz
+Jan-17 11:03:35.781 [main] DEBUG n.file.http.XFileSystemProvider - Remote redirect location: https://raw.githubusercontent.com/paytoncarter14/containers/refs/heads/main/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium_L160__tanypteryx_R_full_R1.fastq.gz
+Jan-17 11:03:36.109 [main] DEBUG n.file.http.XFileSystemProvider - Remote redirect location: https://raw.githubusercontent.com/paytoncarter14/containers/refs/heads/main/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium_L160__tanypteryx_R_full_R1.fastq.gz
+Jan-17 11:03:36.419 [main] DEBUG n.file.http.XFileSystemProvider - Remote redirect location: https://raw.githubusercontent.com/paytoncarter14/containers/refs/heads/main/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium_L160__tanypteryx_R_full_R1.fastq.gz
+Jan-17 11:03:36.663 [main] DEBUG n.file.http.XFileSystemProvider - Remote redirect location: https://raw.githubusercontent.com/paytoncarter14/containers/refs/heads/main/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium_L160__tanypteryx_R_full_R1.fastq.gz
+Jan-17 11:03:36.857 [main] DEBUG nextflow.validation.SchemaEvaluator - Validation of file '/home/pcart14/git/nf-core-targetassembly/assets/test-data/samplesheet.csv' passed!
+Jan-17 11:03:36.862 [main] DEBUG n.validation.ValidationExtension - Finishing parameters validation
+Jan-17 11:03:37.006 [main] DEBUG n.file.http.XFileSystemProvider - Remote redirect location: https://raw.githubusercontent.com/paytoncarter14/containers/refs/heads/main/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium_L160__tanypteryx_R_full_R2.fastq.gz
+Jan-17 11:03:37.253 [main] DEBUG n.file.http.XFileSystemProvider - Remote redirect location: https://raw.githubusercontent.com/paytoncarter14/containers/refs/heads/main/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium_L160__tanypteryx_R_full_R2.fastq.gz
+Jan-17 11:03:37.501 [main] DEBUG n.file.http.XFileSystemProvider - Remote redirect location: https://raw.githubusercontent.com/paytoncarter14/containers/refs/heads/main/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium_L160__tanypteryx_R_full_R2.fastq.gz
+Jan-17 11:03:37.744 [main] DEBUG n.file.http.XFileSystemProvider - Remote redirect location: https://raw.githubusercontent.com/paytoncarter14/containers/refs/heads/main/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium_L160__tanypteryx_R_full_R2.fastq.gz
+Jan-17 11:03:38.063 [main] DEBUG n.file.http.XFileSystemProvider - Remote redirect location: https://raw.githubusercontent.com/paytoncarter14/containers/refs/heads/main/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium_L160__tanypteryx_R_full_R1.fastq.gz
+Jan-17 11:03:38.314 [main] DEBUG n.file.http.XFileSystemProvider - Remote redirect location: https://raw.githubusercontent.com/paytoncarter14/containers/refs/heads/main/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium_L160__tanypteryx_R_full_R1.fastq.gz
+Jan-17 11:03:38.560 [main] DEBUG n.file.http.XFileSystemProvider - Remote redirect location: https://raw.githubusercontent.com/paytoncarter14/containers/refs/heads/main/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium_L160__tanypteryx_R_full_R1.fastq.gz
+Jan-17 11:03:38.867 [main] DEBUG n.file.http.XFileSystemProvider - Remote redirect location: https://raw.githubusercontent.com/paytoncarter14/containers/refs/heads/main/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium_L160__tanypteryx_R_full_R1.fastq.gz
+Jan-17 11:03:39.189 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_medium` matches labels `process_medium` for process with name NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:BLAST_MAKEBLASTDB
+Jan-17 11:03:39.192 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:BLAST_MAKEBLASTDB` matches process NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:BLAST_MAKEBLASTDB
+Jan-17 11:03:39.204 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: slurm
+Jan-17 11:03:39.204 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'slurm'
+Jan-17 11:03:39.215 [main] DEBUG nextflow.executor.Executor - [warm up] executor > slurm
+Jan-17 11:03:39.223 [main] DEBUG n.processor.TaskPollingMonitor - Creating task monitor for executor 'slurm' > capacity: 1; pollInterval: 5s; dumpInterval: 5m 
+Jan-17 11:03:39.224 [main] DEBUG n.processor.TaskPollingMonitor - >>> barrier register (monitor: slurm)
+Jan-17 11:03:39.227 [main] DEBUG n.executor.AbstractGridExecutor - Creating executor 'slurm' > queue-stat-interval: 1m
+Jan-17 11:03:39.291 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_medium` matches labels `process_medium` for process with name NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:BLAST_BLASTN
+Jan-17 11:03:39.292 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:BLAST_BLASTN` matches process NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:BLAST_BLASTN
+Jan-17 11:03:39.295 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: slurm
+Jan-17 11:03:39.295 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'slurm'
+Jan-17 11:03:39.309 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_low` matches labels `process_low` for process with name NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:GNU_SORT
+Jan-17 11:03:39.310 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:GNU_SORT` matches process NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:GNU_SORT
+Jan-17 11:03:39.312 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: slurm
+Jan-17 11:03:39.312 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'slurm'
+Jan-17 11:03:39.333 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_medium` matches labels `process_medium` for process with name NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:FASTP
+Jan-17 11:03:39.334 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:FASTP` matches process NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:FASTP
+Jan-17 11:03:39.341 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: slurm
+Jan-17 11:03:39.341 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'slurm'
+Jan-17 11:03:39.364 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_high` matches labels `process_high` for process with name NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:SPADES
+Jan-17 11:03:39.364 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:SPADES` matches process NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:SPADES
+Jan-17 11:03:39.370 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: slurm
+Jan-17 11:03:39.370 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'slurm'
+Jan-17 11:03:39.393 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_low` matches labels `process_low` for process with name NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:VSEARCH_CLUSTER
+Jan-17 11:03:39.394 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:VSEARCH_CLUSTER` matches process NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:VSEARCH_CLUSTER
+Jan-17 11:03:39.399 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: slurm
+Jan-17 11:03:39.399 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'slurm'
+Jan-17 11:03:39.414 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_single` matches labels `process_single` for process with name NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:GUNZIP
+Jan-17 11:03:39.417 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: slurm
+Jan-17 11:03:39.417 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'slurm'
+Jan-17 11:03:39.425 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_medium` matches labels `process_medium` for process with name NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:BLAST_MAKEBLASTDB2
+Jan-17 11:03:39.426 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:BLAST_MAKEBLASTDB` matches process NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:BLAST_MAKEBLASTDB2
+Jan-17 11:03:39.427 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:BLAST_MAKEBLASTDB2` matches process NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:BLAST_MAKEBLASTDB2
+Jan-17 11:03:39.429 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: slurm
+Jan-17 11:03:39.429 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'slurm'
+Jan-17 11:03:39.442 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_medium` matches labels `process_medium` for process with name NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:BLAST_TBLASTX
+Jan-17 11:03:39.443 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:BLAST_TBLASTX` matches process NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:BLAST_TBLASTX
+Jan-17 11:03:39.446 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: slurm
+Jan-17 11:03:39.446 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'slurm'
+Jan-17 11:03:39.459 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_single` matches labels `process_single` for process with name NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:BITSCOREFILTER
+Jan-17 11:03:39.460 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:BITSCOREFILTER` matches process NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:BITSCOREFILTER
+Jan-17 11:03:39.463 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: slurm
+Jan-17 11:03:39.463 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'slurm'
+Jan-17 11:03:39.484 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_single` matches labels `process_single` for process with name NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:BEDTOOLS_GETFASTA
+Jan-17 11:03:39.485 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:BEDTOOLS_GETFASTA` matches process NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:BEDTOOLS_GETFASTA
+Jan-17 11:03:39.488 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: slurm
+Jan-17 11:03:39.488 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'slurm'
+Jan-17 11:03:39.497 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_medium` matches labels `process_medium` for process with name NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:BLAST_TBLASTX2
+Jan-17 11:03:39.497 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:BLAST_TBLASTX` matches process NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:BLAST_TBLASTX2
+Jan-17 11:03:39.498 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:BLAST_TBLASTX2` matches process NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:BLAST_TBLASTX2
+Jan-17 11:03:39.501 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: slurm
+Jan-17 11:03:39.501 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'slurm'
+Jan-17 11:03:39.510 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_low` matches labels `process_low` for process with name NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:GNU_SORT2
+Jan-17 11:03:39.511 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:GNU_SORT` matches process NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:GNU_SORT2
+Jan-17 11:03:39.512 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:GNU_SORT2` matches process NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:GNU_SORT2
+Jan-17 11:03:39.515 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: slurm
+Jan-17 11:03:39.515 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'slurm'
+Jan-17 11:03:39.527 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_single` matches labels `process_single` for process with name NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:ORTHOLOGFILTER
+Jan-17 11:03:39.531 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: slurm
+Jan-17 11:03:39.531 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'slurm'
+Jan-17 11:03:39.547 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_single` matches labels `process_single` for process with name NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:GETORTHOLOGS_FULL
+Jan-17 11:03:39.548 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:BEDTOOLS_GETFASTA` matches process NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:GETORTHOLOGS_FULL
+Jan-17 11:03:39.549 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:GETORTHOLOGS_FULL` matches process NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:GETORTHOLOGS_FULL
+Jan-17 11:03:39.551 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: slurm
+Jan-17 11:03:39.552 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'slurm'
+Jan-17 11:03:39.561 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_single` matches labels `process_single` for process with name NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:GETORTHOLOGS_PROBE
+Jan-17 11:03:39.564 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:BEDTOOLS_GETFASTA` matches process NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:GETORTHOLOGS_PROBE
+Jan-17 11:03:39.565 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:GETORTHOLOGS_PROBE` matches process NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:GETORTHOLOGS_PROBE
+Jan-17 11:03:39.568 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: slurm
+Jan-17 11:03:39.568 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'slurm'
+Jan-17 11:03:39.586 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_single` matches labels `process_single` for process with name NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:CLEANHEADERS
+Jan-17 11:03:39.589 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: slurm
+Jan-17 11:03:39.589 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'slurm'
+Jan-17 11:03:39.607 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withLabel:process_single` matches labels `process_single` for process with name NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:GATHERSTATS
+Jan-17 11:03:39.610 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: slurm
+Jan-17 11:03:39.610 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'slurm'
+Jan-17 11:03:39.656 [main] DEBUG nextflow.Session - Config process names validation disabled as requested
+Jan-17 11:03:39.658 [main] DEBUG nextflow.Session - Igniting dataflow network (22)
+Jan-17 11:03:39.659 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:BLAST_MAKEBLASTDB
+Jan-17 11:03:39.660 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:BLAST_BLASTN
+Jan-17 11:03:39.660 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:GNU_SORT
+Jan-17 11:03:39.660 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:FASTP
+Jan-17 11:03:39.661 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:SPADES
+Jan-17 11:03:39.661 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:VSEARCH_CLUSTER
+Jan-17 11:03:39.661 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:GUNZIP
+Jan-17 11:03:39.661 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:BLAST_MAKEBLASTDB2
+Jan-17 11:03:39.662 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:BLAST_TBLASTX
+Jan-17 11:03:39.662 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:BITSCOREFILTER
+Jan-17 11:03:39.662 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:BEDTOOLS_GETFASTA
+Jan-17 11:03:39.662 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:BLAST_TBLASTX2
+Jan-17 11:03:39.663 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:GNU_SORT2
+Jan-17 11:03:39.663 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:ORTHOLOGFILTER
+Jan-17 11:03:39.663 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:GETORTHOLOGS_FULL
+Jan-17 11:03:39.663 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:GETORTHOLOGS_PROBE
+Jan-17 11:03:39.664 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:CLEANHEADERS
+Jan-17 11:03:39.664 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:GATHERSTATS
+Jan-17 11:03:39.665 [main] DEBUG nextflow.script.ScriptRunner - Parsed script files:
+  Script_023371ad2f5f1a9a: /home/pcart14/git/nf-core-targetassembly/./workflows/../modules/local/gnu_sort/main.nf
+  Script_4f612cfd8c52e8cd: /home/pcart14/git/nf-core-targetassembly/./workflows/../subworkflows/local/utils_nfcore_targetassembly_pipeline/../../nf-core/utils_nextflow_pipeline/main.nf
+  Script_215a636da7ab24a2: /home/pcart14/git/nf-core-targetassembly/./subworkflows/local/utils_nfcore_targetassembly_pipeline/../../nf-core/utils_nfschema_plugin/main.nf
+  Script_f61e3c0f0833bf3c: /home/pcart14/git/nf-core-targetassembly/./workflows/../modules/nf-core/blast/makeblastdb/main.nf
+  Script_facb7c7c7bdfba66: /home/pcart14/git/nf-core-targetassembly/./workflows/../modules/local/cleanheaders/main.nf
+  Script_6165e8d3aa4826e8: /home/pcart14/git/nf-core-targetassembly/main.nf
+  Script_36254b9f1537e387: /home/pcart14/git/nf-core-targetassembly/./subworkflows/local/utils_nfcore_targetassembly_pipeline/main.nf
+  Script_5c4e8d4051efa81e: /home/pcart14/git/nf-core-targetassembly/./workflows/../subworkflows/local/utils_nfcore_targetassembly_pipeline/../../nf-core/utils_nfcore_pipeline/main.nf
+  Script_a780234b47eb3af3: /home/pcart14/git/nf-core-targetassembly/./workflows/../modules/nf-core/gunzip/main.nf
+  Script_9f6ce129b29ed4a5: /home/pcart14/git/nf-core-targetassembly/./workflows/../modules/nf-core/fastp/main.nf
+  Script_9d734ee1e71c461d: /home/pcart14/git/nf-core-targetassembly/./workflows/../modules/local/blast/tblastx/main.nf
+  Script_7d00c67a6902e34b: /home/pcart14/git/nf-core-targetassembly/./workflows/targetassembly.nf
+  Script_ec7a410c4e02eb62: /home/pcart14/git/nf-core-targetassembly/./workflows/../modules/nf-core/spades/main.nf
+  Script_93b68a323c8f5e13: /home/pcart14/git/nf-core-targetassembly/./workflows/../modules/nf-core/blast/blastn/main.nf
+  Script_8a3ea44866dcb6ed: /home/pcart14/git/nf-core-targetassembly/./workflows/../modules/nf-core/bedtools/getfasta/main.nf
+  Script_3e1b64ac681f83ec: /home/pcart14/git/nf-core-targetassembly/./workflows/../modules/nf-core/vsearch/cluster/main.nf
+  Script_889c9f28821f9229: /home/pcart14/git/nf-core-targetassembly/./workflows/../modules/local/bitscorefilter/main.nf
+  Script_1d5ddc3490d0bd1e: /home/pcart14/git/nf-core-targetassembly/./workflows/../modules/local/gatherstats/main.nf
+  Script_e0fb6799b0316727: /home/pcart14/git/nf-core-targetassembly/./workflows/../modules/local/orthologfilter/main.nf
+Jan-17 11:03:39.665 [main] DEBUG nextflow.script.ScriptRunner - > Awaiting termination 
+Jan-17 11:03:39.665 [main] DEBUG nextflow.Session - Session await
+Jan-17 11:03:39.762 [Actor Thread 79] DEBUG n.file.http.XFileSystemProvider - Remote redirect location: https://raw.githubusercontent.com/paytoncarter14/containers/refs/heads/main/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium_L160__tanypteryx_R_full_R1.fastq.gz
+Jan-17 11:03:40.088 [Actor Thread 81] DEBUG n.file.http.XFileSystemProvider - Remote redirect location: https://raw.githubusercontent.com/paytoncarter14/containers/refs/heads/main/L160__tanypteryx_R_reference.fasta
+Jan-17 11:03:40.482 [Actor Thread 79] DEBUG n.file.http.XFileSystemProvider - Remote redirect location: https://raw.githubusercontent.com/paytoncarter14/containers/refs/heads/main/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium_L160__tanypteryx_R_full_R2.fastq.gz
+Jan-17 11:03:40.675 [FileTransfer-1] DEBUG nextflow.file.FilePorter - Copying foreign file https://github.com/paytoncarter14/containers/raw/refs/heads/main/L160__tanypteryx_R_reference.fasta to work dir: /home/pcart14/git/nf-core-targetassembly/.nf-test/tests/72d168cacd0a659ac1582df021316eda/work/stage-5622e841-6cfa-455e-b05f-64456e293936/4f/310be37e524a2e1229345d5a850956/L160__tanypteryx_R_reference.fasta
+Jan-17 11:03:40.675 [FileTransfer-2] DEBUG nextflow.file.FilePorter - Copying foreign file https://github.com/paytoncarter14/containers/raw/refs/heads/main/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium_L160__tanypteryx_R_full_R1.fastq.gz to work dir: /home/pcart14/git/nf-core-targetassembly/.nf-test/tests/72d168cacd0a659ac1582df021316eda/work/stage-5622e841-6cfa-455e-b05f-64456e293936/be/3f7ae61a946fe4c758c9b0f31df431/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium_L160__tanypteryx_R_full_R1.fastq.gz
+Jan-17 11:03:40.675 [FileTransfer-3] DEBUG nextflow.file.FilePorter - Copying foreign file https://github.com/paytoncarter14/containers/raw/refs/heads/main/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium_L160__tanypteryx_R_full_R2.fastq.gz to work dir: /home/pcart14/git/nf-core-targetassembly/.nf-test/tests/72d168cacd0a659ac1582df021316eda/work/stage-5622e841-6cfa-455e-b05f-64456e293936/cb/4f920b589b7e3c907f1a9d5420f4ae/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium_L160__tanypteryx_R_full_R2.fastq.gz
+Jan-17 11:03:40.733 [FileTransfer-1] DEBUG n.file.http.XFileSystemProvider - Remote redirect location: https://raw.githubusercontent.com/paytoncarter14/containers/refs/heads/main/L160__tanypteryx_R_reference.fasta
+Jan-17 11:03:40.861 [FileTransfer-3] DEBUG n.file.http.XFileSystemProvider - Remote redirect location: https://raw.githubusercontent.com/paytoncarter14/containers/refs/heads/main/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium_L160__tanypteryx_R_full_R2.fastq.gz
+Jan-17 11:03:41.281 [FileTransfer-1] DEBUG n.file.http.XFileSystemProvider - Remote redirect location: https://raw.githubusercontent.com/paytoncarter14/containers/refs/heads/main/L160__tanypteryx_R_reference.fasta
+Jan-17 11:03:41.281 [FileTransfer-2] DEBUG n.file.http.XFileSystemProvider - Remote redirect location: https://raw.githubusercontent.com/paytoncarter14/containers/refs/heads/main/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium_L160__tanypteryx_R_full_R1.fastq.gz
+Jan-17 11:03:41.407 [FileTransfer-3] DEBUG n.file.http.XFileSystemProvider - Remote redirect location: https://raw.githubusercontent.com/paytoncarter14/containers/refs/heads/main/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium_L160__tanypteryx_R_full_R2.fastq.gz
+Jan-17 11:03:41.540 [Actor Thread 78] DEBUG nextflow.container.SingularityCache - Apptainer found local store for image=docker://quay.io/biocontainers/blast:2.15.0--pl5321h6f7f691_1; path=/home/pcart14/.apptainer_cache/quay.io-biocontainers-blast-2.15.0--pl5321h6f7f691_1.img
+Jan-17 11:03:41.644 [FileTransfer-2] DEBUG n.file.http.XFileSystemProvider - Remote redirect location: https://raw.githubusercontent.com/paytoncarter14/containers/refs/heads/main/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium_L160__tanypteryx_R_full_R1.fastq.gz
+Jan-17 11:03:41.689 [Actor Thread 68] DEBUG nextflow.container.SingularityCache - Apptainer found local store for image=docker://quay.io/biocontainers/fastp:0.23.4--h5f740d0_0; path=/home/pcart14/.apptainer_cache/quay.io-biocontainers-fastp-0.23.4--h5f740d0_0.img
+Jan-17 11:03:41.883 [Task submitter] DEBUG nextflow.executor.GridTaskHandler - [SLURM] submitted process NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:BLAST_MAKEBLASTDB (L160__tanypteryx_R_reference) > jobId: 9328892; workDir: /home/pcart14/git/nf-core-targetassembly/.nf-test/tests/72d168cacd0a659ac1582df021316eda/work/f3/af56f99ac26a50bef15c06ca640064
+Jan-17 11:03:41.883 [Task submitter] INFO  nextflow.Session - [f3/af56f9] Submitted process > NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:BLAST_MAKEBLASTDB (L160__tanypteryx_R_reference)
+Jan-17 11:04:14.240 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[jobId: 9328892; id: 1; name: NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:BLAST_MAKEBLASTDB (L160__tanypteryx_R_reference); status: COMPLETED; exit: 0; error: -; workDir: /home/pcart14/git/nf-core-targetassembly/.nf-test/tests/72d168cacd0a659ac1582df021316eda/work/f3/af56f99ac26a50bef15c06ca640064 started: 1768673024964; exited: 2026-01-17T18:03:46.184128862Z; ]
+Jan-17 11:04:14.241 [Task monitor] DEBUG nextflow.util.ThreadPoolBuilder - Creating thread pool 'TaskFinalizer' minSize=10; maxSize=240; workQueue=LinkedBlockingQueue[10000]; allowCoreThreadTimeout=false
+Jan-17 11:04:14.382 [TaskFinalizer-1] DEBUG nextflow.util.ThreadPoolBuilder - Creating thread pool 'PublishDir' minSize=10; maxSize=240; workQueue=LinkedBlockingQueue[10000]; allowCoreThreadTimeout=false
+Jan-17 11:04:14.632 [Actor Thread 81] DEBUG n.file.http.XFileSystemProvider - Remote redirect location: https://raw.githubusercontent.com/paytoncarter14/containers/refs/heads/main/L160__tanypteryx_R_probe.fasta
+Jan-17 11:04:14.711 [Task submitter] DEBUG nextflow.executor.GridTaskHandler - [SLURM] submitted process NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:FASTP (105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium) > jobId: 9328896; workDir: /home/pcart14/git/nf-core-targetassembly/.nf-test/tests/72d168cacd0a659ac1582df021316eda/work/38/ac292a3a3738a938097bccda85ad41
+Jan-17 11:04:14.711 [Task submitter] INFO  nextflow.Session - [38/ac292a] Submitted process > NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:FASTP (105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium)
+Jan-17 11:04:14.919 [FileTransfer-4] DEBUG nextflow.file.FilePorter - Copying foreign file https://github.com/paytoncarter14/containers/raw/refs/heads/main/L160__tanypteryx_R_probe.fasta to work dir: /home/pcart14/git/nf-core-targetassembly/.nf-test/tests/72d168cacd0a659ac1582df021316eda/work/stage-5622e841-6cfa-455e-b05f-64456e293936/46/0c76fb138fd98913e42c759897ef63/L160__tanypteryx_R_probe.fasta
+Jan-17 11:04:14.977 [FileTransfer-4] DEBUG n.file.http.XFileSystemProvider - Remote redirect location: https://raw.githubusercontent.com/paytoncarter14/containers/refs/heads/main/L160__tanypteryx_R_probe.fasta
+Jan-17 11:04:15.219 [FileTransfer-4] DEBUG n.file.http.XFileSystemProvider - Remote redirect location: https://raw.githubusercontent.com/paytoncarter14/containers/refs/heads/main/L160__tanypteryx_R_probe.fasta
+Jan-17 11:05:19.238 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[jobId: 9328896; id: 2; name: NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:FASTP (105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium); status: COMPLETED; exit: 0; error: -; workDir: /home/pcart14/git/nf-core-targetassembly/.nf-test/tests/72d168cacd0a659ac1582df021316eda/work/38/ac292a3a3738a938097bccda85ad41 started: 1768673059229; exited: 2026-01-17T18:04:19.870001357Z; ]
+Jan-17 11:05:19.343 [TaskFinalizer-2] DEBUG nextflow.processor.TaskProcessor - Process NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:FASTP > Skipping output binding because one or more optional files are missing: fileoutparam<4:1>
+Jan-17 11:05:19.343 [TaskFinalizer-2] DEBUG nextflow.processor.TaskProcessor - Process NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:FASTP > Skipping output binding because one or more optional files are missing: fileoutparam<5:1>
+Jan-17 11:05:19.358 [Actor Thread 78] DEBUG nextflow.container.SingularityCache - Apptainer found local store for image=docker://quay.io/biocontainers/spades:4.0.0--h5fb382e_1; path=/home/pcart14/.apptainer_cache/quay.io-biocontainers-spades-4.0.0--h5fb382e_1.img
+Jan-17 11:05:19.462 [Task submitter] DEBUG nextflow.executor.GridTaskHandler - [SLURM] submitted process NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:BLAST_BLASTN (L160__tanypteryx_R_probe) > jobId: 9328899; workDir: /home/pcart14/git/nf-core-targetassembly/.nf-test/tests/72d168cacd0a659ac1582df021316eda/work/e0/c6b0349d7f1770ea40c363b87d44d5
+Jan-17 11:05:19.462 [Task submitter] INFO  nextflow.Session - [e0/c6b034] Submitted process > NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:BLAST_BLASTN (L160__tanypteryx_R_probe)
+Jan-17 11:05:24.240 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[jobId: 9328899; id: 3; name: NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:BLAST_BLASTN (L160__tanypteryx_R_probe); status: COMPLETED; exit: 0; error: -; workDir: /home/pcart14/git/nf-core-targetassembly/.nf-test/tests/72d168cacd0a659ac1582df021316eda/work/e0/c6b0349d7f1770ea40c363b87d44d5 started: 1768673124231; exited: 2026-01-17T18:05:21.840298703Z; ]
+Jan-17 11:05:24.258 [Actor Thread 80] DEBUG nextflow.container.SingularityCache - Apptainer found local store for image=docker://quay.io/biocontainers/coreutils:9.3; path=/home/pcart14/.apptainer_cache/quay.io-biocontainers-coreutils-9.3.img
+Jan-17 11:05:24.514 [Task submitter] DEBUG nextflow.executor.GridTaskHandler - [SLURM] submitted process NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:SPADES (105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium) > jobId: 9328903; workDir: /home/pcart14/git/nf-core-targetassembly/.nf-test/tests/72d168cacd0a659ac1582df021316eda/work/1d/306ce7f28308c9693fc1b1c29acc3e
+Jan-17 11:05:24.514 [Task submitter] INFO  nextflow.Session - [1d/306ce7] Submitted process > NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:SPADES (105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium)
+Jan-17 11:05:59.236 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[jobId: 9328903; id: 4; name: NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:SPADES (105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium); status: COMPLETED; exit: 0; error: -; workDir: /home/pcart14/git/nf-core-targetassembly/.nf-test/tests/72d168cacd0a659ac1582df021316eda/work/1d/306ce7f28308c9693fc1b1c29acc3e started: 1768673129232; exited: 2026-01-17T18:05:31.187783515Z; ]
+Jan-17 11:05:59.258 [TaskFinalizer-4] DEBUG nextflow.processor.TaskProcessor - Process NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:SPADES > Skipping output binding because one or more optional files are missing: fileoutparam<2:1>
+Jan-17 11:05:59.258 [TaskFinalizer-4] DEBUG nextflow.processor.TaskProcessor - Process NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:SPADES > Skipping output binding because one or more optional files are missing: fileoutparam<3:1>
+Jan-17 11:05:59.278 [Actor Thread 80] DEBUG nextflow.container.SingularityCache - Apptainer found local store for image=docker://quay.io/biocontainers/mulled-v2-53dae514294fca7b44842b784ed85a5303ac2d80:7b3365d778c690ca79bc85aaaeb86bb39a2dec69-0; path=/home/pcart14/.apptainer_cache/quay.io-biocontainers-mulled-v2-53dae514294fca7b44842b784ed85a5303ac2d80-7b3365d778c690ca79bc85aaaeb86bb39a2dec69-0.img
+Jan-17 11:05:59.501 [Task submitter] DEBUG nextflow.executor.GridTaskHandler - [SLURM] submitted process NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:GNU_SORT (L160__tanypteryx_R_probe) > jobId: 9328904; workDir: /home/pcart14/git/nf-core-targetassembly/.nf-test/tests/72d168cacd0a659ac1582df021316eda/work/4a/d1e85a52e2bae87674e1de0479dd93
+Jan-17 11:05:59.502 [Task submitter] INFO  nextflow.Session - [4a/d1e85a] Submitted process > NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:GNU_SORT (L160__tanypteryx_R_probe)
+Jan-17 11:06:04.239 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[jobId: 9328904; id: 5; name: NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:GNU_SORT (L160__tanypteryx_R_probe); status: COMPLETED; exit: 0; error: -; workDir: /home/pcart14/git/nf-core-targetassembly/.nf-test/tests/72d168cacd0a659ac1582df021316eda/work/4a/d1e85a52e2bae87674e1de0479dd93 started: 1768673164232; exited: 2026-01-17T18:06:01.324401073Z; ]
+Jan-17 11:06:04.459 [Task submitter] DEBUG nextflow.executor.GridTaskHandler - [SLURM] submitted process NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:VSEARCH_CLUSTER (105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium) > jobId: 9328910; workDir: /home/pcart14/git/nf-core-targetassembly/.nf-test/tests/72d168cacd0a659ac1582df021316eda/work/79/8e2a82f6555ac816c039ef932260d0
+Jan-17 11:06:04.460 [Task submitter] INFO  nextflow.Session - [79/8e2a82] Submitted process > NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:VSEARCH_CLUSTER (105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium)
+Jan-17 11:06:09.239 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[jobId: 9328910; id: 6; name: NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:VSEARCH_CLUSTER (105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium); status: COMPLETED; exit: 0; error: -; workDir: /home/pcart14/git/nf-core-targetassembly/.nf-test/tests/72d168cacd0a659ac1582df021316eda/work/79/8e2a82f6555ac816c039ef932260d0 started: 1768673169233; exited: 2026-01-17T18:06:06.802702393Z; ]
+Jan-17 11:06:09.260 [TaskFinalizer-6] DEBUG nextflow.processor.TaskProcessor - Process NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:VSEARCH_CLUSTER > Skipping output binding because one or more optional files are missing: fileoutparam<0:1>
+Jan-17 11:06:09.261 [TaskFinalizer-6] DEBUG nextflow.processor.TaskProcessor - Process NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:VSEARCH_CLUSTER > Skipping output binding because one or more optional files are missing: fileoutparam<1:1>
+Jan-17 11:06:09.261 [TaskFinalizer-6] DEBUG nextflow.processor.TaskProcessor - Process NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:VSEARCH_CLUSTER > Skipping output binding because one or more optional files are missing: fileoutparam<2:1>
+Jan-17 11:06:09.261 [TaskFinalizer-6] DEBUG nextflow.processor.TaskProcessor - Process NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:VSEARCH_CLUSTER > Skipping output binding because one or more optional files are missing: fileoutparam<3:1>
+Jan-17 11:06:09.261 [TaskFinalizer-6] DEBUG nextflow.processor.TaskProcessor - Process NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:VSEARCH_CLUSTER > Skipping output binding because one or more optional files are missing: fileoutparam<4:1>
+Jan-17 11:06:09.261 [TaskFinalizer-6] DEBUG nextflow.processor.TaskProcessor - Process NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:VSEARCH_CLUSTER > Skipping output binding because one or more optional files are missing: fileoutparam<5:1>
+Jan-17 11:06:09.261 [TaskFinalizer-6] DEBUG nextflow.processor.TaskProcessor - Process NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:VSEARCH_CLUSTER > Skipping output binding because one or more optional files are missing: fileoutparam<6:1>
+Jan-17 11:06:09.261 [TaskFinalizer-6] DEBUG nextflow.processor.TaskProcessor - Process NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:VSEARCH_CLUSTER > Skipping output binding because one or more optional files are missing: fileoutparam<7:1>
+Jan-17 11:06:09.261 [TaskFinalizer-6] DEBUG nextflow.processor.TaskProcessor - Process NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:VSEARCH_CLUSTER > Skipping output binding because one or more optional files are missing: fileoutparam<9:1>
+Jan-17 11:06:09.261 [TaskFinalizer-6] DEBUG nextflow.processor.TaskProcessor - Process NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:VSEARCH_CLUSTER > Skipping output binding because one or more optional files are missing: fileoutparam<10:1>
+Jan-17 11:06:09.261 [TaskFinalizer-6] DEBUG nextflow.processor.TaskProcessor - Process NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:VSEARCH_CLUSTER > Skipping output binding because one or more optional files are missing: fileoutparam<11:1>
+Jan-17 11:06:09.269 [Actor Thread 74] DEBUG nextflow.container.SingularityCache - Apptainer found local store for image=docker://community.wave.seqera.io/library/coreutils_grep_gzip_lbzip2_pruned:838ba80435a629f8; path=/home/pcart14/.apptainer_cache/community.wave.seqera.io-library-coreutils_grep_gzip_lbzip2_pruned-838ba80435a629f8.img
+Jan-17 11:06:09.490 [Task submitter] DEBUG nextflow.executor.GridTaskHandler - [SLURM] submitted process NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:BLAST_MAKEBLASTDB2 (105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium) > jobId: 9328911; workDir: /home/pcart14/git/nf-core-targetassembly/.nf-test/tests/72d168cacd0a659ac1582df021316eda/work/0a/ab36ddfa54770d4e907fd9141753c4
+Jan-17 11:06:09.490 [Task submitter] INFO  nextflow.Session - [0a/ab36dd] Submitted process > NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:BLAST_MAKEBLASTDB2 (105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium)
+Jan-17 11:06:14.240 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[jobId: 9328911; id: 7; name: NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:BLAST_MAKEBLASTDB2 (105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium); status: COMPLETED; exit: 0; error: -; workDir: /home/pcart14/git/nf-core-targetassembly/.nf-test/tests/72d168cacd0a659ac1582df021316eda/work/0a/ab36ddfa54770d4e907fd9141753c4 started: 1768673174233; exited: 2026-01-17T18:06:11.857676755Z; ]
+Jan-17 11:06:14.542 [Task submitter] DEBUG nextflow.executor.GridTaskHandler - [SLURM] submitted process NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:GUNZIP (105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.centroids.fasta.gz) > jobId: 9328912; workDir: /home/pcart14/git/nf-core-targetassembly/.nf-test/tests/72d168cacd0a659ac1582df021316eda/work/76/48d9370bcd4f2b0c543bee39cd9e3d
+Jan-17 11:06:14.542 [Task submitter] INFO  nextflow.Session - [76/48d937] Submitted process > NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:GUNZIP (105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.centroids.fasta.gz)
+Jan-17 11:06:14.618 [Actor Thread 81] DEBUG n.file.http.XFileSystemProvider - Remote redirect location: https://raw.githubusercontent.com/paytoncarter14/containers/refs/heads/main/L160__tanypteryx_R_probe.fasta
+Jan-17 11:06:19.238 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[jobId: 9328912; id: 8; name: NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:GUNZIP (105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.centroids.fasta.gz); status: COMPLETED; exit: 0; error: -; workDir: /home/pcart14/git/nf-core-targetassembly/.nf-test/tests/72d168cacd0a659ac1582df021316eda/work/76/48d9370bcd4f2b0c543bee39cd9e3d started: 1768673179232; exited: 2026-01-17T18:06:17.278982214Z; ]
+Jan-17 11:06:19.458 [Task submitter] DEBUG nextflow.executor.GridTaskHandler - [SLURM] submitted process NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:BLAST_TBLASTX (105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium) > jobId: 9328913; workDir: /home/pcart14/git/nf-core-targetassembly/.nf-test/tests/72d168cacd0a659ac1582df021316eda/work/5f/58f1c921cdc661b632d4e0081e5de6
+Jan-17 11:06:19.458 [Task submitter] INFO  nextflow.Session - [5f/58f1c9] Submitted process > NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:BLAST_TBLASTX (105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium)
+Jan-17 11:06:24.242 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[jobId: 9328913; id: 9; name: NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:BLAST_TBLASTX (105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium); status: COMPLETED; exit: 0; error: -; workDir: /home/pcart14/git/nf-core-targetassembly/.nf-test/tests/72d168cacd0a659ac1582df021316eda/work/5f/58f1c921cdc661b632d4e0081e5de6 started: 1768673184232; exited: 2026-01-17T18:06:22.328289207Z; ]
+Jan-17 11:06:24.638 [Task submitter] DEBUG nextflow.executor.GridTaskHandler - [SLURM] submitted process NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:BITSCOREFILTER (105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium) > jobId: 9328914; workDir: /home/pcart14/git/nf-core-targetassembly/.nf-test/tests/72d168cacd0a659ac1582df021316eda/work/15/51039598494c7c91cc7a66ba495534
+Jan-17 11:06:24.638 [Task submitter] INFO  nextflow.Session - [15/510395] Submitted process > NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:BITSCOREFILTER (105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium)
+Jan-17 11:06:29.239 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[jobId: 9328914; id: 10; name: NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:BITSCOREFILTER (105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium); status: COMPLETED; exit: 0; error: -; workDir: /home/pcart14/git/nf-core-targetassembly/.nf-test/tests/72d168cacd0a659ac1582df021316eda/work/15/51039598494c7c91cc7a66ba495534 started: 1768673189233; exited: 2026-01-17T18:06:27.579052622Z; ]
+Jan-17 11:06:29.256 [Actor Thread 75] DEBUG nextflow.container.SingularityCache - Apptainer found local store for image=docker://quay.io/biocontainers/bedtools:2.31.1--hf5e1c6e_0; path=/home/pcart14/.apptainer_cache/quay.io-biocontainers-bedtools-2.31.1--hf5e1c6e_0.img
+Jan-17 11:06:29.508 [Task submitter] DEBUG nextflow.executor.GridTaskHandler - [SLURM] submitted process NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:BEDTOOLS_GETFASTA (105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium) > jobId: 9328915; workDir: /home/pcart14/git/nf-core-targetassembly/.nf-test/tests/72d168cacd0a659ac1582df021316eda/work/c6/103e1f56fe5a41916759908cff35dd
+Jan-17 11:06:29.508 [Task submitter] INFO  nextflow.Session - [c6/103e1f] Submitted process > NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:BEDTOOLS_GETFASTA (105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium)
+Jan-17 11:06:34.238 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[jobId: 9328915; id: 11; name: NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:BEDTOOLS_GETFASTA (105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium); status: COMPLETED; exit: 0; error: -; workDir: /home/pcart14/git/nf-core-targetassembly/.nf-test/tests/72d168cacd0a659ac1582df021316eda/work/c6/103e1f56fe5a41916759908cff35dd started: 1768673194233; exited: 2026-01-17T18:06:31.776801472Z; ]
+Jan-17 11:06:34.460 [Task submitter] DEBUG nextflow.executor.GridTaskHandler - [SLURM] submitted process NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:BLAST_TBLASTX2 (105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium) > jobId: 9328916; workDir: /home/pcart14/git/nf-core-targetassembly/.nf-test/tests/72d168cacd0a659ac1582df021316eda/work/7a/29a887a9467647ba69cf851fe3ba94
+Jan-17 11:06:34.461 [Task submitter] INFO  nextflow.Session - [7a/29a887] Submitted process > NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:BLAST_TBLASTX2 (105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium)
+Jan-17 11:06:39.240 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[jobId: 9328916; id: 12; name: NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:BLAST_TBLASTX2 (105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium); status: COMPLETED; exit: 0; error: -; workDir: /home/pcart14/git/nf-core-targetassembly/.nf-test/tests/72d168cacd0a659ac1582df021316eda/work/7a/29a887a9467647ba69cf851fe3ba94 started: 1768673199232; exited: 2026-01-17T18:06:36.716590928Z; ]
+Jan-17 11:06:39.462 [Task submitter] DEBUG nextflow.executor.GridTaskHandler - [SLURM] submitted process NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:GNU_SORT2 (105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium) > jobId: 9328917; workDir: /home/pcart14/git/nf-core-targetassembly/.nf-test/tests/72d168cacd0a659ac1582df021316eda/work/cc/28371aa1ad2a1c7959d5a5fa91323a
+Jan-17 11:06:39.463 [Task submitter] INFO  nextflow.Session - [cc/28371a] Submitted process > NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:GNU_SORT2 (105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium)
+Jan-17 11:06:44.238 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[jobId: 9328917; id: 13; name: NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:GNU_SORT2 (105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium); status: COMPLETED; exit: 0; error: -; workDir: /home/pcart14/git/nf-core-targetassembly/.nf-test/tests/72d168cacd0a659ac1582df021316eda/work/cc/28371aa1ad2a1c7959d5a5fa91323a started: 1768673204233; exited: 2026-01-17T18:06:41.449833704Z; ]
+Jan-17 11:06:44.281 [Actor Thread 75] DEBUG nextflow.container.SingularityCache - Apptainer found local store for image=docker://quay.io/biocontainers/python:3.12; path=/home/pcart14/.apptainer_cache/quay.io-biocontainers-python-3.12.img
+Jan-17 11:06:44.517 [Task submitter] DEBUG nextflow.executor.GridTaskHandler - [SLURM] submitted process NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:ORTHOLOGFILTER (105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium) > jobId: 9328922; workDir: /home/pcart14/git/nf-core-targetassembly/.nf-test/tests/72d168cacd0a659ac1582df021316eda/work/d8/050be5d6001c8b55f3d23e80e6b764
+Jan-17 11:06:44.517 [Task submitter] INFO  nextflow.Session - [d8/050be5] Submitted process > NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:ORTHOLOGFILTER (105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium)
+Jan-17 11:06:49.239 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[jobId: 9328922; id: 14; name: NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:ORTHOLOGFILTER (105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium); status: COMPLETED; exit: 0; error: -; workDir: /home/pcart14/git/nf-core-targetassembly/.nf-test/tests/72d168cacd0a659ac1582df021316eda/work/d8/050be5d6001c8b55f3d23e80e6b764 started: 1768673209233; exited: 2026-01-17T18:06:47.699826937Z; ]
+Jan-17 11:06:49.470 [Task submitter] DEBUG nextflow.executor.GridTaskHandler - [SLURM] submitted process NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:GETORTHOLOGS_PROBE (105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium) > jobId: 9328924; workDir: /home/pcart14/git/nf-core-targetassembly/.nf-test/tests/72d168cacd0a659ac1582df021316eda/work/de/376130bc3bcfd1e5df92212f6e4864
+Jan-17 11:06:49.471 [Task submitter] INFO  nextflow.Session - [de/376130] Submitted process > NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:GETORTHOLOGS_PROBE (105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium)
+Jan-17 11:06:54.241 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[jobId: 9328924; id: 15; name: NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:GETORTHOLOGS_PROBE (105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium); status: COMPLETED; exit: 0; error: -; workDir: /home/pcart14/git/nf-core-targetassembly/.nf-test/tests/72d168cacd0a659ac1582df021316eda/work/de/376130bc3bcfd1e5df92212f6e4864 started: 1768673214233; exited: 2026-01-17T18:06:51.575672462Z; ]
+Jan-17 11:06:54.514 [Task submitter] DEBUG nextflow.executor.GridTaskHandler - [SLURM] submitted process NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:GETORTHOLOGS_FULL (105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium) > jobId: 9328925; workDir: /home/pcart14/git/nf-core-targetassembly/.nf-test/tests/72d168cacd0a659ac1582df021316eda/work/c4/b2dd1611dd14840bc405a15e7d05ad
+Jan-17 11:06:54.515 [Task submitter] INFO  nextflow.Session - [c4/b2dd16] Submitted process > NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:GETORTHOLOGS_FULL (105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium)
+Jan-17 11:06:59.241 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[jobId: 9328925; id: 16; name: NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:GETORTHOLOGS_FULL (105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium); status: COMPLETED; exit: 0; error: -; workDir: /home/pcart14/git/nf-core-targetassembly/.nf-test/tests/72d168cacd0a659ac1582df021316eda/work/c4/b2dd1611dd14840bc405a15e7d05ad started: 1768673219234; exited: 2026-01-17T18:06:56.815036197Z; ]
+Jan-17 11:06:59.454 [Task submitter] DEBUG nextflow.executor.GridTaskHandler - [SLURM] submitted process NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:CLEANHEADERS (105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium) > jobId: 9328926; workDir: /home/pcart14/git/nf-core-targetassembly/.nf-test/tests/72d168cacd0a659ac1582df021316eda/work/62/81d319dce7b7dfa0db400bbc4d3589
+Jan-17 11:06:59.455 [Task submitter] INFO  nextflow.Session - [62/81d319] Submitted process > NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:CLEANHEADERS (105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium)
+Jan-17 11:07:04.242 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[jobId: 9328926; id: 17; name: NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:CLEANHEADERS (105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium); status: COMPLETED; exit: 0; error: -; workDir: /home/pcart14/git/nf-core-targetassembly/.nf-test/tests/72d168cacd0a659ac1582df021316eda/work/62/81d319dce7b7dfa0db400bbc4d3589 started: 1768673224235; exited: 2026-01-17T18:07:01.00742336Z; ]
+Jan-17 11:07:04.471 [Task submitter] DEBUG nextflow.executor.GridTaskHandler - [SLURM] submitted process NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:CLEANHEADERS (105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium) > jobId: 9328927; workDir: /home/pcart14/git/nf-core-targetassembly/.nf-test/tests/72d168cacd0a659ac1582df021316eda/work/73/10ad2ae493bb73c3335b27e5063875
+Jan-17 11:07:04.472 [Task submitter] INFO  nextflow.Session - [73/10ad2a] Submitted process > NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:CLEANHEADERS (105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium)
+Jan-17 11:07:09.242 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[jobId: 9328927; id: 18; name: NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:CLEANHEADERS (105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium); status: COMPLETED; exit: 0; error: -; workDir: /home/pcart14/git/nf-core-targetassembly/.nf-test/tests/72d168cacd0a659ac1582df021316eda/work/73/10ad2ae493bb73c3335b27e5063875 started: 1768673229236; exited: 2026-01-17T18:07:07.103571265Z; ]
+Jan-17 11:07:09.253 [TaskFinalizer-8] DEBUG nextflow.processor.TaskProcessor - Process NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:CLEANHEADERS > Skipping output binding because one or more optional files are missing: fileoutparam<1>
+Jan-17 11:07:09.254 [TaskFinalizer-8] DEBUG nextflow.processor.TaskProcessor - Process NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:CLEANHEADERS > Skipping output binding because one or more optional files are missing: fileoutparam<2>
+Jan-17 11:07:09.254 [TaskFinalizer-8] DEBUG nextflow.processor.TaskProcessor - Process NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:CLEANHEADERS > Skipping output binding because one or more optional files are missing: fileoutparam<3>
+Jan-17 11:07:09.254 [TaskFinalizer-8] DEBUG nextflow.processor.TaskProcessor - Process NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:CLEANHEADERS > Skipping output binding because one or more optional files are missing: fileoutparam<4>
+Jan-17 11:07:09.284 [Actor Thread 77] DEBUG nextflow.sort.BigSort - Sort completed -- entries: 18; slices: 1; internal sort time: 0.019 s; external sort time: 0.003 s; total time: 0.022 s
+Jan-17 11:07:09.326 [Actor Thread 77] DEBUG nextflow.file.FileCollector - Saved collect-files list to: /home/pcart14/git/nf-core-targetassembly/.nf-test/tests/72d168cacd0a659ac1582df021316eda/work/collect-file/2be9d665bd0643b6a1da4d3fa6e53b08
+Jan-17 11:07:09.333 [Actor Thread 77] DEBUG nextflow.file.FileCollector - Deleting file collector temp dir: /tmp/nxf-6078861343636479007
+Jan-17 11:07:09.487 [Task submitter] DEBUG nextflow.executor.GridTaskHandler - [SLURM] submitted process NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:GATHERSTATS (all_samples) > jobId: 9328928; workDir: /home/pcart14/git/nf-core-targetassembly/.nf-test/tests/72d168cacd0a659ac1582df021316eda/work/f1/b2c23d6f8849c1946039cd5e837027
+Jan-17 11:07:09.487 [Task submitter] INFO  nextflow.Session - [f1/b2c23d] Submitted process > NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:GATHERSTATS (all_samples)
+Jan-17 11:07:14.242 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[jobId: 9328928; id: 19; name: NFCORE_TARGETASSEMBLY:TARGETASSEMBLY:GATHERSTATS (all_samples); status: COMPLETED; exit: 0; error: -; workDir: /home/pcart14/git/nf-core-targetassembly/.nf-test/tests/72d168cacd0a659ac1582df021316eda/work/f1/b2c23d6f8849c1946039cd5e837027 started: 1768673234236; exited: 2026-01-17T18:07:11.346861517Z; ]
+Jan-17 11:07:14.247 [main] DEBUG nextflow.Session - Session await > all processes finished
+Jan-17 11:07:19.236 [Task monitor] DEBUG n.processor.TaskPollingMonitor - <<< barrier arrives (monitor: slurm) - terminating tasks monitor poll loop
+Jan-17 11:07:19.236 [main] DEBUG nextflow.Session - Session await > all barriers passed
+Jan-17 11:07:19.239 [main] DEBUG nextflow.util.ThreadPoolManager - Thread pool 'TaskFinalizer' shutdown completed (hard=false)
+Jan-17 11:07:19.239 [main] DEBUG nextflow.util.ThreadPoolManager - Thread pool 'PublishDir' shutdown completed (hard=false)
+Jan-17 11:07:19.245 [main] INFO  nextflow.Nextflow - -[0;35m[nf-core/targetassembly][0;32m Pipeline completed successfully[0m-
+Jan-17 11:07:19.249 [main] DEBUG n.trace.WorkflowStatsObserver - Workflow completed > WorkflowStats[succeededCount=19; failedCount=0; ignoredCount=0; cachedCount=0; pendingCount=0; submittedCount=0; runningCount=0; retriesCount=0; abortedCount=0; succeedDuration=22.4s; failedDuration=0ms; cachedDuration=0ms;loadCpus=0; loadMemory=0; peakRunning=1; peakCpus=2; peakMemory=6 GB; ]
+Jan-17 11:07:19.249 [main] DEBUG nextflow.trace.TraceFileObserver - Workflow completed -- saving trace file
+Jan-17 11:07:19.252 [main] DEBUG nextflow.trace.ReportObserver - Workflow completed -- rendering execution report
+Jan-17 11:07:19.944 [main] DEBUG nextflow.trace.TimelineObserver - Workflow completed -- rendering execution timeline
+Jan-17 11:07:20.088 [main] DEBUG nextflow.cache.CacheDB - Closing CacheDB done
+Jan-17 11:07:20.131 [main] INFO  org.pf4j.AbstractPluginManager - Stop plugin 'nf-schema@2.3.0'
+Jan-17 11:07:20.131 [main] DEBUG nextflow.plugin.BasePlugin - Plugin stopped nf-schema
+Jan-17 11:07:20.132 [main] DEBUG nextflow.util.ThreadPoolManager - Thread pool 'FileTransfer' shutdown completed (hard=false)
+Jan-17 11:07:20.133 [main] DEBUG nextflow.script.ScriptRunner - > Execution complete -- Goodbye

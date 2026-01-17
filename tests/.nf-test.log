@@ -1,0 +1,8 @@
+Jan-17 08:44:54.224 [main] INFO  com.askimed.nf.test.App - nf-test 0.9.2
+Jan-17 08:44:54.241 [main] INFO  com.askimed.nf.test.App - Arguments: [test, tests/main.nf.test, --profile, apptainer, --update-snapshot]
+Jan-17 08:44:55.275 [main] INFO  com.askimed.nf.test.App - Nextflow Version: 24.10.4
+Jan-17 08:44:55.280 [main] WARN  com.askimed.nf.test.commands.RunTestsCommand - No nf-test config file found.
+Jan-17 08:44:55.296 [main] INFO  com.askimed.nf.test.lang.dependencies.DependencyResolver - Loaded 1 files from directory /home/pcart14/git/nf-core-targetassembly/tests in 0.014 sec
+Jan-17 08:44:55.298 [main] INFO  com.askimed.nf.test.lang.dependencies.DependencyResolver - Found 0 files containing tests.
+Jan-17 08:44:55.298 [main] DEBUG com.askimed.nf.test.lang.dependencies.DependencyResolver - Found files: []
+Jan-17 08:44:55.301 [main] INFO  com.askimed.nf.test.commands.RunTestsCommand - Found 0 tests to execute.
