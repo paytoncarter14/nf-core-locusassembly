@@ -42,7 +42,6 @@ workflow TARGETASSEMBLY {
     ch_versions = ch_versions.mix(BLAST_MAKEBLASTDB.out.versions)
 
     // blastn probes to reference genome
-    // TODO: test/implement tblastx for more divergent probe sequences
     if (params.probe2ref_blast_method == 'blastn') {
         BLAST_BLASTN ([[id: ch_probes.baseName], ch_probes], BLAST_MAKEBLASTDB.out.db)
         ch_versions = ch_versions.mix(BLAST_BLASTN.out.versions)
@@ -54,7 +53,7 @@ workflow TARGETASSEMBLY {
     }
 
     // sort probe/reference hits by bitscore and keep only best probe/reference hit by bitscore
-    // TODO: add filter for paralogy, low quality hits
+    // FEATURE: add filter for paralogy, low quality hits
     GNU_SORT (probe2ref.out.txt)
     ch_versions = ch_versions.mix(GNU_SORT.out.versions)
 
@@ -173,8 +172,6 @@ SAMTOOLS_DEPTH ( MINIMAP2_ALIGN.out.bam, [[], []] )
 // locus lengths
 // mapping coverage
 // spades kmer coverage
-// TODO: add % reads on target
-// TODO: add pct at 80% mean cov
 COLLECTSTATS (
     CLEANHEADERS_PROBE.out.fasta.map{it[1]}.collect().map{[[id: 'all_samples'], it]},
     CLEANHEADERS_FULL.out.fasta.map{it[1]}.collect().map{[[id: 'all_samples'], it]},

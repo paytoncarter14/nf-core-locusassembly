@@ -179,5 +179,11 @@
         {
             "$ref": "#/$defs/generic_options"
         }
-    ]
+    ],
+    "properties": {
+        "probe2ref_blast_method": {
+            "type": "string",
+            "default": "tblastx"
+        }
+    }
 }
