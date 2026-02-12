@@ -1,4 +1,4 @@
-process CLEANHEADERS {
+process CLEANHEADERS_FULL {
     tag "$meta.id"
     label 'process_single'
 
@@ -11,11 +11,7 @@ process CLEANHEADERS {
     tuple val(meta) , path(fasta)
 
     output:
-    tuple val(meta), path('*.fasta'), emit: fasta
-    path('*.stats.kmer_coverage.csv'), emit: kmer_coverage, optional: true
-    path('*.stats.length_full.csv'), emit: full_length, optional: true
-    path('*.stats.length_probe.csv'), emit: probe_length, optional: true
-    path('*.stats.summary.csv'), emit: general, optional: true
+    tuple val(meta), path('*.orthologs.full.fasta'), emit: fasta
     path "versions.yml", emit: versions
 
     when:
@@ -27,8 +23,6 @@ process CLEANHEADERS {
     sed_version = '4.0' // BusyBox sed --version outputs "This is not GNU sed version 4.0"
     def python_version = '3.12.2'
     if ("${fasta}" == "${prefix}.fasta") error "Input and output names are the same, set prefix in module configuration to disambiguate!"
-    if ( fasta.name.tokenize('.')[-2] == 'probe_ortho' ) template "cleanheaders.py"
-    else
     """
     sed 's|:.*\$||g' ${fasta} > ${prefix}.orthologs.full.fasta
 

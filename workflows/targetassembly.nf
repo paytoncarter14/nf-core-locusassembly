@@ -19,7 +19,11 @@ include { BLAST_TBLASTX as BLAST_TBLASTX2              } from '../modules/local/
 include { ORTHOLOGFILTER                               } from '../modules/local/orthologfilter/main'
 include { BEDTOOLS_GETFASTA as GETORTHOLOGS_PROBE      } from '../modules/nf-core/bedtools/getfasta/main'
 include { BEDTOOLS_GETFASTA as GETORTHOLOGS_FULL       } from '../modules/nf-core/bedtools/getfasta/main'
-include { CLEANHEADERS                                 } from '../modules/local/cleanheaders/main'
+include { CLEANHEADERS_FULL                            } from '../modules/local/cleanheaders_full/main'
+include { CLEANHEADERS_PROBE                           } from '../modules/local/cleanheaders_probe/main'
+include { MINIMAP2_ALIGN                               } from '../modules/nf-core/minimap2/align/main'
+include { SAMTOOLS_COVERAGE                            } from '../modules/nf-core/samtools/coverage/main'
+include { SAMTOOLS_DEPTH                               } from '../modules/nf-core/samtools/depth/main'
 include { GATHERSTATS                                  } from '../modules/local/gatherstats/main'
 
 workflow TARGETASSEMBLY {
@@ -118,13 +122,29 @@ workflow TARGETASSEMBLY {
     ch_versions = ch_versions.mix(GETORTHOLOGS_FULL.out.versions)
     ch_versions = ch_versions.mix(GETORTHOLOGS_PROBE.out.versions)
 
+    /* -----------
+    QC and cleanup
+    ----------- */
+
     // remove spades information and keep only locus name in fasta headers
     // calculate some stats as well
-    CLEANHEADERS ( GETORTHOLOGS_FULL.out.fasta.mix(GETORTHOLOGS_PROBE.out.fasta) )
-    ch_versions = ch_versions.mix(CLEANHEADERS.out.versions)
+    CLEANHEADERS_FULL ( GETORTHOLOGS_FULL.out.fasta )
+    ch_versions = ch_versions.mix(CLEANHEADERS_FULL.out.versions)
+
+    CLEANHEADERS_PROBE ( GETORTHOLOGS_PROBE.out.fasta )
+    ch_versions = ch_versions.mix(CLEANHEADERS_PROBE.out.versions)
+
+    // align fastqs with orthologs to get coverage stats
+    minimap2_input = FASTP.out.reads.join(CLEANHEADERS_FULL.out.fasta)
+    MINIMAP2_ALIGN ( minimap2_input.map{[it[0], it[1]]}, minimap2_input.map{[it[0], it[2]]}, true, 'bai', true, false )
+
+    // get alignment coverage and depth stats
+    samtools_input = MINIMAP2_ALIGN.out.bam.join(CLEANHEADERS_FULL.out.fasta)
+    SAMTOOLS_COVERAGE ( samtools_input.map{[it[0], it[1], []]}, samtools_input.map{[it[0], it[2]]}, [[], []])
+    SAMTOOLS_DEPTH ( MINIMAP2_ALIGN.out.bam, [[], []] )
 
     // collect stats for all samples into summary.csv
-    GATHERSTATS ( CLEANHEADERS.out.general.collect().map{[[id: 'all_samples'], it]} )
+    GATHERSTATS ( CLEANHEADERS_PROBE.out.general.collect().map{[[id: 'all_samples'], it]} )
 
     // Collate and save software versions
     softwareVersionsToYAML(ch_versions)
@@ -143,13 +163,12 @@ workflow TARGETASSEMBLY {
 /* archived processes
 include { VSEARCH_SORT                                 } from '../modules/nf-core/vsearch/sort/main'
 include { FASTQTOOLS_SORT                              } from '../modules/local/fastqtools_sort/main'
-include { MINIMAP2_ALIGN                               } from '../modules/nf-core/minimap2/align/main'
-include { SAMTOOLS_COVERAGE                            } from '../modules/nf-core/samtools/coverage/main'
+
 include { SAMTOOLS_FAIDX                               } from '../modules/nf-core/samtools/faidx/main'
 include { GETLOCUSLENGTH as GETLOCUSLENGTH_PROBE       } from '../modules/local/getlocuslength/main'
 include { GETLOCUSLENGTH as GETLOCUSLENGTH_FULL        } from '../modules/local/getlocuslength/main'
 include { COLLECTSTATS                                 } from '../modules/local/collectstats/main'
-include { SAMTOOLS_DEPTH                               } from '../modules/nf-core/samtools/depth/main'
+
 include { GETSPADESCOVERAGE                            } from '../modules/local/getspadescoverage/main'
 
 // sort scaffolds
