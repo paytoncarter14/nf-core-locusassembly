@@ -19,48 +19,67 @@
 
 ## Introduction
 
-**nf-core/targetassembly** is a bioinformatics pipeline that ...
+**nf-core/targetassembly** is a bioinformatics pipeline that assembles loci from target enrichment sequencing data for the downstream purpose of phylogenetic analysis. As input, it takes sample FASTQ files, a reference genome FASTA file, and probe sequences in a FASTA file. It performs de novo assembly on the sequencing data with SPAdes and searches for orthology with NCBI BLAST. As output, it produces FASTA files for each sample, with each sequence representing a locus.
 
-<!-- TODO nf-core:
+<!-- nf-core:
    Complete this sentence with a 2-3 sentence summary of what types of data the pipeline ingests, a brief overview of the
    major pipeline sections and the types of output it produces. You're giving an overview to someone new
    to nf-core here, in 15-20 seconds. For an example, see https://github.com/nf-core/rnaseq/blob/master/README.md#introduction
 -->
 
-<!-- TODO nf-core: Include a figure that guides the user through the major workflow steps. Many nf-core
+![Pipeline flowchart diagram](flowchart.png)
+
+<!-- nf-core: Include a figure that guides the user through the major workflow steps. Many nf-core
      workflows use the "tube map" design for that. See https://nf-co.re/docs/contributing/design_guidelines#examples for examples.   -->
-<!-- TODO nf-core: Fill in short bullet-pointed list of the default steps in the pipeline -->
+
+1. Filters sequencing reads and gathers sequencing QC with fastp
+1. Assembles filtered sequencing reads with SPAdes
+1. Collapses similar scaffolds with vsearch cluster
+1. Makes BLAST databases from the collapsed scaffolds and reference genome
+1. Queries the probe sequences to the scaffolds with tblastx
+1. For scaffolds with tblastx probe hits, pull hit regions (putative orthologs) with bedtools
+1. Queries the putative orthologs to the reference genome with tblastx
+1. Queries the probe sequences to the reference genome with blastn
+1. Ensures the putative ortholog and the associated probe hit the same location on the reference genome
+
+<!-- nf-core: Fill in short bullet-pointed list of the default steps in the pipeline -->
 
 ## Usage
 
 > [!NOTE]
 > If you are new to Nextflow and nf-core, please refer to [this page](https://nf-co.re/docs/usage/installation) on how to set-up Nextflow. Make sure to [test your setup](https://nf-co.re/docs/usage/introduction#how-to-run-a-pipeline) with `-profile test` before running the workflow on actual data.
 
-<!-- TODO nf-core: Describe the minimum required steps to execute the pipeline, e.g. how to prepare samplesheets.
-     Explain what rows and columns represent. For instance (please edit as appropriate):
-
-First, prepare a samplesheet with your input data that looks as follows:
-
-`samplesheet.csv`:
+To run the pipeline, prepare a `samplesheet.csv` with your input data that looks as follows:
 
 ```csv
 sample,fastq_1,fastq_2
-CONTROL_REP1,AEG588A1_S1_L002_R1_001.fastq.gz,AEG588A1_S1_L002_R2_001.fastq.gz
+Calopterygidae_Umma_declivium,B01_i5-1582_i7-5823_S1_L002_R1_001.fastq.gz,B01_i5-1582_i7-5823_S1_L002_R2_001.fastq.gz
 ```
 
-Each row represents a fastq file (single-end) or a pair of fastq files (paired end).
+Each row represents a sample name and a pair of FASTQ files (paired end). The sample name is used as the output FASTA file name.
 
--->
+Prepare your probe sequences as a FASTA file, with one locus per sequence. The locus names are used in the output FASTA files. For example:
+
+```fasta
+>L001
+ATGCATGCATGC
+>L002
+GATCTATCCCAT
+```
+
+Prepare a reference genome FASTA file. The probe sequences and putative orthologs are queried with BLAST against this reference to identify orthology, so ideally the reference should have been utilized in the probe design.
 
 Now, you can run the pipeline using:
 
-<!-- TODO nf-core: update the following command to include all required parameters for a minimal example -->
+<!-- nf-core: update the following command to include all required parameters for a minimal example -->
 
 ```bash
 nextflow run nf-core/targetassembly \
-   -profile <docker/singularity/.../institute> \
-   --input samplesheet.csv \
-   --outdir <OUTDIR>
+  -profile <docker/singularity/.../institute> \
+  --input samplesheet.csv \
+  --probes probes.fasta \
+  --reference reference.fasta \
+  --outdir <OUTDIR>
 ```
 
 > [!WARNING]
@@ -80,7 +99,8 @@ nf-core/targetassembly was originally written by Payton Carter.
 
 We thank the following people for their extensive assistance in the development of this pipeline:
 
-<!-- TODO nf-core: If applicable, make list of people who have also contributed -->
+- Jesse Breinholt
+- Paul Frandsen
 
 ## Contributions and Support
 
@@ -92,8 +112,6 @@ For further information or help, don't hesitate to get in touch on the [Slack `#
 
 <!-- TODO nf-core: Add citation for pipeline after first release. Uncomment lines below and update Zenodo doi and badge at the top of this file. -->
 <!-- If you use nf-core/targetassembly for your analysis, please cite it using the following doi: [10.5281/zenodo.XXXXXX](https://doi.org/10.5281/zenodo.XXXXXX) -->
-
-<!-- TODO nf-core: Add bibliography of tools and data used in your pipeline -->
 
 An extensive list of references for the tools used by the pipeline can be found in the [`CITATIONS.md`](CITATIONS.md) file.
 

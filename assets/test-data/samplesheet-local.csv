@@ -1,0 +1,2 @@
+sample,fastq_1,fastq_2
+105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium,/home/pcart14/git/nf-core-targetassembly/assets/test-data/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium_L160__tanypteryx_R_full_R1.fastq.gz,/home/pcart14/git/nf-core-targetassembly/assets/test-data/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium_L160__tanypteryx_R_full_R2.fastq.gz

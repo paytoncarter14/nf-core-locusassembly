@@ -1,4 +1,4 @@
-name: bitscorefilter
+name: gatherstats
 channels:
   - conda-forge
   - defaults

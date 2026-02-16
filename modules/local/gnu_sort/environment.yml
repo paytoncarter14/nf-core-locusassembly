@@ -1,4 +1,4 @@
-name: bitscorefilter
+name: gnu_sort
 channels:
   - conda-forge
   - defaults

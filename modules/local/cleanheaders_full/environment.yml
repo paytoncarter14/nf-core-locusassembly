@@ -1,6 +1,7 @@
-name: bitscorefilter
+name: cleanheaders
 channels:
   - conda-forge
   - defaults
 dependencies:
+  - conda-forge::python=3.12
   - conda-forge::coreutils=9.3

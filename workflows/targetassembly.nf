@@ -1,39 +1,36 @@
-/* TODO:
-    file endings and prefixes
-    check and lint all local modules
-    biocontainers/python:3.12 is probably a good general container, already used for ORTHOLOGFILTER
-    maybe biocontainers/coreutils:9.3 as well
-    publish tblastx as nf-core module
-    params to skip optional steps of pipeline
-    check if fastqtools sort is necessary
-*/
-
 include { paramsSummaryMap       } from 'plugin/nf-schema'
 include { softwareVersionsToYAML } from '../subworkflows/nf-core/utils_nfcore_pipeline'
 include { methodsDescriptionText } from '../subworkflows/local/utils_nfcore_targetassembly_pipeline'
 
 include { BLAST_MAKEBLASTDB                            } from '../modules/nf-core/blast/makeblastdb/main'
 include { BLAST_BLASTN                                 } from '../modules/nf-core/blast/blastn/main'
+include { BLAST_TBLASTX as BLAST_TBLASTXPROBE2REF      } from '../modules/local/blast/tblastx/main'
 include { GNU_SORT                                     } from '../modules/local/gnu_sort/main'
 include { GNU_SORT as GNU_SORT2                        } from '../modules/local/gnu_sort/main'
 include { FASTP                                        } from '../modules/nf-core/fastp/main'
 include { SPADES                                       } from '../modules/nf-core/spades/main'
-include { VSEARCH_CLUSTER                              } from '../modules/local/vsearch/cluster/main'
+include { VSEARCH_CLUSTER                              } from '../modules/nf-core/vsearch/cluster/main'
 include { BLAST_MAKEBLASTDB as BLAST_MAKEBLASTDB2      } from '../modules/nf-core/blast/makeblastdb/main'
 include { BLAST_TBLASTX                                } from '../modules/local/blast/tblastx/main'
 include { BITSCOREFILTER                               } from '../modules/local/bitscorefilter/main'
 include { BEDTOOLS_GETFASTA                            } from '../modules/nf-core/bedtools/getfasta/main'
+include { GUNZIP                                       } from '../modules/nf-core/gunzip/main'
 include { BLAST_TBLASTX as BLAST_TBLASTX2              } from '../modules/local/blast/tblastx/main'
 include { ORTHOLOGFILTER                               } from '../modules/local/orthologfilter/main'
 include { BEDTOOLS_GETFASTA as GETORTHOLOGS_PROBE      } from '../modules/nf-core/bedtools/getfasta/main'
 include { BEDTOOLS_GETFASTA as GETORTHOLOGS_FULL       } from '../modules/nf-core/bedtools/getfasta/main'
-include { CLEANHEADERS                                 } from '../modules/local/cleanheaders/main'
+include { CLEANHEADERS_FULL                            } from '../modules/local/cleanheaders_full/main'
+include { CLEANHEADERS_PROBE                           } from '../modules/local/cleanheaders_probe/main'
+include { MINIMAP2_ALIGN                               } from '../modules/nf-core/minimap2/align/main'
+include { SAMTOOLS_COVERAGE                            } from '../modules/nf-core/samtools/coverage/main'
+include { SAMTOOLS_DEPTH                               } from '../modules/nf-core/samtools/depth/main'
 include { GATHERSTATS                                  } from '../modules/local/gatherstats/main'
 
 workflow TARGETASSEMBLY {
 
     take:
-    ch_samplesheet // channel: samplesheet read in from --input
+    ch_samplesheet
+    
     main:
 
     ch_reference = file(params.reference)
@@ -49,11 +46,19 @@ workflow TARGETASSEMBLY {
     ch_versions = ch_versions.mix(BLAST_MAKEBLASTDB.out.versions)
 
     // blastn probes to reference genome
-    BLAST_BLASTN ([[id: ch_probes.baseName], ch_probes], BLAST_MAKEBLASTDB.out.db)
-    ch_versions = ch_versions.mix(BLAST_BLASTN.out.versions)
+    if (params.probe2ref_blast_method == 'blastn') {
+        BLAST_BLASTN ([[id: ch_probes.baseName], ch_probes], BLAST_MAKEBLASTDB.out.db)
+        ch_versions = ch_versions.mix(BLAST_BLASTN.out.versions)
+        probe2ref = BLAST_BLASTN
+    } else if (params.probe2ref_blast_method == 'tblastx') {
+        BLAST_TBLASTXPROBE2REF ([[id: ch_probes.baseName], ch_probes], BLAST_MAKEBLASTDB.out.db)
+        ch_versions = ch_versions.mix(BLAST_TBLASTXPROBE2REF.out.versions)
+        probe2ref = BLAST_TBLASTXPROBE2REF
+    }
 
     // sort probe/reference hits by bitscore and keep only best probe/reference hit by bitscore
-    GNU_SORT (BLAST_BLASTN.out.txt)
+    // FEATURE: add filter for paralogy, low quality hits
+    GNU_SORT (probe2ref.out.txt)
     ch_versions = ch_versions.mix(GNU_SORT.out.versions)
 
     // filter reads, gather sequencing qc with fastp
@@ -68,9 +73,12 @@ workflow TARGETASSEMBLY {
     SPADES (FASTP.out.reads.map{[it[0], it[1], [], []]}, [], [])
     ch_versions = ch_versions.mix(SPADES.out.versions)
 
-    // collapse similar scaffolds
+    // collapse similar scaffolds and unzip output
     VSEARCH_CLUSTER (SPADES.out.scaffolds)
     ch_versions = ch_versions.mix(VSEARCH_CLUSTER.out.versions)
+
+    GUNZIP (VSEARCH_CLUSTER.out.centroids)
+    ch_versions = ch_versions.mix(GUNZIP.out.versions)
 
     /* -------------
     Orthology filter
@@ -90,7 +98,7 @@ workflow TARGETASSEMBLY {
     ch_versions = ch_versions.mix(BITSCOREFILTER.out.versions)
 
     // pull regions of scaffold sequences (putative orthologs) that had tblastx probe hits
-    together = BITSCOREFILTER.out.bed.join(VSEARCH_CLUSTER.out.centroids)
+    together = BITSCOREFILTER.out.bed.join(GUNZIP.out.gunzip)
     BEDTOOLS_GETFASTA ( together.map{it[0..1]}, together.map{it[2]} )
     ch_versions = ch_versions.mix(BEDTOOLS_GETFASTA.out.versions)
 
@@ -102,22 +110,41 @@ workflow TARGETASSEMBLY {
     GNU_SORT2 ( BLAST_TBLASTX2.out.txt )
     ch_versions = ch_versions.mix(GNU_SORT2.out.versions)
 
-    // ortholog filter: make sure putative orthologs intersect the same coordinates as the probe/reference blast
+    // make sure putative orthologs intersect the same coordinates as the probe/reference blast
     ORTHOLOGFILTER ( GNU_SORT2.out.sorted, GNU_SORT.out.sorted )
     ch_versions = ch_versions.mix(ORTHOLOGFILTER.out.versions)
 
     // pull full and probe orthologs
-    full_input = ORTHOLOGFILTER.out.full.join(VSEARCH_CLUSTER.out.centroids)
-    probe_input = ORTHOLOGFILTER.out.probe.join(VSEARCH_CLUSTER.out.centroids)
+    full_input = ORTHOLOGFILTER.out.full.join(GUNZIP.out.gunzip)
+    probe_input = ORTHOLOGFILTER.out.probe.join(GUNZIP.out.gunzip)
     GETORTHOLOGS_FULL ( full_input.map{it[0..1]}, full_input.map{it[2]} )
     GETORTHOLOGS_PROBE ( probe_input.map{it[0..1]}, probe_input.map{it[2]} )
+    ch_versions = ch_versions.mix(GETORTHOLOGS_FULL.out.versions)
+    ch_versions = ch_versions.mix(GETORTHOLOGS_PROBE.out.versions)
+
+    /* -----------
+    QC and cleanup
+    ----------- */
 
     // remove spades information and keep only locus name in fasta headers
-    // collect some stats as well
-    CLEANHEADERS ( GETORTHOLOGS_FULL.out.fasta.mix(GETORTHOLOGS_PROBE.out.fasta) )
+    // calculate some stats as well
+    CLEANHEADERS_FULL ( GETORTHOLOGS_FULL.out.fasta )
+    ch_versions = ch_versions.mix(CLEANHEADERS_FULL.out.versions)
 
-    GATHERSTATS ( CLEANHEADERS.out.general.collect().map{[[id: 'all_samples'], it]} )
-    // compile general stats
+    CLEANHEADERS_PROBE ( GETORTHOLOGS_PROBE.out.fasta )
+    ch_versions = ch_versions.mix(CLEANHEADERS_PROBE.out.versions)
+
+    // align fastqs with orthologs to get coverage stats
+    minimap2_input = FASTP.out.reads.join(CLEANHEADERS_FULL.out.fasta)
+    MINIMAP2_ALIGN ( minimap2_input.map{[it[0], it[1]]}, minimap2_input.map{[it[0], it[2]]}, true, 'bai', true, false )
+
+    // get alignment coverage and depth stats
+    samtools_input = MINIMAP2_ALIGN.out.bam.join(CLEANHEADERS_FULL.out.fasta)
+    SAMTOOLS_COVERAGE ( samtools_input.map{[it[0], it[1], []]}, samtools_input.map{[it[0], it[2]]}, [[], []])
+    SAMTOOLS_DEPTH ( MINIMAP2_ALIGN.out.bam, [[], []] )
+
+    // collect stats for all samples into summary.csv
+    GATHERSTATS ( CLEANHEADERS_PROBE.out.general.collect().map{[[id: 'all_samples'], it]} )
 
     // Collate and save software versions
     softwareVersionsToYAML(ch_versions)
@@ -136,13 +163,12 @@ workflow TARGETASSEMBLY {
 /* archived processes
 include { VSEARCH_SORT                                 } from '../modules/nf-core/vsearch/sort/main'
 include { FASTQTOOLS_SORT                              } from '../modules/local/fastqtools_sort/main'
-include { MINIMAP2_ALIGN                               } from '../modules/nf-core/minimap2/align/main'
-include { SAMTOOLS_COVERAGE                            } from '../modules/nf-core/samtools/coverage/main'
+
 include { SAMTOOLS_FAIDX                               } from '../modules/nf-core/samtools/faidx/main'
 include { GETLOCUSLENGTH as GETLOCUSLENGTH_PROBE       } from '../modules/local/getlocuslength/main'
 include { GETLOCUSLENGTH as GETLOCUSLENGTH_FULL        } from '../modules/local/getlocuslength/main'
 include { COLLECTSTATS                                 } from '../modules/local/collectstats/main'
-include { SAMTOOLS_DEPTH                               } from '../modules/nf-core/samtools/depth/main'
+
 include { GETSPADESCOVERAGE                            } from '../modules/local/getspadescoverage/main'
 
 // sort scaffolds
@@ -165,8 +191,6 @@ SAMTOOLS_DEPTH ( MINIMAP2_ALIGN.out.bam, [[], []] )
 // locus lengths
 // mapping coverage
 // spades kmer coverage
-// TODO: add % reads on target
-// TODO: add pct at 80% mean cov
 COLLECTSTATS (
     CLEANHEADERS_PROBE.out.fasta.map{it[1]}.collect().map{[[id: 'all_samples'], it]},
     CLEANHEADERS_FULL.out.fasta.map{it[1]}.collect().map{[[id: 'all_samples'], it]},

@@ -1,13 +1,11 @@
-// TODO: gnu cut version (`cut --version` doesn't work)
-
 process BITSCOREFILTER {
     tag "$meta.id"
     label 'process_single'
 
     conda "${moduleDir}/environment.yml"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/python:3.12':
-        'biocontainers/python:3.12' }"
+        'https://depot.galaxyproject.org/singularity/coreutils:9.3':
+        'biocontainers/coreutils:9.3' }"
 
     input:
     tuple val(meta), path(txt)
@@ -23,6 +21,7 @@ process BITSCOREFILTER {
 
     script:
     def prefix = task.ext.prefix ?: "${meta.id}"
+    def coreutils_version = '9.3'
     if ("${txt}" == "${prefix}.txt") error "Input and output names are the same, set prefix in module configuration to disambiguate!"
 
     """
@@ -32,8 +31,7 @@ process BITSCOREFILTER {
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        sort: \$(sort --version | sed -n 's/sort (GNU coreutils) \\(.*\\)\$/\\1/p')
-        awk: \$(awk --version | sed -e '1!d' -e 's/,.*\$//' -e 's/GNU Awk //')
+        coreutils: ${coreutils_version}
     END_VERSIONS
     """
 
@@ -45,9 +43,8 @@ process BITSCOREFILTER {
     touch ${prefix}.key
 
     cat <<-END_VERSIONS > versions.yml
-    "!{task.process}":
-        sort: \$(sort --version | sed -n 's/sort (GNU coreutils) \\(.*\\)\$/\\1/p')
-        awk: \$(awk --version | sed -e '1!d' -e 's/,.*\$//' -e 's/GNU Awk //')
+    "${task.process}":
+        coreutils: ${coreutils_version}
     END_VERSIONS
     """
 }
