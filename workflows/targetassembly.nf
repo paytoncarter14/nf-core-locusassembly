@@ -3,7 +3,9 @@ include { softwareVersionsToYAML } from '../subworkflows/nf-core/utils_nfcore_pi
 include { methodsDescriptionText } from '../subworkflows/local/utils_nfcore_targetassembly_pipeline'
 
 include { BLAST_MAKEBLASTDB                            } from '../modules/nf-core/blast/makeblastdb/main'
-include { BLAST_BLASTN                                 } from '../modules/nf-core/blast/blastn/main'
+include { BLAST_BLASTN as BLAST_BLASTNPROBE2REF        } from '../modules/nf-core/blast/blastn/main'
+include { BLAST_BLASTN as BLAST_BLASTNPROBE2SCAFFOLD   } from '../modules/nf-core/blast/blastn/main'
+include { BLAST_BLASTN as BLAST_BLASTNSCAFFOLD2REF     } from '../modules/nf-core/blast/blastn/main'
 include { BLAST_TBLASTX as BLAST_TBLASTXPROBE2REF      } from '../modules/local/blast/tblastx/main'
 include { GNU_SORT                                     } from '../modules/local/gnu_sort/main'
 include { GNU_SORT as GNU_SORT2                        } from '../modules/local/gnu_sort/main'
@@ -24,6 +26,7 @@ include { CLEANHEADERS_PROBE                           } from '../modules/local/
 include { MINIMAP2_ALIGN                               } from '../modules/nf-core/minimap2/align/main'
 include { SAMTOOLS_COVERAGE                            } from '../modules/nf-core/samtools/coverage/main'
 include { SAMTOOLS_DEPTH                               } from '../modules/nf-core/samtools/depth/main'
+include { SAMTOOLS_STATS                               } from '../modules/nf-core/samtools/stats/main'
 include { GATHERSTATS                                  } from '../modules/local/gatherstats/main'
 
 workflow TARGETASSEMBLY {
@@ -47,9 +50,9 @@ workflow TARGETASSEMBLY {
 
     // blastn probes to reference genome
     if (params.probe2ref_blast_method == 'blastn') {
-        BLAST_BLASTN ([[id: ch_probes.baseName], ch_probes], BLAST_MAKEBLASTDB.out.db)
-        ch_versions = ch_versions.mix(BLAST_BLASTN.out.versions)
-        probe2ref = BLAST_BLASTN
+        BLAST_BLASTNPROBE2REF ([[id: ch_probes.baseName], ch_probes], BLAST_MAKEBLASTDB.out.db)
+        ch_versions = ch_versions.mix(BLAST_BLASTNPROBE2REF.out.versions)
+        probe2ref = BLAST_BLASTNPROBE2REF
     } else if (params.probe2ref_blast_method == 'tblastx') {
         BLAST_TBLASTXPROBE2REF ([[id: ch_probes.baseName], ch_probes], BLAST_MAKEBLASTDB.out.db)
         ch_versions = ch_versions.mix(BLAST_TBLASTXPROBE2REF.out.versions)
@@ -89,12 +92,12 @@ workflow TARGETASSEMBLY {
     ch_versions = ch_versions.mix(BLAST_MAKEBLASTDB2.out.versions)
 
     // tblastx probes (query) to scaffolds (db)
-    BLAST_TBLASTX (BLAST_MAKEBLASTDB2.out.db.map{[it[0], ch_probes]}, BLAST_MAKEBLASTDB2.out.db)
-    ch_versions = ch_versions.mix(BLAST_TBLASTX.out.versions)
+    BLAST_BLASTNPROBE2SCAFFOLD (BLAST_MAKEBLASTDB2.out.db.map{[it[0], ch_probes]}, BLAST_MAKEBLASTDB2.out.db)
+    ch_versions = ch_versions.mix(BLAST_BLASTNPROBE2SCAFFOLD.out.versions)
 
     // keep probe/scaffold hits with bit scores at least 80% of top bit score per probe
     // and transform probe/scaffold blast output to bed for bedtools
-    BITSCOREFILTER (BLAST_TBLASTX.out.txt)
+    BITSCOREFILTER (BLAST_BLASTNPROBE2SCAFFOLD.out.txt)
     ch_versions = ch_versions.mix(BITSCOREFILTER.out.versions)
 
     // pull regions of scaffold sequences (putative orthologs) that had tblastx probe hits
@@ -103,11 +106,11 @@ workflow TARGETASSEMBLY {
     ch_versions = ch_versions.mix(BEDTOOLS_GETFASTA.out.versions)
 
     // tblastx putative orthologs (query) to reference genome (db)
-    BLAST_TBLASTX2 ( BEDTOOLS_GETFASTA.out.fasta, BLAST_MAKEBLASTDB.out.db )
-    ch_versions = ch_versions.mix(BLAST_TBLASTX2.out.versions)
+    BLAST_BLASTNSCAFFOLD2REF ( BEDTOOLS_GETFASTA.out.fasta, BLAST_MAKEBLASTDB.out.db )
+    ch_versions = ch_versions.mix(BLAST_BLASTNSCAFFOLD2REF.out.versions)
 
     // keep only top ortholog/reference hit by bitscore for each ortholog
-    GNU_SORT2 ( BLAST_TBLASTX2.out.txt )
+    GNU_SORT2 ( BLAST_BLASTNSCAFFOLD2REF.out.txt )
     ch_versions = ch_versions.mix(GNU_SORT2.out.versions)
 
     // make sure putative orthologs intersect the same coordinates as the probe/reference blast
@@ -142,6 +145,7 @@ workflow TARGETASSEMBLY {
     samtools_input = MINIMAP2_ALIGN.out.bam.join(CLEANHEADERS_FULL.out.fasta)
     SAMTOOLS_COVERAGE ( samtools_input.map{[it[0], it[1], []]}, samtools_input.map{[it[0], it[2]]}, [[], []])
     SAMTOOLS_DEPTH ( MINIMAP2_ALIGN.out.bam, [[], []] )
+    SAMTOOLS_STATS ( MINIMAP2_ALIGN.out.bam.join(MINIMAP2_ALIGN.out.index), [[id: ch_reference.baseName], ch_reference] )
 
     // collect stats for all samples into summary.csv
     GATHERSTATS ( CLEANHEADERS_PROBE.out.general.collect().map{[[id: 'all_samples'], it]} )
