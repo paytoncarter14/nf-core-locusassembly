@@ -7,7 +7,7 @@ include { BLAST_BLASTN as BLAST_BLASTNPROBE2REF        } from '../modules/nf-cor
 include { BLAST_BLASTN as BLAST_BLASTNPROBE2SCAFFOLD   } from '../modules/nf-core/blast/blastn/main'
 include { BLAST_BLASTN as BLAST_BLASTNSCAFFOLD2REF     } from '../modules/nf-core/blast/blastn/main'
 include { BLAST_TBLASTX as BLAST_TBLASTXPROBE2REF      } from '../modules/local/blast/tblastx/main'
-include { GNU_SORT                                     } from '../modules/local/gnu_sort/main'
+include { PARALOGFILTER                                } from '../modules/local/paralogfilter/main'
 include { GNU_SORT as GNU_SORT2                        } from '../modules/local/gnu_sort/main'
 include { FASTP                                        } from '../modules/nf-core/fastp/main'
 include { SPADES                                       } from '../modules/nf-core/spades/main'
@@ -61,8 +61,8 @@ workflow TARGETASSEMBLY {
 
     // sort probe/reference hits by bitscore and keep only best probe/reference hit by bitscore
     // FEATURE: add filter for paralogy, low quality hits
-    GNU_SORT (probe2ref.out.txt)
-    ch_versions = ch_versions.mix(GNU_SORT.out.versions)
+    PARALOGFILTER (probe2ref.out.txt, params.paralog_ratio_threshold)
+    ch_versions = ch_versions.mix(PARALOGFILTER.out.versions)
 
     // filter reads, gather sequencing qc with fastp
     FASTP (ch_samplesheet, [], false, false, false)
@@ -114,7 +114,7 @@ workflow TARGETASSEMBLY {
     ch_versions = ch_versions.mix(GNU_SORT2.out.versions)
 
     // make sure putative orthologs intersect the same coordinates as the probe/reference blast
-    ORTHOLOGFILTER ( GNU_SORT2.out.sorted, GNU_SORT.out.sorted )
+    ORTHOLOGFILTER ( GNU_SORT2.out.sorted, PARALOGFILTER.out.sorted )
     ch_versions = ch_versions.mix(ORTHOLOGFILTER.out.versions)
 
     // pull full and probe orthologs
