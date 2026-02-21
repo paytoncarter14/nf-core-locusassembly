@@ -11,6 +11,7 @@ include { PARALOGFILTER                                } from '../modules/local/
 include { GNU_SORT as GNU_SORT2                        } from '../modules/local/gnu_sort/main'
 include { FASTP                                        } from '../modules/nf-core/fastp/main'
 include { SPADES                                       } from '../modules/nf-core/spades/main'
+include { GAWK                                         } from '../modules/nf-core/gawk/main'
 include { VSEARCH_CLUSTER                              } from '../modules/nf-core/vsearch/cluster/main'
 include { BLAST_MAKEBLASTDB as BLAST_MAKEBLASTDB2      } from '../modules/nf-core/blast/makeblastdb/main'
 include { BLAST_TBLASTX                                } from '../modules/local/blast/tblastx/main'
@@ -27,6 +28,7 @@ include { MINIMAP2_ALIGN                               } from '../modules/nf-cor
 include { SAMTOOLS_COVERAGE                            } from '../modules/nf-core/samtools/coverage/main'
 include { SAMTOOLS_DEPTH                               } from '../modules/nf-core/samtools/depth/main'
 include { SAMTOOLS_STATS                               } from '../modules/nf-core/samtools/stats/main'
+include { BCFTOOLS_MPILEUP                             } from '../modules/nf-core/bcftools/mpileup/main'
 include { GATHERSTATS                                  } from '../modules/local/gatherstats/main'
 
 workflow TARGETASSEMBLY {
@@ -76,8 +78,12 @@ workflow TARGETASSEMBLY {
     SPADES (FASTP.out.reads.map{[it[0], it[1], [], []]}, [], [])
     ch_versions = ch_versions.mix(SPADES.out.versions)
 
+    // filter scaffolds by minimum kmer coverage and length
+    GAWK (SPADES.out.scaffolds, [], false)
+    // ch_versions = ch_versions.mix(GAWK.out.versions_gawk)
+
     // collapse similar scaffolds and unzip output
-    VSEARCH_CLUSTER (SPADES.out.scaffolds)
+    VSEARCH_CLUSTER (GAWK.out.output)
     ch_versions = ch_versions.mix(VSEARCH_CLUSTER.out.versions)
 
     GUNZIP (VSEARCH_CLUSTER.out.centroids)

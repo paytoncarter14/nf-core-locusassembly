@@ -55,7 +55,7 @@ BEGIN {
     } else {
         count++
         if (count == 2) {
-            if (score / best_score >= 0.9) {
+            if (score / best_score >= ${ratio_threshold}) {
                 is_bad = "true"
             }
         }
