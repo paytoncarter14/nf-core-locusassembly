@@ -30,7 +30,7 @@ workflow TARGETASSEMBLY {
 
     take:
     ch_samplesheet
-    
+
     main:
 
     ch_reference = file(params.reference)
@@ -136,6 +136,7 @@ workflow TARGETASSEMBLY {
 
     // align fastqs with orthologs to get coverage stats
     minimap2_input = FASTP.out.reads.join(CLEANHEADERS_FULL.out.fasta)
+    minimap2_input.view()
     MINIMAP2_ALIGN ( minimap2_input.map{[it[0], it[1]]}, minimap2_input.map{[it[0], it[2]]}, true, 'bai', true, false )
 
     // get alignment coverage and depth stats
