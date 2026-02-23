@@ -30,6 +30,7 @@ include { SAMTOOLS_DEPTH                               } from '../modules/nf-cor
 include { SAMTOOLS_STATS                               } from '../modules/nf-core/samtools/stats/main'
 include { BCFTOOLS_MPILEUP                             } from '../modules/nf-core/bcftools/mpileup/main'
 include { GATHERSTATS                                  } from '../modules/local/gatherstats/main'
+include { CONTAMINATIONCHECK                           } from '../modules/local/contaminationcheck/main'
 
 workflow TARGETASSEMBLY {
 
@@ -86,15 +87,15 @@ workflow TARGETASSEMBLY {
     // VSEARCH_CLUSTER (GAWK.out.output)
     // ch_versions = ch_versions.mix(VSEARCH_CLUSTER.out.versions)
 
-    // GUNZIP (VSEARCH_CLUSTER.out.centroids)
-    // ch_versions = ch_versions.mix(GUNZIP.out.versions)
+    GUNZIP (GAWK.out.output)
+    ch_versions = ch_versions.mix(GUNZIP.out.versions)
 
     /* -------------
     Orthology filter
     ------------- */
 
     // make blast db from scaffolds
-    BLAST_MAKEBLASTDB2 (GAWK.out.output)
+    BLAST_MAKEBLASTDB2 (GUNZIP.out.gunzip)
     ch_versions = ch_versions.mix(BLAST_MAKEBLASTDB2.out.versions)
 
     // tblastx probes (query) to scaffolds (db)
@@ -152,9 +153,10 @@ workflow TARGETASSEMBLY {
     SAMTOOLS_COVERAGE ( samtools_input.map{[it[0], it[1], []]}, samtools_input.map{[it[0], it[2]]}, [[], []])
     SAMTOOLS_DEPTH ( MINIMAP2_ALIGN.out.bam, [[], []] )
     SAMTOOLS_STATS ( MINIMAP2_ALIGN.out.bam.join(MINIMAP2_ALIGN.out.index), [[id: ch_reference.baseName], ch_reference] )
+    CONTAMINATIONCHECK ( MINIMAP2_ALIGN.out.bam.join(MINIMAP2_ALIGN.out.index).join(CLEANHEADERS_FULL.out.fasta) )
 
     // collect stats for all samples into summary.csv
-    GATHERSTATS ( CLEANHEADERS_PROBE.out.general.collect().map{[[id: 'all_samples'], it]} )
+    GATHERSTATS ( CLEANHEADERS_PROBE.out.general.collect().map{[[id: 'all_samples'], it]}, CONTAMINATIONCHECK.out.contam_index.map{it[1]}.collect().map{[[id: 'all_samples'], it]}.view() )
 
     // Collate and save software versions
     softwareVersionsToYAML(ch_versions)
