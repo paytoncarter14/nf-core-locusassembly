@@ -83,18 +83,18 @@ workflow TARGETASSEMBLY {
     // ch_versions = ch_versions.mix(GAWK.out.versions_gawk)
 
     // collapse similar scaffolds and unzip output
-    VSEARCH_CLUSTER (GAWK.out.output)
-    ch_versions = ch_versions.mix(VSEARCH_CLUSTER.out.versions)
+    // VSEARCH_CLUSTER (GAWK.out.output)
+    // ch_versions = ch_versions.mix(VSEARCH_CLUSTER.out.versions)
 
-    GUNZIP (VSEARCH_CLUSTER.out.centroids)
-    ch_versions = ch_versions.mix(GUNZIP.out.versions)
+    // GUNZIP (VSEARCH_CLUSTER.out.centroids)
+    // ch_versions = ch_versions.mix(GUNZIP.out.versions)
 
     /* -------------
     Orthology filter
     ------------- */
 
     // make blast db from scaffolds
-    BLAST_MAKEBLASTDB2 (VSEARCH_CLUSTER.out.centroids)
+    BLAST_MAKEBLASTDB2 (GAWK.out.output)
     ch_versions = ch_versions.mix(BLAST_MAKEBLASTDB2.out.versions)
 
     // tblastx probes (query) to scaffolds (db)
