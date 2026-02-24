@@ -1,26 +1,5 @@
 #!/usr/bin/env python3
 
-# import argparse
-
-# parser = argparse.ArgumentParser()
-# parser.add_argument(
-#     "--probe_blast",
-#     required=True,
-#     help="Results of probe sequence blast to reference genome, specified in blast 6 format, one hit per locus",
-# )
-# parser.add_argument(
-#     "--assembly_blast",
-#     required=True,
-#     help="Results of assembly scaffold blast to reference genome, specified in blast 6 format",
-# )
-# parser.add_argument(
-#     "--prefix",
-#     required=False,
-#     help="Prefix that output files will be named with",
-# )
-
-# args = parser.parse_args()
-
 # qseqid                sseqid          pident  length  mismatch    gapopen qstart  qend    sstart      send        evalue  bitscore
 # L100__lampyridae_R    NW_022170509.1  100.000 738     0           0       1       738     21766757    21767494    0.0     1363
 import platform

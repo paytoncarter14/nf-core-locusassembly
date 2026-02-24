@@ -9,7 +9,6 @@ process PARALOGFILTER {
 
     input:
     tuple val(meta), path(input)
-    val(ratio_threshold)
 
     output:
     tuple val(meta), file( "${output_file}" )   , emit: sorted
@@ -19,14 +18,13 @@ process PARALOGFILTER {
     task.ext.when == null || task.ext.when
 
     script:
-    def args        = task.ext.args     ?: ''
-    def args2       = task.ext.args2    ?: ''
     def prefix      = task.ext.prefix   ?: "${meta.id}"
     suffix          = task.ext.suffix   ?: "${input.extension}"
     output_file     = "${prefix}.${suffix}"
     def VERSION     = "9.3" // WARN: Version information not provided by tool on CLI. Please update this string when bumping container versions.
     if ("$input" == "$output_file") error "Input and output names are the same, use \"task.ext.prefix\" to disambiguate!"
     """
+
 # Sort by locus and bitscore (descending),
 # then use awk to filter any loci where the second best hit
 # is more than [ratio_threshold, e.g. 0.9] times as good as the best hit (i.e. it's a paralog)
@@ -55,7 +53,7 @@ BEGIN {
     } else {
         count++
         if (count == 2) {
-            if (score / best_score >= ${ratio_threshold}) {
+            if (score / best_score >= ${params.paralogfilter_ratio_threshold}) {
                 is_bad = "true"
             }
         }
@@ -63,8 +61,8 @@ BEGIN {
 }
 
 END {
-    if (count == 1) {
-        print \$0
+    if (is_bad == "false") {
+        print best_line
     }
 }
 
@@ -74,6 +72,7 @@ cat <<-END_VERSIONS > versions.yml
 "${task.process}":
     coreutils: $VERSION
 END_VERSIONS
+
     """
 
     stub:

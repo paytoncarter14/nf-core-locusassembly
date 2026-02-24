@@ -21,9 +21,9 @@ nextflow_pipeline {
             def stable_name = getAllFilesFromDir(params.outdir, relative: true, includeDir: true, ignore: ['pipeline_info/*.{html,json,txt}'])
 
             // stable_path: All files in ${params.outdir}/ with stable content
-            def stable_path = getAllFilesFromDir(params.outdir, include: ['cleanheaders/*.orthologs.*.fasta'], ignoreFile: 'tests/.nftignore')
+            // def stable_path = getAllFilesFromDir(params.outdir, include: ['cleanheaders/*.orthologs.*.fasta'], ignoreFile: 'tests/.nftignore')
 
-            // check for stable-ish motif in ortholog output
+            // check for stable motif in ortholog output
             def orthologProbe = path("$outputDir/cleanheaders/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.orthologs.probe.fasta").fasta
             def orthologFull = path("$outputDir/cleanheaders/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.orthologs.full.fasta").fasta
             def seqId = "L160__tanypteryx_R"

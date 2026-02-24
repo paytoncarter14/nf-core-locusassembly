@@ -1,4 +1,4 @@
-name: cleanheaders_full
+name: paralogfilter
 channels:
   - conda-forge
   - defaults

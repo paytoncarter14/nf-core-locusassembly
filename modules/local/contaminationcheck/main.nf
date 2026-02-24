@@ -22,8 +22,8 @@ process CONTAMINATIONCHECK {
     echo -e "CHROM\\tPOS\\tAD\\tGQ\\tRATIO" > ${meta.id}.txt
     bcftools mpileup \
         --fasta-ref ${fasta} \
-        --min-BQ 30 \
-        --min-MQ 20 \
+        --min-BQ ${params.contaminationcheck_mpileup_min_bq} \
+        --min-MQ ${params.contaminationcheck_mpileup_min_mq} \
         --annotate AD \
         ${bam} | \
     bcftools call \
@@ -31,7 +31,7 @@ process CONTAMINATIONCHECK {
         --variants-only \
         --annotate GQ | \
     bcftools query \
-        --include 'GT="het" && GQ>=20' \
+        --include 'GT="het" && GQ>=${params.contaminationcheck_call_min_gq}' \
         --format '[%CHROM\\t%POS\\t%AD\\t%GQ\\n]' | \
     awk '
     BEGIN {OFS="\\t"}
@@ -39,14 +39,14 @@ process CONTAMINATIONCHECK {
         n = split(\$3, a, ",")
         sum = 0
         for (i=1; i<=n; i++) sum += a[i]
-        if (sum >= 16) print \$0, a[1]/sum
+        if (sum >= ${params.contaminationcheck_call_min_cov}) print \$0, a[1]/sum
     }' >> ${meta.id}.contam_summary.txt
 
     awk '
     BEGIN { OFS = "," }
     NR==1 { next }
     {
-        if (\$5 < 0.3) below++
+        if (\$5 < ${params.contaminationcheck_af_threshold}) below++
         total++
     }
     END { print "${meta.id}", (total > 0 ? below/total : 0) }' ${meta.id}.contam_summary.txt > ${meta.id}.contam_index.txt

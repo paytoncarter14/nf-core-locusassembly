@@ -20,13 +20,11 @@ process ORTHOLOGFILTER {
     task.ext.when == null || task.ext.when
 
     script:
-    def args = task.ext.args ?: ''
     prefix = task.ext.prefix ?: "${meta.id}"
 
     template "orthologfilter.py"
 
     stub:
-    def args = task.ext.args ?: ''
     def prefix = task.ext.prefix ?: "${meta.id}"
     """
     touch ${prefix}.ortho_probe.bed

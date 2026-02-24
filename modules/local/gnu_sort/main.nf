@@ -18,15 +18,13 @@ process GNU_SORT {
     task.ext.when == null || task.ext.when
 
     script:
-    def args        = task.ext.args     ?: ''
-    def args2       = task.ext.args2    ?: ''
     def prefix      = task.ext.prefix   ?: "${meta.id}"
     suffix          = task.ext.suffix   ?: "${input.extension}"
     output_file     = "${prefix}.${suffix}"
     def VERSION     = "9.3" // WARN: Version information not provided by tool on CLI. Please update this string when bumping container versions.
     if ("$input" == "$output_file") error "Input and output names are the same, use \"task.ext.prefix\" to disambiguate!"
     """
-    sort ${args} ${input} | sort ${args2} > ${output_file}
+    sort -k12,12nr ${input} | sort -t ":" -u -k1,1 > ${output_file}
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
