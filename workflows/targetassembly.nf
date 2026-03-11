@@ -136,6 +136,7 @@ workflow TARGETASSEMBLY {
     // collect stats for all samples into summary.csv
     GATHERSTATS ( CLEANHEADERS_PROBE.out.general.collect().map{[[id: 'all_samples'], it]}, CONTAMINATIONCHECK.out.contam_index.map{it[1]}.collect().map{[[id: 'all_samples'], it]} )
 
+    // send all stats to MultiQC
     multiqc_input = FASTP.out.json.map{it[1]}.mix(SAMTOOLS_STATS.out.stats.map{it[1]}, GATHERSTATS.out.summary).collect().map{[[id: 'all_samples'], it, [], [], [], []]}
     MULTIQC ( multiqc_input )
 

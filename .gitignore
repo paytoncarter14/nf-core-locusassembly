@@ -8,6 +8,4 @@ assets/test-data-full/
 .nf*
 .vscode/
 .nextflow*
-
-
-
+.archive/
