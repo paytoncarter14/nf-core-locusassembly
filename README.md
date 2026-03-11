@@ -21,28 +21,20 @@
 
 **nf-core/targetassembly** is a bioinformatics pipeline that assembles loci from target enrichment sequencing data for the downstream purpose of phylogenetic analysis. As input, it takes sample FASTQ files, a reference genome FASTA file, and probe sequences in a FASTA file. It performs de novo assembly on the sequencing data with SPAdes and searches for orthology with NCBI BLAST. As output, it produces FASTA files for each sample, with each sequence representing a locus.
 
-<!-- nf-core:
-   Complete this sentence with a 2-3 sentence summary of what types of data the pipeline ingests, a brief overview of the
-   major pipeline sections and the types of output it produces. You're giving an overview to someone new
-   to nf-core here, in 15-20 seconds. For an example, see https://github.com/nf-core/rnaseq/blob/master/README.md#introduction
--->
-
 ![Pipeline flowchart diagram](flowchart.png)
 
-<!-- nf-core: Include a figure that guides the user through the major workflow steps. Many nf-core
-     workflows use the "tube map" design for that. See https://nf-co.re/docs/contributing/design_guidelines#examples for examples.   -->
+This pipeline performs the following steps:
 
-1. Filters sequencing reads and gathers sequencing QC with fastp
+1. Filters adapters from sequencing reads and gathers sequencing QC with fastp
 1. Assembles filtered sequencing reads with SPAdes
-1. Collapses similar scaffolds with vsearch cluster
-1. Makes BLAST databases from the collapsed scaffolds and reference genome
-1. Queries the probe sequences to the scaffolds with tblastx
-1. For scaffolds with tblastx probe hits, pull hit regions (putative orthologs) with bedtools
-1. Queries the putative orthologs to the reference genome with tblastx
-1. Queries the probe sequences to the reference genome with blastn
+1. Makes BLAST databases from the scaffolds and reference genome
+1. Queries the probe sequences to the scaffolds with dc-megablast
+1. For scaffolds with probe hits, pull hit regions (putative orthologs) with bedtools
+1. Queries the putative orthologs to the reference genome with dc-megablast
+1. Queries the probe sequences to the reference genome with dc-megablast
 1. Ensures the putative ortholog and the associated probe hit the same location on the reference genome
-
-<!-- nf-core: Fill in short bullet-pointed list of the default steps in the pipeline -->
+1. Maps the sequencing reads back to the confirmed orthologs with minimap2 and calculates mapping statistics with samtools
+1. Evaluates potential contamination by calling variants with bcftools and assessing heterozygous allele frequencies
 
 ## Usage
 
@@ -70,8 +62,6 @@ GATCTATCCCAT
 Prepare a reference genome FASTA file. The probe sequences and putative orthologs are queried with BLAST against this reference to identify orthology, so ideally the reference should have been utilized in the probe design.
 
 Now, you can run the pipeline using:
-
-<!-- nf-core: update the following command to include all required parameters for a minimal example -->
 
 ```bash
 nextflow run nf-core/targetassembly \
