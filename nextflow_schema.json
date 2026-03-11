@@ -183,7 +183,39 @@
     "properties": {
         "probe2ref_blast_method": {
             "type": "string",
-            "default": "tblastx"
+            "default": "blastn"
+        },
+        "paralogfilter_ratio_threshold": {
+            "type": "number",
+            "default": 0.9
+        },
+        "spades_min_cov": {
+            "type": "integer",
+            "default": 1
+        },
+        "spades_min_len": {
+            "type": "integer",
+            "default": 100
+        },
+        "contaminationcheck_mpileup_min_bq": {
+            "type": "integer",
+            "default": 30
+        },
+        "contaminationcheck_mpileup_min_mq": {
+            "type": "integer",
+            "default": 20
+        },
+        "contaminationcheck_call_min_gq": {
+            "type": "integer",
+            "default": 20
+        },
+        "contaminationcheck_call_min_cov": {
+            "type": "integer",
+            "default": 16
+        },
+        "contaminationcheck_af_threshold": {
+            "type": "number",
+            "default": 0.3
         }
     }
 }

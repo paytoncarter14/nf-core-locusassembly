@@ -1,7 +1,7 @@
 {
     "-profile test": {
         "content": [
-            19,
+            21,
             {
                 "BEDTOOLS_GETFASTA": {
                     "bedtools": "2.31.1"
@@ -9,7 +9,13 @@
                 "BITSCOREFILTER": {
                     "coreutils": 9.3
                 },
-                "BLAST_BLASTN": {
+                "BLAST_BLASTNPROBE2REF": {
+                    "blast": "2.15.0+"
+                },
+                "BLAST_BLASTNPROBE2SCAFFOLD": {
+                    "blast": "2.15.0+"
+                },
+                "BLAST_BLASTNSCAFFOLD2REF": {
                     "blast": "2.15.0+"
                 },
                 "BLAST_MAKEBLASTDB2": {
@@ -18,15 +24,11 @@
                 "BLAST_MAKEBLASTDB": {
                     "blast": "2.15.0+"
                 },
-                "BLAST_TBLASTX2": {
-                    "blast": "2.15.0+"
-                },
-                "BLAST_TBLASTX": {
-                    "blast": "2.15.0+"
-                },
-                "CLEANHEADERS": {
-                    "python": "3.12.2",
+                "CLEANHEADERS_FULL": {
                     "sed": 4.0
+                },
+                "CLEANHEADERS_PROBE": {
+                    "python": "3.12.2"
                 },
                 "FASTP": {
                     "fastp": "0.23.4"
@@ -37,23 +39,17 @@
                 "GETORTHOLOGS_PROBE": {
                     "bedtools": "2.31.1"
                 },
-                "GNU_SORT2": {
-                    "coreutils": 9.3
-                },
                 "GNU_SORT": {
                     "coreutils": 9.3
-                },
-                "GUNZIP": {
-                    "gunzip": 1.13
                 },
                 "ORTHOLOGFILTER": {
                     "python": "3.12.2"
                 },
+                "PARALOGFILTER": {
+                    "coreutils": 9.3
+                },
                 "SPADES": {
                     "spades": "4.0.0"
-                },
-                "VSEARCH_CLUSTER": {
-                    "vsearch": "2.21.1"
                 },
                 "Workflow": {
                     "nf-core/targetassembly": "v1.0.0dev"
@@ -70,16 +66,15 @@
                 "blast/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium",
                 "blast/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.probe2scaffold.txt",
                 "blast/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.scaffold2reference.txt",
-                "blast/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.centroids.fasta",
-                "blast/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.centroids.fasta.gz",
-                "blast/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.centroids.fasta.ndb",
-                "blast/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.centroids.fasta.nhr",
-                "blast/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.centroids.fasta.nin",
-                "blast/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.centroids.fasta.njs",
-                "blast/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.centroids.fasta.not",
-                "blast/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.centroids.fasta.nsq",
-                "blast/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.centroids.fasta.ntf",
-                "blast/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.centroids.fasta.nto",
+                "blast/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.scaffolds_filtered.fa",
+                "blast/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.scaffolds_filtered.fa.ndb",
+                "blast/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.scaffolds_filtered.fa.nhr",
+                "blast/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.scaffolds_filtered.fa.nin",
+                "blast/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.scaffolds_filtered.fa.njs",
+                "blast/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.scaffolds_filtered.fa.not",
+                "blast/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.scaffolds_filtered.fa.nsq",
+                "blast/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.scaffolds_filtered.fa.ntf",
+                "blast/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.scaffolds_filtered.fa.nto",
                 "blast/L160__tanypteryx_R_probe.probe2reference.txt",
                 "blast/L160__tanypteryx_R_reference",
                 "blast/L160__tanypteryx_R_reference/L160__tanypteryx_R_reference.fasta",
@@ -98,6 +93,9 @@
                 "cleanheaders/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.stats.length_full.csv",
                 "cleanheaders/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.stats.length_probe.csv",
                 "cleanheaders/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.stats.summary.csv",
+                "contaminationcheck",
+                "contaminationcheck/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.contam_index.txt",
+                "contaminationcheck/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.contam_summary.txt",
                 "fastp",
                 "fastp/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.fastp.html",
                 "fastp/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.fastp.json",
@@ -110,29 +108,32 @@
                 "getorthologs/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.full_ortho.fa",
                 "getorthologs/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.probe_ortho.fa",
                 "gnu",
-                "gnu/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.ortho_filtered.txt",
-                "gnu/L160__tanypteryx_R_probe.probes_filtered.txt",
-                "gunzip",
-                "gunzip/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.centroids.fasta",
+                "gnu/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.txt",
+                "minimap2",
+                "minimap2/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.bam",
+                "minimap2/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.bam.bai",
                 "orthologfilter",
                 "orthologfilter/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.ortho_full.bed",
                 "orthologfilter/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.ortho_probe.bed",
+                "paralogfilter",
+                "paralogfilter/L160__tanypteryx_R_probe.probes_filtered.txt",
                 "pipeline_info",
                 "pipeline_info/nf_core_targetassembly_software_versions.yml",
+                "samtools",
+                "samtools/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.stats",
                 "spades",
                 "spades/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.assembly.gfa.gz",
                 "spades/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.contigs.fa.gz",
                 "spades/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.scaffolds.fa.gz",
                 "spades/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.spades.log",
-                "spades/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.warnings.log",
-                "vsearch",
-                "vsearch/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.centroids.fasta.gz"
+                "spadesfilter",
+                "spadesfilter/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.scaffolds_filtered.fa"
             ]
         ],
         "meta": {
             "nf-test": "0.9.2",
             "nextflow": "24.10.4"
         },
-        "timestamp": "2026-01-17T09:46:57.687700145"
+        "timestamp": "2026-03-11T11:10:48.924046268"
     }
 }

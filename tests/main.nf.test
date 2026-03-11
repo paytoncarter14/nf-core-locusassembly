@@ -6,12 +6,11 @@ nextflow_pipeline {
 
     test("-profile test") {
 
+        config 'conf/test.config'
+
         when {
             params {
                 outdir = "$outputDir"
-                input  = "${projectDir}/assets/test-data/samplesheet.csv"
-                probes = "https://github.com/paytoncarter14/containers/raw/refs/heads/main/L160__tanypteryx_R_probe.fasta"
-                reference = "https://github.com/paytoncarter14/containers/raw/refs/heads/main/L160__tanypteryx_R_reference.fasta"
             }
         }
 

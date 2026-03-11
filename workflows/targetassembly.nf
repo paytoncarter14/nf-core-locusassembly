@@ -23,6 +23,7 @@ include { MINIMAP2_ALIGN                               } from '../modules/nf-cor
 include { SAMTOOLS_STATS                               } from '../modules/nf-core/samtools/stats/main'
 include { GATHERSTATS                                  } from '../modules/local/gatherstats/main'
 include { CONTAMINATIONCHECK                           } from '../modules/local/contaminationcheck/main'
+include { MULTIQC                                      } from '../modules/nf-core/multiqc/main'
 
 workflow TARGETASSEMBLY {
 
@@ -133,7 +134,10 @@ workflow TARGETASSEMBLY {
     CONTAMINATIONCHECK ( MINIMAP2_ALIGN.out.bam.join(MINIMAP2_ALIGN.out.index).join(CLEANHEADERS_FULL.out.fasta) )
 
     // collect stats for all samples into summary.csv
-    GATHERSTATS ( CLEANHEADERS_PROBE.out.general.collect().map{[[id: 'all_samples'], it]}, CONTAMINATIONCHECK.out.contam_index.map{it[1]}.collect().map{[[id: 'all_samples'], it]}.view() )
+    GATHERSTATS ( CLEANHEADERS_PROBE.out.general.collect().map{[[id: 'all_samples'], it]}, CONTAMINATIONCHECK.out.contam_index.map{it[1]}.collect().map{[[id: 'all_samples'], it]} )
+
+    multiqc_input = FASTP.out.json.map{it[1]}.mix(SAMTOOLS_STATS.out.stats.map{it[1]}, GATHERSTATS.out.summary).collect().map{[[id: 'all_samples'], it, [], [], [], []]}
+    MULTIQC ( multiqc_input )
 
     // Collate and save software versions
     softwareVersionsToYAML(ch_versions)
