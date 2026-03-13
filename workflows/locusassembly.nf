@@ -42,7 +42,7 @@ workflow LOCUSASSEMBLY {
 
     // make reference genome blast db
     BLAST_MAKEBLASTDB ([[id: ch_reference.baseName], ch_reference])
-    ch_versions = ch_versions.mix(BLAST_MAKEBLASTDB.out.versions)
+    // ch_versions = ch_versions.mix(BLAST_MAKEBLASTDB.out.versions)
 
     // blastn probes to reference genome
     BLAST_BLASTNPROBE2REF ([[id: ch_probes.baseName], ch_probes], BLAST_MAKEBLASTDB.out.db)
@@ -74,7 +74,7 @@ workflow LOCUSASSEMBLY {
 
     // make blast db from scaffolds
     BLAST_MAKEBLASTDB2 (SPADESFILTER.out.scaffolds)
-    ch_versions = ch_versions.mix(BLAST_MAKEBLASTDB2.out.versions)
+    // ch_versions = ch_versions.mix(BLAST_MAKEBLASTDB2.out.versions)
 
     // tblastx probes (query) to scaffolds (db)
     BLAST_BLASTNPROBE2SCAFFOLD (BLAST_MAKEBLASTDB2.out.db.map{[it[0], ch_probes]}, BLAST_MAKEBLASTDB2.out.db)

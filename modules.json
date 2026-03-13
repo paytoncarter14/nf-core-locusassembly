@@ -17,7 +17,7 @@
                     },
                     "blast/makeblastdb": {
                         "branch": "master",
-                        "git_sha": "81880787133db07d9b4c1febd152c090eb8325dc",
+                        "git_sha": "4da6a2662e7a5f62dd9c456fde7161ed34b59d1e",
                         "installed_by": ["modules"]
                     },
                     "fastp": {
