@@ -34,7 +34,7 @@ workflow TARGETASSEMBLY {
 
     ch_reference = file(params.reference)
     ch_probes = file(params.probes)
-    ch_versions = Channel.empty()
+    ch_versions = channel.empty()
 
     /* -----------------------------------
     Prepare reference, probes, and samples

@@ -1,6 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://raw.githubusercontent.com/nf-core/targetassembly/master/nextflow_schema.json",
+    "$id": "https://raw.githubusercontent.com/nf-core/targetassembly/main/nextflow_schema.json",
     "title": "nf-core/targetassembly pipeline parameters",
     "description": "A pipeline to assemble phylogenetic loci from libraries prepared with target enrichment methods like anchored hybrid enrichment (AHE) and ultraconserved elements (UCE)",
     "type": "object",
@@ -165,6 +165,18 @@
                     "fa_icon": "far calendar",
                     "description": "Suffix to add to the trace report filename. Default is the date and time in the format yyyy-MM-dd_HH-mm-ss.",
                     "hidden": true
+                },
+                "help": {
+                    "type": ["boolean", "string"],
+                    "description": "Display the help message."
+                },
+                "help_full": {
+                    "type": "boolean",
+                    "description": "Display the full detailed help message."
+                },
+                "show_hidden": {
+                    "type": "boolean",
+                    "description": "Display hidden parameters in the help message (only works when --help or --help_full are provided)."
                 }
             }
         }

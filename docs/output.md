@@ -8,7 +8,13 @@ The directories listed below will be created in the results directory after the 
 
 <!-- TODO nf-core: Write this documentation describing your workflow's output -->
 
-## General 
+## Pipeline overview
+
+The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes data using the following steps:
+
+- [Pipeline information](#pipeline-information) - Report metrics generated during the workflow execution
+
+### Pipeline information
 
 <details markdown="1">
 <summary>Output files</summary>
