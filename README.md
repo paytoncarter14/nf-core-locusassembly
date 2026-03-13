@@ -1,13 +1,13 @@
 <h1>
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="docs/images/nf-core-targetassembly_logo_dark.png">
-    <img alt="nf-core/targetassembly" src="docs/images/nf-core-targetassembly_logo_light.png">
+    <source media="(prefers-color-scheme: dark)" srcset="docs/images/nf-core-locusassembly_logo_dark.png">
+    <img alt="nf-core/locusassembly" src="docs/images/nf-core-locusassembly_logo_light.png">
   </picture>
 </h1>
 
-[![Open in GitHub Codespaces](https://img.shields.io/badge/Open_In_GitHub_Codespaces-black?labelColor=grey&logo=github)](https://github.com/codespaces/new/nf-core/targetassembly)
-[![GitHub Actions CI Status](https://github.com/nf-core/targetassembly/actions/workflows/nf-test.yml/badge.svg)](https://github.com/nf-core/targetassembly/actions/workflows/nf-test.yml)
-[![GitHub Actions Linting Status](https://github.com/nf-core/targetassembly/actions/workflows/linting.yml/badge.svg)](https://github.com/nf-core/targetassembly/actions/workflows/linting.yml)[![AWS CI](https://img.shields.io/badge/CI%20tests-full%20size-FF9900?labelColor=000000&logo=Amazon%20AWS)](https://nf-co.re/targetassembly/results)[![Cite with Zenodo](http://img.shields.io/badge/DOI-10.5281/zenodo.XXXXXXX-1073c8?labelColor=000000)](https://doi.org/10.5281/zenodo.XXXXXXX)
+[![Open in GitHub Codespaces](https://img.shields.io/badge/Open_In_GitHub_Codespaces-black?labelColor=grey&logo=github)](https://github.com/codespaces/new/nf-core/locusassembly)
+[![GitHub Actions CI Status](https://github.com/nf-core/locusassembly/actions/workflows/nf-test.yml/badge.svg)](https://github.com/nf-core/locusassembly/actions/workflows/nf-test.yml)
+[![GitHub Actions Linting Status](https://github.com/nf-core/locusassembly/actions/workflows/linting.yml/badge.svg)](https://github.com/nf-core/locusassembly/actions/workflows/linting.yml)[![AWS CI](https://img.shields.io/badge/CI%20tests-full%20size-FF9900?labelColor=000000&logo=Amazon%20AWS)](https://nf-co.re/locusassembly/results)[![Cite with Zenodo](http://img.shields.io/badge/DOI-10.5281/zenodo.XXXXXXX-1073c8?labelColor=000000)](https://doi.org/10.5281/zenodo.XXXXXXX)
 [![nf-test](https://img.shields.io/badge/unit_tests-nf--test-337ab7.svg)](https://www.nf-test.com)
 
 [![Nextflow](https://img.shields.io/badge/version-%E2%89%A524.10.4-green?style=flat&logo=nextflow&logoColor=white&color=%230DC09D&link=https%3A%2F%2Fnextflow.io)](https://www.nextflow.io/)
@@ -15,13 +15,13 @@
 [![run with conda](http://img.shields.io/badge/run%20with-conda-3EB049?labelColor=000000&logo=anaconda)](https://docs.conda.io/en/latest/)
 [![run with docker](https://img.shields.io/badge/run%20with-docker-0db7ed?labelColor=000000&logo=docker)](https://www.docker.com/)
 [![run with singularity](https://img.shields.io/badge/run%20with-singularity-1d355c.svg?labelColor=000000)](https://sylabs.io/docs/)
-[![Launch on Seqera Platform](https://img.shields.io/badge/Launch%20%F0%9F%9A%80-Seqera%20Platform-%234256e7)](https://cloud.seqera.io/launch?pipeline=https://github.com/nf-core/targetassembly)
+[![Launch on Seqera Platform](https://img.shields.io/badge/Launch%20%F0%9F%9A%80-Seqera%20Platform-%234256e7)](https://cloud.seqera.io/launch?pipeline=https://github.com/nf-core/locusassembly)
 
-[![Get help on Slack](http://img.shields.io/badge/slack-nf--core%20%23targetassembly-4A154B?labelColor=000000&logo=slack)](https://nfcore.slack.com/channels/targetassembly)[![Follow on Bluesky](https://img.shields.io/badge/bluesky-%40nf__core-1185fe?labelColor=000000&logo=bluesky)](https://bsky.app/profile/nf-co.re)[![Follow on Mastodon](https://img.shields.io/badge/mastodon-nf__core-6364ff?labelColor=FFFFFF&logo=mastodon)](https://mstdn.science/@nf_core)[![Watch on YouTube](http://img.shields.io/badge/youtube-nf--core-FF0000?labelColor=000000&logo=youtube)](https://www.youtube.com/c/nf-core)
+[![Get help on Slack](http://img.shields.io/badge/slack-nf--core%20%23locusassembly-4A154B?labelColor=000000&logo=slack)](https://nfcore.slack.com/channels/locusassembly)[![Follow on Bluesky](https://img.shields.io/badge/bluesky-%40nf__core-1185fe?labelColor=000000&logo=bluesky)](https://bsky.app/profile/nf-co.re)[![Follow on Mastodon](https://img.shields.io/badge/mastodon-nf__core-6364ff?labelColor=FFFFFF&logo=mastodon)](https://mstdn.science/@nf_core)[![Watch on YouTube](http://img.shields.io/badge/youtube-nf--core-FF0000?labelColor=000000&logo=youtube)](https://www.youtube.com/c/nf-core)
 
 ## Introduction
 
-**nf-core/targetassembly** is a bioinformatics pipeline that assembles loci from target enrichment sequencing data for the downstream purpose of phylogenetic analysis. As input, it takes sample FASTQ files, a reference genome FASTA file, and probe sequences in a FASTA file. It performs de novo assembly on the sequencing data with SPAdes and searches for orthology with NCBI BLAST. As output, it produces FASTA files for each sample, with each sequence representing a locus.
+**nf-core/locusassembly** is a bioinformatics pipeline that assembles loci from target enrichment sequencing data for the downstream purpose of phylogenetic analysis. As input, it takes sample FASTQ files, a reference genome FASTA file, and probe sequences in a FASTA file. It performs de novo assembly on the sequencing data with SPAdes and searches for orthology with NCBI BLAST. As output, it produces FASTA files for each sample, with each sequence representing a locus.
 
 ![Pipeline flowchart diagram](flowchart.png)
 
@@ -66,7 +66,7 @@ Prepare a reference genome FASTA file. The probe sequences and putative ortholog
 Now, you can run the pipeline using:
 
 ```bash
-nextflow run nf-core/targetassembly \
+nextflow run nf-core/locusassembly \
   -profile <docker/singularity/.../institute> \
   --input samplesheet.csv \
   --probes probes.fasta \
@@ -77,17 +77,17 @@ nextflow run nf-core/targetassembly \
 > [!WARNING]
 > Please provide pipeline parameters via the CLI or Nextflow `-params-file` option. Custom config files including those provided by the `-c` Nextflow option can be used to provide any configuration _**except for parameters**_; see [docs](https://nf-co.re/docs/usage/getting_started/configuration#custom-configuration-files).
 
-For more details and further functionality, please refer to the [usage documentation](https://nf-co.re/targetassembly/usage) and the [parameter documentation](https://nf-co.re/targetassembly/parameters).
+For more details and further functionality, please refer to the [usage documentation](https://nf-co.re/locusassembly/usage) and the [parameter documentation](https://nf-co.re/locusassembly/parameters).
 
 ## Pipeline output
 
-To see the results of an example test run with a full size dataset refer to the [results](https://nf-co.re/targetassembly/results) tab on the nf-core website pipeline page.
+To see the results of an example test run with a full size dataset refer to the [results](https://nf-co.re/locusassembly/results) tab on the nf-core website pipeline page.
 For more details about the output files and reports, please refer to the
-[output documentation](https://nf-co.re/targetassembly/output).
+[output documentation](https://nf-co.re/locusassembly/output).
 
 ## Credits
 
-nf-core/targetassembly was originally written by Payton Carter.
+nf-core/locusassembly was originally written by Payton Carter.
 
 We thank the following people for their extensive assistance in the development of this pipeline:
 
@@ -98,12 +98,12 @@ We thank the following people for their extensive assistance in the development 
 
 If you would like to contribute to this pipeline, please see the [contributing guidelines](.github/CONTRIBUTING.md).
 
-For further information or help, don't hesitate to get in touch on the [Slack `#targetassembly` channel](https://nfcore.slack.com/channels/targetassembly) (you can join with [this invite](https://nf-co.re/join/slack)).
+For further information or help, don't hesitate to get in touch on the [Slack `#locusassembly` channel](https://nfcore.slack.com/channels/locusassembly) (you can join with [this invite](https://nf-co.re/join/slack)).
 
 ## Citations
 
 <!-- TODO nf-core: Add citation for pipeline after first release. Uncomment lines below and update Zenodo doi and badge at the top of this file. -->
-<!-- If you use nf-core/targetassembly for your analysis, please cite it using the following doi: [10.5281/zenodo.XXXXXX](https://doi.org/10.5281/zenodo.XXXXXX) -->
+<!-- If you use nf-core/locusassembly for your analysis, please cite it using the following doi: [10.5281/zenodo.XXXXXX](https://doi.org/10.5281/zenodo.XXXXXX) -->
 
 An extensive list of references for the tools used by the pipeline can be found in the [`CITATIONS.md`](CITATIONS.md) file.
 

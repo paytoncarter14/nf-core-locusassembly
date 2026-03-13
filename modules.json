@@ -1,6 +1,6 @@
 {
-    "name": "nf-core/targetassembly",
-    "homePage": "https://github.com/nf-core/targetassembly",
+    "name": "nf-core/locusassembly",
+    "homePage": "https://github.com/nf-core/locusassembly",
     "repos": {
         "https://github.com/nf-core/modules.git": {
             "modules": {

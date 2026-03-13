@@ -1,11 +1,11 @@
 #!/usr/bin/env nextflow
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    nf-core/targetassembly
+    nf-core/locusassembly
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    Github : https://github.com/nf-core/targetassembly
-    Website: https://nf-co.re/targetassembly
-    Slack  : https://nfcore.slack.com/channels/targetassembly
+    Github : https://github.com/nf-core/locusassembly
+    Website: https://nf-co.re/locusassembly
+    Slack  : https://nfcore.slack.com/channels/locusassembly
 ----------------------------------------------------------------------------------------
 */
 
@@ -15,9 +15,9 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { TARGETASSEMBLY  } from './workflows/targetassembly'
-include { PIPELINE_INITIALISATION } from './subworkflows/local/utils_nfcore_targetassembly_pipeline'
-include { PIPELINE_COMPLETION     } from './subworkflows/local/utils_nfcore_targetassembly_pipeline'
+include { LOCUSASSEMBLY  } from './workflows/locusassembly'
+include { PIPELINE_INITIALISATION } from './subworkflows/local/utils_nfcore_locusassembly_pipeline'
+include { PIPELINE_COMPLETION     } from './subworkflows/local/utils_nfcore_locusassembly_pipeline'
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     NAMED WORKFLOWS FOR PIPELINE
@@ -27,7 +27,7 @@ include { PIPELINE_COMPLETION     } from './subworkflows/local/utils_nfcore_targ
 //
 // WORKFLOW: Run main analysis pipeline depending on type of input
 //
-workflow NFCORE_TARGETASSEMBLY {
+workflow NFCORE_LOCUSASSEMBLY {
 
     take:
     samplesheet // channel: samplesheet read in from --input
@@ -37,7 +37,7 @@ workflow NFCORE_TARGETASSEMBLY {
     //
     // WORKFLOW: Run pipeline
     //
-    TARGETASSEMBLY (
+    LOCUSASSEMBLY (
         samplesheet
     )
 }
@@ -68,7 +68,7 @@ workflow {
     //
     // WORKFLOW: Run main workflow
     //
-    NFCORE_TARGETASSEMBLY (
+    NFCORE_LOCUSASSEMBLY (
         PIPELINE_INITIALISATION.out.samplesheet
     )
     //

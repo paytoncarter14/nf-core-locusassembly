@@ -1,4 +1,4 @@
-# nf-core/targetassembly: Output
+# nf-core/locusassembly: Output
 
 ## Introduction
 

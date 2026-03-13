@@ -52,7 +52,7 @@
                     "spades": "4.0.0"
                 },
                 "Workflow": {
-                    "nf-core/targetassembly": "v1.0.0dev"
+                    "nf-core/locusassembly": "v1.0.0dev"
                 }
             },
             [
@@ -147,7 +147,7 @@
                 "paralogfilter",
                 "paralogfilter/L160__tanypteryx_R_probe.probes_filtered.txt",
                 "pipeline_info",
-                "pipeline_info/nf_core_targetassembly_software_versions.yml",
+                "pipeline_info/nf_core_locusassembly_software_versions.yml",
                 "samtools",
                 "samtools/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.stats",
                 "spades",

@@ -21,7 +21,7 @@ template:
     elements (UCE)
   force: false
   is_nfcore: true
-  name: targetassembly
+  name: locusassembly
   org: nf-core
   outdir: .
   skip_features:

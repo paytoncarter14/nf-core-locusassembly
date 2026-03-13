@@ -1,7 +1,7 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://raw.githubusercontent.com/nf-core/targetassembly/main/assets/schema_input.json",
-    "title": "nf-core/targetassembly pipeline - params.input schema",
+    "$id": "https://raw.githubusercontent.com/nf-core/locusassembly/main/assets/schema_input.json",
+    "title": "nf-core/locusassembly pipeline - params.input schema",
     "description": "Schema for the file provided with params.input",
     "type": "array",
     "items": {
