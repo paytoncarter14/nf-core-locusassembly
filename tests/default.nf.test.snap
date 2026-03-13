@@ -1,7 +1,7 @@
 {
     "-profile test": {
         "content": [
-            21,
+            22,
             {
                 "BEDTOOLS_GETFASTA": {
                     "bedtools": "2.31.1"
@@ -103,7 +103,7 @@
                 "fastp/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium_1.fastp.fastq.gz",
                 "fastp/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium_2.fastp.fastq.gz",
                 "gatherstats",
-                "gatherstats/summary.csv",
+                "gatherstats/summary_mqc.csv",
                 "getorthologs",
                 "getorthologs/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.full_ortho.fa",
                 "getorthologs/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.probe_ortho.fa",
@@ -112,6 +112,35 @@
                 "minimap2",
                 "minimap2/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.bam",
                 "minimap2/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.bam.bai",
+                "multiqc",
+                "multiqc/multiqc_data",
+                "multiqc/multiqc_data/fastp-insert-size-plot.txt",
+                "multiqc/multiqc_data/fastp-seq-content-gc-plot_Read_1_After_filtering.txt",
+                "multiqc/multiqc_data/fastp-seq-content-gc-plot_Read_1_Before_filtering.txt",
+                "multiqc/multiqc_data/fastp-seq-content-gc-plot_Read_2_After_filtering.txt",
+                "multiqc/multiqc_data/fastp-seq-content-gc-plot_Read_2_Before_filtering.txt",
+                "multiqc/multiqc_data/fastp-seq-content-n-plot_Read_1_After_filtering.txt",
+                "multiqc/multiqc_data/fastp-seq-content-n-plot_Read_1_Before_filtering.txt",
+                "multiqc/multiqc_data/fastp-seq-content-n-plot_Read_2_After_filtering.txt",
+                "multiqc/multiqc_data/fastp-seq-content-n-plot_Read_2_Before_filtering.txt",
+                "multiqc/multiqc_data/fastp-seq-quality-plot_Read_1_After_filtering.txt",
+                "multiqc/multiqc_data/fastp-seq-quality-plot_Read_1_Before_filtering.txt",
+                "multiqc/multiqc_data/fastp-seq-quality-plot_Read_2_After_filtering.txt",
+                "multiqc/multiqc_data/fastp-seq-quality-plot_Read_2_Before_filtering.txt",
+                "multiqc/multiqc_data/fastp_filtered_reads_plot.txt",
+                "multiqc/multiqc_data/llms-full.txt",
+                "multiqc/multiqc_data/multiqc.log",
+                "multiqc/multiqc_data/multiqc.parquet",
+                "multiqc/multiqc_data/multiqc_citations.txt",
+                "multiqc/multiqc_data/multiqc_data.json",
+                "multiqc/multiqc_data/multiqc_fastp.txt",
+                "multiqc/multiqc_data/multiqc_general_stats.txt",
+                "multiqc/multiqc_data/multiqc_samtools_stats.txt",
+                "multiqc/multiqc_data/multiqc_software_versions.txt",
+                "multiqc/multiqc_data/multiqc_sources.txt",
+                "multiqc/multiqc_data/samtools-stats-dp.txt",
+                "multiqc/multiqc_data/samtools_alignment_plot.txt",
+                "multiqc/multiqc_report.html",
                 "orthologfilter",
                 "orthologfilter/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.ortho_full.bed",
                 "orthologfilter/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.ortho_probe.bed",
@@ -130,10 +159,10 @@
                 "spadesfilter/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.scaffolds_filtered.fa"
             ]
         ],
+        "timestamp": "2026-03-11T17:35:26.424371862",
         "meta": {
-            "nf-test": "0.9.2",
-            "nextflow": "24.10.4"
-        },
-        "timestamp": "2026-03-11T11:10:48.924046268"
+            "nf-test": "0.9.4",
+            "nextflow": "25.10.4"
+        }
     }
 }

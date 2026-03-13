@@ -49,6 +49,54 @@
                 }
             }
         },
+        "filtering_options": {
+            "title": "Filtering options",
+            "type": "object",
+            "description": "",
+            "default": "",
+            "properties": {
+                "paralogfilter_ratio_threshold": {
+                    "type": "number",
+                    "default": 0.9,
+                    "description": "For the probe to reference BLAST, loci with any hits in a different location that have a bitscore within this ratio of the best hit are discarded."
+                },
+                "spades_min_len": {
+                    "type": "integer",
+                    "default": 100,
+                    "description": "SPAdes scaffolds shorter than this value are discarded."
+                },
+                "spades_min_cov": {
+                    "type": "integer",
+                    "default": 1,
+                    "description": "SPAdes scaffolds with kmer coverage less than this value are discarded."
+                },
+                "contaminationcheck_mpileup_min_bq": {
+                    "type": "integer",
+                    "default": 30,
+                    "description": "Minimum base quality for contamination check."
+                },
+                "contaminationcheck_mpileup_min_mq": {
+                    "type": "integer",
+                    "default": 20,
+                    "description": "Minimum mapping quality for contamination check."
+                },
+                "contaminationcheck_call_min_cov": {
+                    "type": "integer",
+                    "default": 16,
+                    "description": "Minimum coverage for contamination check."
+                },
+                "contaminationcheck_call_min_gq": {
+                    "type": "integer",
+                    "default": 20,
+                    "description": "Minimum genotype quality for contamination check."
+                },
+                "contaminationcheck_af_threshold": {
+                    "type": "number",
+                    "default": 0.3,
+                    "description": "Heterozygous variants with alternative allele frequencies less than this value are considered indicators of potential contamination."
+                }
+            }
+        },
         "institutional_config_options": {
             "title": "Institutional config options",
             "type": "object",
@@ -186,48 +234,13 @@
             "$ref": "#/$defs/input_output_options"
         },
         {
+            "$ref": "#/$defs/filtering_options"
+        },
+        {
             "$ref": "#/$defs/institutional_config_options"
         },
         {
             "$ref": "#/$defs/generic_options"
         }
-    ],
-    "properties": {
-        "probe2ref_blast_method": {
-            "type": "string",
-            "default": "blastn"
-        },
-        "paralogfilter_ratio_threshold": {
-            "type": "number",
-            "default": 0.9
-        },
-        "spades_min_cov": {
-            "type": "integer",
-            "default": 1
-        },
-        "spades_min_len": {
-            "type": "integer",
-            "default": 100
-        },
-        "contaminationcheck_mpileup_min_bq": {
-            "type": "integer",
-            "default": 30
-        },
-        "contaminationcheck_mpileup_min_mq": {
-            "type": "integer",
-            "default": 20
-        },
-        "contaminationcheck_call_min_gq": {
-            "type": "integer",
-            "default": 20
-        },
-        "contaminationcheck_call_min_cov": {
-            "type": "integer",
-            "default": 16
-        },
-        "contaminationcheck_af_threshold": {
-            "type": "number",
-            "default": 0.3
-        }
-    }
+    ]
 }

@@ -1,11 +1,12 @@
+.nextflow*
 work/
-test-work/
-output/
 data/
+results/
+.DS_Store
+testing/
+testing*
+*.pyc
 null/
-test-output/
 assets/test-data-full/
 .nf*
-.vscode/
-.nextflow*
 .archive/

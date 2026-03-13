@@ -4,10 +4,6 @@
 
 > _Documentation of pipeline parameters is generated automatically from the pipeline schema and can no longer be found in markdown files._
 
-## Introduction
-
-<!-- TODO nf-core: Add documentation about anything specific to running your pipeline. For general topics, please point to (and add to) the main nf-core website. -->
-
 ## Samplesheet input
 
 You will need to create a samplesheet with information about the samples you would like to analyse before running the pipeline. Use this parameter to specify its location. It has to be a comma-separated file with 3 columns, and a header row as shown in the examples below.
@@ -211,3 +207,7 @@ We recommend adding the following line to your environment to limit this (typica
 ```bash
 NXF_OPTS='-Xms1g -Xmx4g'
 ```
+
+## A note on BLAST searches
+
+This pipeline relies heavily on BLAST searches to assign and confirm orthology. It assumes each probe target sequence maps to a contiguous sequence on the reference genome. Violating this assumption will trigger the paralogy filter and the locus will be removed. Unplaced contigs representing unresolved haplotypes in the reference genome may also cause this. Non-standard characters in the probe target sequences, such as unknown (N or X) bases or IUPAC ambiguity codes, are treated as mismatches by BLAST and will result in fewer hits. If locus recovery counts are lower than expected, it is always worth evaluating the BLAST results manually to see at what point the loci were dropped.
