@@ -9,9 +9,10 @@ process GATHERSTATS {
 
     input:
     tuple val(meta), path(general)
+    tuple val(meta2), path(contam_index)
 
     output:
-    path('summary.csv'), emit: summary
+    path('summary_mqc.csv'), emit: summary
 
     when:
     task.ext.when == null || task.ext.when
@@ -19,8 +20,11 @@ process GATHERSTATS {
     script:
     def coreutils_version = '9.3'
     """
-    echo 'sample,loci,kmer_coverage,full_length,probe_length' > summary.csv
-    cat *.stats.summary.csv >> summary.csv
+    echo '# plot_type: "generalstats"' > summary_mqc.csv
+    echo 'sample,loci,kmer_coverage,full_length,probe_length,contam_index' >> summary_mqc.csv
+    cat *.stats.summary.csv | sort -k1,1 > summary-sorted.csv
+    cat *.contam_index.txt | sort -k1,1 > contam-index-sorted.csv
+    join -t ',' summary-sorted.csv contam-index-sorted.csv >> summary_mqc.csv
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

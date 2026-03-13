@@ -1,0 +1,6 @@
+name: paralogfilter
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - conda-forge::coreutils=9.3

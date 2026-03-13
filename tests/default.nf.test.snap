@@ -1,0 +1,168 @@
+{
+    "-profile test": {
+        "content": [
+            22,
+            {
+                "BEDTOOLS_GETFASTA": {
+                    "bedtools": "2.31.1"
+                },
+                "BITSCOREFILTER": {
+                    "coreutils": 9.3
+                },
+                "BLAST_BLASTNPROBE2REF": {
+                    "blast": "2.15.0+"
+                },
+                "BLAST_BLASTNPROBE2SCAFFOLD": {
+                    "blast": "2.15.0+"
+                },
+                "BLAST_BLASTNSCAFFOLD2REF": {
+                    "blast": "2.15.0+"
+                },
+                "BLAST_MAKEBLASTDB2": {
+                    "blast": "2.15.0+"
+                },
+                "BLAST_MAKEBLASTDB": {
+                    "blast": "2.15.0+"
+                },
+                "CLEANHEADERS_FULL": {
+                    "sed": 4.0
+                },
+                "CLEANHEADERS_PROBE": {
+                    "python": "3.12.2"
+                },
+                "FASTP": {
+                    "fastp": "0.23.4"
+                },
+                "GETORTHOLOGS_FULL": {
+                    "bedtools": "2.31.1"
+                },
+                "GETORTHOLOGS_PROBE": {
+                    "bedtools": "2.31.1"
+                },
+                "GNU_SORT": {
+                    "coreutils": 9.3
+                },
+                "ORTHOLOGFILTER": {
+                    "python": "3.12.2"
+                },
+                "PARALOGFILTER": {
+                    "coreutils": 9.3
+                },
+                "SPADES": {
+                    "spades": "4.0.0"
+                },
+                "Workflow": {
+                    "nf-core/locusassembly": "v1.0.0dev"
+                }
+            },
+            [
+                "bedtools",
+                "bedtools/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.fa",
+                "bitscorefilter",
+                "bitscorefilter/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.filtered.bed",
+                "bitscorefilter/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.filtered.key",
+                "bitscorefilter/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.filtered.txt",
+                "blast",
+                "blast/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium",
+                "blast/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.probe2scaffold.txt",
+                "blast/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.scaffold2reference.txt",
+                "blast/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.scaffolds_filtered.fa",
+                "blast/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.scaffolds_filtered.fa.ndb",
+                "blast/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.scaffolds_filtered.fa.nhr",
+                "blast/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.scaffolds_filtered.fa.nin",
+                "blast/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.scaffolds_filtered.fa.njs",
+                "blast/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.scaffolds_filtered.fa.not",
+                "blast/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.scaffolds_filtered.fa.nsq",
+                "blast/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.scaffolds_filtered.fa.ntf",
+                "blast/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.scaffolds_filtered.fa.nto",
+                "blast/L160__tanypteryx_R_probe.probe2reference.txt",
+                "blast/L160__tanypteryx_R_reference",
+                "blast/L160__tanypteryx_R_reference/L160__tanypteryx_R_reference.fasta",
+                "blast/L160__tanypteryx_R_reference/L160__tanypteryx_R_reference.fasta.ndb",
+                "blast/L160__tanypteryx_R_reference/L160__tanypteryx_R_reference.fasta.nhr",
+                "blast/L160__tanypteryx_R_reference/L160__tanypteryx_R_reference.fasta.nin",
+                "blast/L160__tanypteryx_R_reference/L160__tanypteryx_R_reference.fasta.njs",
+                "blast/L160__tanypteryx_R_reference/L160__tanypteryx_R_reference.fasta.not",
+                "blast/L160__tanypteryx_R_reference/L160__tanypteryx_R_reference.fasta.nsq",
+                "blast/L160__tanypteryx_R_reference/L160__tanypteryx_R_reference.fasta.ntf",
+                "blast/L160__tanypteryx_R_reference/L160__tanypteryx_R_reference.fasta.nto",
+                "cleanheaders",
+                "cleanheaders/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.orthologs.full.fasta",
+                "cleanheaders/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.orthologs.probe.fasta",
+                "cleanheaders/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.stats.kmer_coverage.csv",
+                "cleanheaders/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.stats.length_full.csv",
+                "cleanheaders/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.stats.length_probe.csv",
+                "cleanheaders/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.stats.summary.csv",
+                "contaminationcheck",
+                "contaminationcheck/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.contam_index.txt",
+                "contaminationcheck/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.contam_summary.txt",
+                "fastp",
+                "fastp/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.fastp.html",
+                "fastp/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.fastp.json",
+                "fastp/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.fastp.log",
+                "fastp/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium_1.fastp.fastq.gz",
+                "fastp/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium_2.fastp.fastq.gz",
+                "gatherstats",
+                "gatherstats/summary_mqc.csv",
+                "getorthologs",
+                "getorthologs/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.full_ortho.fa",
+                "getorthologs/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.probe_ortho.fa",
+                "gnu",
+                "gnu/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.txt",
+                "minimap2",
+                "minimap2/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.bam",
+                "minimap2/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.bam.bai",
+                "multiqc",
+                "multiqc/multiqc_data",
+                "multiqc/multiqc_data/fastp-insert-size-plot.txt",
+                "multiqc/multiqc_data/fastp-seq-content-gc-plot_Read_1_After_filtering.txt",
+                "multiqc/multiqc_data/fastp-seq-content-gc-plot_Read_1_Before_filtering.txt",
+                "multiqc/multiqc_data/fastp-seq-content-gc-plot_Read_2_After_filtering.txt",
+                "multiqc/multiqc_data/fastp-seq-content-gc-plot_Read_2_Before_filtering.txt",
+                "multiqc/multiqc_data/fastp-seq-content-n-plot_Read_1_After_filtering.txt",
+                "multiqc/multiqc_data/fastp-seq-content-n-plot_Read_1_Before_filtering.txt",
+                "multiqc/multiqc_data/fastp-seq-content-n-plot_Read_2_After_filtering.txt",
+                "multiqc/multiqc_data/fastp-seq-content-n-plot_Read_2_Before_filtering.txt",
+                "multiqc/multiqc_data/fastp-seq-quality-plot_Read_1_After_filtering.txt",
+                "multiqc/multiqc_data/fastp-seq-quality-plot_Read_1_Before_filtering.txt",
+                "multiqc/multiqc_data/fastp-seq-quality-plot_Read_2_After_filtering.txt",
+                "multiqc/multiqc_data/fastp-seq-quality-plot_Read_2_Before_filtering.txt",
+                "multiqc/multiqc_data/fastp_filtered_reads_plot.txt",
+                "multiqc/multiqc_data/llms-full.txt",
+                "multiqc/multiqc_data/multiqc.log",
+                "multiqc/multiqc_data/multiqc.parquet",
+                "multiqc/multiqc_data/multiqc_citations.txt",
+                "multiqc/multiqc_data/multiqc_data.json",
+                "multiqc/multiqc_data/multiqc_fastp.txt",
+                "multiqc/multiqc_data/multiqc_general_stats.txt",
+                "multiqc/multiqc_data/multiqc_samtools_stats.txt",
+                "multiqc/multiqc_data/multiqc_software_versions.txt",
+                "multiqc/multiqc_data/multiqc_sources.txt",
+                "multiqc/multiqc_data/samtools-stats-dp.txt",
+                "multiqc/multiqc_data/samtools_alignment_plot.txt",
+                "multiqc/multiqc_report.html",
+                "orthologfilter",
+                "orthologfilter/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.ortho_full.bed",
+                "orthologfilter/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.ortho_probe.bed",
+                "paralogfilter",
+                "paralogfilter/L160__tanypteryx_R_probe.probes_filtered.txt",
+                "pipeline_info",
+                "pipeline_info/nf_core_locusassembly_software_versions.yml",
+                "samtools",
+                "samtools/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.stats",
+                "spades",
+                "spades/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.assembly.gfa.gz",
+                "spades/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.contigs.fa.gz",
+                "spades/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.scaffolds.fa.gz",
+                "spades/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.spades.log",
+                "spadesfilter",
+                "spadesfilter/105603_P011_WD08_4002184661_Calopterygidae_Umma_declivium.scaffolds_filtered.fa"
+            ]
+        ],
+        "timestamp": "2026-03-11T17:35:26.424371862",
+        "meta": {
+            "nf-test": "0.9.4",
+            "nextflow": "25.10.4"
+        }
+    }
+}

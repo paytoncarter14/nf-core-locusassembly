@@ -1,19 +1,32 @@
-flowchart LR
-    A["Sample .fastq"]
-    AA["Reference .fasta"]
-    AAA["Probes .fasta"]
-    B["Filter reads<br>(fastp)"]
+flowchart TD
+    A([Sample .fastq])
+    AA([Reference .fasta])
+    AAA([Probe target<br>sequences .fasta])
+    B["Filter adapters<br>(fastp)"]
     C["Assemble scaffolds<br>(SPAdes)"]
-    D["Collapse scaffolds<br>(vsearch cluster)"]
-    E["Query probes to<br>scaffolds (tblastx)"]
+    E["Query probes to<br>scaffolds (dc-megablast)"]
     F["Pull orthologs from<br>scaffolds (bedtools)"]
-    G["Query orthologs to<br>reference (tblastx)"]
-    H["Query probes to <br>reference (blastn)"]
+    G["Query orthologs to<br>reference (dc-megablast)"]
+    H["Query probes to <br>reference (dc-megablast)"]
     I["Ensure orthologs and<br>probes hit same<br>reference location"]
-    J["Ortholog .fasta"]
+    J(["Ortholog .fasta"])
+    K["Filter ambiguous hits"]
+    L["Filter scaffolds by coverage/length"]
+    M["Map reads to<br>orthologs (minimap2)"]
+    N["Call variants and assess contamination (bcftools)"]
+    O["Calculate mapping<br>metrics (samtools)"]
 
-A-->B-->C-->D-->E-->F-->G-->I-->J
+A-->B-->C-->L-->E-->F-->G-->I-->J
 AA-->H
+AA-->G
 AAA-->H
 AAA-->E
-H-->I
+H-->K-->I
+A-->M
+J-->M-->N
+M-->O
+
+classDef input fill:#CFC;
+classDef output fill:#DDF;
+class A,AA,AAA input;
+class J output;

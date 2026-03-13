@@ -4,15 +4,15 @@
   |\\ | |__  __ /  ` /  \\ |__) |__         }  {
   | \\| |       \\__, \\__/ |  \\ |___     \\`-._,-`-,
                                         `._,._,'
-  nf-core/targetassembly ${version}
+  nf-core/locusassembly ${version}
 ----------------------------------------------------
 Run Name: $runName
 
 <% if (success){
-    out << "## nf-core/targetassembly execution completed successfully! ##"
+    out << "## nf-core/locusassembly execution completed successfully! ##"
 } else {
     out << """####################################################
-## nf-core/targetassembly execution completed unsuccessfully! ##
+## nf-core/locusassembly execution completed unsuccessfully! ##
 ####################################################
 The exit status of the task that caused the workflow execution to fail was: $exitStatus.
 The full error message was:
@@ -35,5 +35,5 @@ Pipeline Configuration:
 <% out << summary.collect{ k,v -> " - $k: $v" }.join("\n") %>
 
 --
-nf-core/targetassembly
-https://github.com/nf-core/targetassembly
+nf-core/locusassembly
+https://github.com/nf-core/locusassembly

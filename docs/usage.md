@@ -1,12 +1,8 @@
-# nf-core/targetassembly: Usage
+# nf-core/locusassembly: Usage
 
-## :warning: Please read this documentation on the nf-core website: [https://nf-co.re/targetassembly/usage](https://nf-co.re/targetassembly/usage)
+## :warning: Please read this documentation on the nf-core website: [https://nf-co.re/locusassembly/usage](https://nf-co.re/locusassembly/usage)
 
 > _Documentation of pipeline parameters is generated automatically from the pipeline schema and can no longer be found in markdown files._
-
-## Introduction
-
-<!-- TODO nf-core: Add documentation about anything specific to running your pipeline. For general topics, please point to (and add to) the main nf-core website. -->
 
 ## Samplesheet input
 
@@ -57,7 +53,7 @@ An [example samplesheet](../assets/samplesheet.csv) has been provided with the p
 The typical command for running the pipeline is as follows:
 
 ```bash
-nextflow run nf-core/targetassembly --input ./samplesheet.csv --outdir ./results  -profile docker
+nextflow run nf-core/locusassembly --input ./samplesheet.csv --outdir ./results  -profile docker
 ```
 
 This will launch the pipeline with the `docker` configuration profile. See below for more information about profiles.
@@ -81,7 +77,7 @@ Pipeline settings can be provided in a `yaml` or `json` file via `-params-file <
 The above pipeline run specified with a params file in yaml format:
 
 ```bash
-nextflow run nf-core/targetassembly -profile docker -params-file params.yaml
+nextflow run nf-core/locusassembly -profile docker -params-file params.yaml
 ```
 
 with:
@@ -99,14 +95,14 @@ You can also generate such `YAML`/`JSON` files via [nf-core/launch](https://nf-c
 When you run the above command, Nextflow automatically pulls the pipeline code from GitHub and stores it as a cached version. When running the pipeline after this, it will always use the cached version if available - even if the pipeline has been updated since. To make sure that you're running the latest version of the pipeline, make sure that you regularly update the cached version of the pipeline:
 
 ```bash
-nextflow pull nf-core/targetassembly
+nextflow pull nf-core/locusassembly
 ```
 
 ### Reproducibility
 
 It is a good idea to specify the pipeline version when running the pipeline on your data. This ensures that a specific version of the pipeline code and software are used when you run your pipeline. If you keep using the same tag, you'll be running the same version of the pipeline, even if there have been changes to the code since.
 
-First, go to the [nf-core/targetassembly releases page](https://github.com/nf-core/targetassembly/releases) and find the latest pipeline version - numeric only (eg. `1.3.1`). Then specify this when running the pipeline with `-r` (one hyphen) - eg. `-r 1.3.1`. Of course, you can switch to another version by changing the number after the `-r` flag.
+First, go to the [nf-core/locusassembly releases page](https://github.com/nf-core/locusassembly/releases) and find the latest pipeline version - numeric only (eg. `1.3.1`). Then specify this when running the pipeline with `-r` (one hyphen) - eg. `-r 1.3.1`. Of course, you can switch to another version by changing the number after the `-r` flag.
 
 This version number will be logged in reports when you run the pipeline, so that you'll know what you used when you look back in the future.
 
@@ -148,7 +144,7 @@ If `-profile` is not specified, the pipeline will run locally and expect all sof
 - `shifter`
   - A generic configuration profile to be used with [Shifter](https://nersc.gitlab.io/development/shifter/how-to-use/)
 - `charliecloud`
-  - A generic configuration profile to be used with [Charliecloud](https://hpc.github.io/charliecloud/)
+  - A generic configuration profile to be used with [Charliecloud](https://charliecloud.io/)
 - `apptainer`
   - A generic configuration profile to be used with [Apptainer](https://apptainer.org/)
 - `wave`
@@ -211,3 +207,7 @@ We recommend adding the following line to your environment to limit this (typica
 ```bash
 NXF_OPTS='-Xms1g -Xmx4g'
 ```
+
+## A note on BLAST searches
+
+This pipeline relies heavily on BLAST searches to assign and confirm orthology. It assumes each probe target sequence maps to a contiguous sequence on the reference genome. Violating this assumption will trigger the paralogy filter and the locus will be removed. Unplaced contigs representing unresolved haplotypes in the reference genome may also cause this. Non-standard characters in the probe target sequences, such as unknown (N or X) bases or IUPAC ambiguity codes, are treated as mismatches by BLAST and will result in fewer hits. If locus recovery counts are lower than expected, it is always worth evaluating the BLAST results manually to see at what point the loci were dropped.
