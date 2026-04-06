@@ -70,6 +70,11 @@
                     "default": 1,
                     "description": "SPAdes scaffolds with kmer coverage less than this value are discarded."
                 },
+                "remap": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Whether to remap fastq reads to the assembled scaffolds. Required for contamination check."
+                },
                 "contaminationcheck_mpileup_min_bq": {
                     "type": "integer",
                     "default": 30,

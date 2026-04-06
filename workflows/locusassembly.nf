@@ -122,23 +122,34 @@ workflow LOCUSASSEMBLY {
     CLEANHEADERS_PROBE ( GETORTHOLOGS_PROBE.out.fasta )
     ch_versions = ch_versions.mix(CLEANHEADERS_PROBE.out.versions)
 
-    // align fastqs with orthologs to get coverage stats
-    minimap2_input = FASTP.out.reads.join(CLEANHEADERS_FULL.out.fasta)
-    MINIMAP2_ALIGN ( minimap2_input.map{[it[0], it[1]]}, minimap2_input.map{[it[0], it[2]]}, true, 'bai', true, false )
+    gatherstats_input = CLEANHEADERS_PROBE.out.general.collect()
 
-    // get alignment coverage and depth stats
-    samtools_input = MINIMAP2_ALIGN.out.bam.join(CLEANHEADERS_FULL.out.fasta)
-    SAMTOOLS_STATS ( MINIMAP2_ALIGN.out.bam.join(MINIMAP2_ALIGN.out.index), [[id: ch_reference.baseName], ch_reference] )
+    if (params.remap == true) {
 
-    // check for contamination
-    CONTAMINATIONCHECK ( MINIMAP2_ALIGN.out.bam.join(MINIMAP2_ALIGN.out.index).join(CLEANHEADERS_FULL.out.fasta) )
+        // align fastqs with orthologs to get coverage stats
+        minimap2_input = FASTP.out.reads.join(CLEANHEADERS_FULL.out.fasta)
+        MINIMAP2_ALIGN ( minimap2_input.map{[it[0], it[1]]}, minimap2_input.map{[it[0], it[2]]}, true, 'bai', true, false )
+
+        // get alignment coverage and depth stats
+        samtools_input = MINIMAP2_ALIGN.out.bam.join(CLEANHEADERS_FULL.out.fasta)
+        SAMTOOLS_STATS ( MINIMAP2_ALIGN.out.bam.join(MINIMAP2_ALIGN.out.index), [[id: ch_reference.baseName], ch_reference] )
+
+        // check for contamination
+        CONTAMINATIONCHECK ( MINIMAP2_ALIGN.out.bam.join(MINIMAP2_ALIGN.out.index).join(CLEANHEADERS_FULL.out.fasta) )
+
+        gatherstats_input = gatherstats_input.mix(CONTAMINATIONCHECK.out.contam_index.map{it[1]}.collect())
+
+    }
 
     // collect stats for all samples into summary.csv
-    GATHERSTATS ( CLEANHEADERS_PROBE.out.general.collect().map{[[id: 'all_samples'], it]}, CONTAMINATIONCHECK.out.contam_index.map{it[1]}.collect().map{[[id: 'all_samples'], it]} )
+    GATHERSTATS ( gatherstats_input.map{[[id: 'all_samples'], it]} )
 
     // send all stats to MultiQC
-    multiqc_input = FASTP.out.json.map{it[1]}.mix(SAMTOOLS_STATS.out.stats.map{it[1]}, GATHERSTATS.out.summary).collect().map{[[id: 'all_samples'], it, [], [], [], []]}
-    MULTIQC ( multiqc_input )
+    multiqc_input = FASTP.out.json.map{it[1]}.mix(GATHERSTATS.out.summary)
+    if (params.remap == true) {
+        multiqc_input = multiqc_input.mix(SAMTOOLS_STATS.out.stats.map{it[1]})
+    }
+    MULTIQC ( multiqc_input.collect().map{[[id: 'all_samples'], it, [], [], [], []]} )
 
     // Collate and save software versions
     softwareVersionsToYAML(ch_versions)
