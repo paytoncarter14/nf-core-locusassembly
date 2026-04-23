@@ -11,8 +11,8 @@ import platform
 # csvs of per locus: kmer coverage, full ortholog length, and probe ortholog length
 # single line of averages of above stats in that order
 
-def average(list):
-    return sum(list) / len(list)
+def average(lst):
+    return sum(lst) / len(lst) if lst else 0
 
 with open('$fasta') as fasta_input, \
 open('$prefix' + '.orthologs.probe.fasta', 'w') as fasta_output, \
